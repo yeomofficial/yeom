@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>YEOM - Home</title>
+  <link rel="stylesheet" href="home.css" />
+</head>
+<body>
+  <header>
+    <img class="header-img" src="yeom_img.png" />
+    <a href="#"><img class="notification-img" src="notification.png" /></a>
+  </header>
+
+  <main>
+    <div id="feed"></div>
+  </main>
+
+  <nav>
+    <ul>
+      <li><a href="home.html"><img class="home-img" src="home.png" /></a></li>
+      <li><a href="search.html"><img class="search-img" src="search.png" /></a></li>
+      <li><a href="#"><img class="upload-img" src="upload.png" /></a></li>
+      <li><a href="profile.html" id="profile-link"><img class="profile-img" src="profile.png" alt="Profile Icon"></a></li>
+    </ul>
+  </nav>
+
+  <!-- Add this just before closing </body> -->
+<input type="file" id="fileInput" accept="image/*" style="display: none;" />
+
+
+  <script type="module" src="home.js"></script>
+  <script type="module">
+   function addPost(username, imageUrl) {
+  const feed = document.getElementById('feed');
+  
+  // Create the new post container
+  const postDiv = document.createElement('div');
+  postDiv.classList.add('post');
+
+  // Create the username label
+  const usernameLabel = document.createElement('label');
+  usernameLabel.classList.add('username-overlay');
+  usernameLabel.textContent = username;
+
+  // Create the image container
+  const postImgContainer = document.createElement('div');
+  postImgContainer.classList.add('post-img-container');
+  const postImg = document.createElement('img');
+  postImg.classList.add('post-img');
+  postImg.src = imageUrl;
+
+  // Create actions buttons (like & save)
+  const actionsDiv = document.createElement('div');
+  actionsDiv.classList.add('actions');
+  
+  // Like button
+  const likeButton = document.createElement('button');
+  likeButton.classList.add('like-btn');
+  likeButton.innerHTML = '<img class="heart-img" src="like-btn.png" /> <span>Likes 0</span>';
+  
+  // Save button
+  const saveButton = document.createElement('button');
+  saveButton.classList.add('save-btn');
+  saveButton.innerHTML = '<img class="bookmark-img" src="save-btn.png" /> <span>Save</span>';
+  
+  // Add the buttons to the actions section
+  actionsDiv.appendChild(likeButton);
+  actionsDiv.appendChild(saveButton);
+
+  // Append all elements to the postDiv
+  postDiv.appendChild(usernameLabel);
+  postDiv.appendChild(postImgContainer);
+  postImgContainer.appendChild(postImg);
+  postDiv.appendChild(actionsDiv);
+
+  // Prepend the new post to the feed (so it's on top)
+  feed.prepend(postDiv);
+
+  // Like button functionality
+  likeButton.addEventListener('click', () => {
+    const likeCountSpan = likeButton.querySelector('span');
+    let likes = parseInt(likeCountSpan.textContent.replace('Likes ', ''), 10);
+
+    if (isNaN(likes)) {
+      likes = 0; // Fallback in case the text content is not a valid number
+    }
+
+    if (likeButton.classList.contains('liked')) {
+      likes -= 1; // Unlike
+      likeButton.classList.remove('liked');
+    } else {
+      likes += 1; // Like
+      likeButton.classList.add('liked');
+    }
+
+    likeCountSpan.textContent = `Likes ${likes}`;
+  });
+
+  // Save button functionality
+  saveButton.addEventListener('click', () => {
+    saveButton.classList.toggle('saved');
+    const savedText = saveButton.querySelector('span');
+    savedText.textContent = saveButton.classList.contains('saved') ? 'Saved' : 'Save';
+  });
+}
+
+// Example usage: Add a post
+addPost('camila', 'women-pintrest.png');
+  </script>
+</body>
+</html>
