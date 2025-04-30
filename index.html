@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YEOM app</title>
+  <link rel="stylesheet" href="index.css" />
+  <script type="module" src="firebase.js"></script>
+  <style>
+    /* fallback in case your CSS file doesn’t hide both forms */
+    #loginForm, #signupForm {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Signup Form -->
+  <div id="signupForm" class="auth-container form-section">
+    <h2>Sign Up for YEOM</h2>
+    <div id="signUpMessage" class="messageDiv" style="display:none"></div>
+    <input type="email" id="rEmail" placeholder="Enter Email" required />
+    <div id="emailInputError" class="error-message"></div>
+    <input type="password" id="rPassword" placeholder="Enter Password" required minlength="6" />
+    <div id="passwordInputError" class="error-message"></div>
+
+    <div class="terms">
+      <input type="checkbox" id="terms-checkbox" required />
+      <label id="terms">
+        I agree to the
+        <a href="https://docs.google.com/document/d/1aTk4Een6Ynf1aCXi4N5uDvw3bYUjILxSm_dl0wML7x4/edit?usp=drivesdk">
+          Terms and Conditions
+        </a>
+      </label>
+      <div id="terms-error" class="error-message"></div>
+    </div>
+
+    <button id="signup-btn" class="auth-button">Sign Up</button>
+    <p class="auth-link">
+      Already have an account? <a id="goToLogin" href="#login">Log in</a>
+    </p>
+  </div>
+
+  <!-- Login Form -->
+  <div id="loginForm" class="auth-container form-section">
+    <h2>Login to Your Account</h2>
+    <div id="signInMessage" class="messageDiv" style="display:none;"></div>
+    <input type="email" id="loginEmail" placeholder="Enter Email" required />
+    <input type="password" id="loginPassword" placeholder="Enter Password" required />
+    <button id="loginBtn" class="auth-button">Login</button>
+    <p class="auth-link">
+      Don't have an account? <a id="goToSignup" href="#signup">Sign up</a>
+    </p>
+  </div>
+
+  <script>
+    const signupForm = document.getElementById("signupForm");
+    const loginForm = document.getElementById("loginForm");
+    const goToLogin = document.getElementById("goToLogin");
+    const goToSignup = document.getElementById("goToSignup");
+
+    function showForm() {
+      const hash = window.location.hash || "#signup";
+
+      if (hash === "#login") {
+        signupForm.style.display = "none";
+        loginForm.style.display = "block";
+      } else {
+        loginForm.style.display = "none";
+        signupForm.style.display = "block";
+      }
+    }
+
+    window.addEventListener("load", showForm);
+    window.addEventListener("hashchange", showForm);
+
+    if (goToLogin) {
+      goToLogin.addEventListener("click", function (event) {
+        event.preventDefault();
+        window.location.hash = "#login";
+      });
+    }
+
+    if (goToSignup) {
+      goToSignup.addEventListener("click", function (event) {
+        event.preventDefault();
+        window.location.hash = "#signup";
+      });
+    }
+
+    // Error helpers
+    function showInputError(inputId, message) {
+      const input = document.getElementById(inputId);
+      const errorDiv = document.getElementById(inputId + "Error");
+
+      if (input) input.classList.add("error");
+      if (errorDiv) errorDiv.textContent = message;
+    }
+
+    function clearInputError(inputId) {
+      const input = document.getElementById(inputId);
+      const errorDiv = document.getElementById(inputId + "Error");
+
+      if (input) input.classList.remove("error");
+      if (errorDiv) errorDiv.textContent = "";
+    }
+  </script>
+</body>
+</html>

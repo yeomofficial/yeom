@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile</title>
+  <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+
+  <header>
+    <img src="yeom_img.png" class="header-img">
+    <a href="settings.html"><img class="settings-img" src="setting.png"></a>
+  </header>
+
+  <section class="profile-section">
+    <div class="profile-header">
+      <img id="profilePhoto" src="person.png" alt="Profile Photo">
+      <h2 id="loggedInUsername">@username</h2>
+      <button id="editProfileBtn">Edit Profile</button>
+      <div class="counts">
+        <div><strong>0</strong><br>Posts</div>
+        <div><strong>0</strong><br>Spotters</div>
+        <div><strong>0</strong><br>Spotting</div>
+      </div>
+    </div>
+
+    <div class="post-save-tabs">
+      <button id="postsTab" class="active">Posts</button>
+      <button id="savedTab">Saved</button>
+    </div>
+
+    <div class="user-posts" id="userPosts">
+      <p style="margin-top: 50px;">User posts will appear here!</p>
+    </div>
+  </section>
+
+  <nav>
+    <ul>
+      <li><a href="home.html"><img class="home-img" src="home.png" /></a></li>
+      <li><a href="search.html"><img class="search-img" src="search.png" /></a></li>
+      <li><a href="#"><img class="upload-img" src="upload.png" /></a></li>
+      <li><a href="profile.html" id="profile-link"><img class="profile-img" src="profile.png" alt="Profile Icon"></a></li>
+    </ul>
+  </nav>
+
+  <script type="module" src="profile.js"></script>
+</body>
+</html>
+  

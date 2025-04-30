@@ -1,0 +1,141 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8; /* Light gray background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  /* Container for Login & Signup */
+  .auth-container {
+    background: white;
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+    padding: 25px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  /* Heading Styles */
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Input Fields */
+  input[type="email"],
+  input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  /* Buttons */
+  button {
+    width: 100%;
+    background-color: black;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #333;
+  }
+  
+  /* Terms & Conditions Link */
+  .terms {
+    font-size: 14px;
+    margin: 15px 0;
+    align-items: center;
+  }
+  
+  .terms a {
+    color: blue;
+    text-decoration: none;
+  }
+  
+  .terms a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Checkbox */
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin: 10px 0;
+  }
+  
+  .checkbox-container input {
+    margin-right: 10px;
+  }
+  
+  /* Styles for the authentication link section */
+  
+  .auth-link {
+    margin-top: 15px;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .auth-link a {
+    color: blue;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  /* Underlines the authentication link on hover for better user interaction */
+  .auth-link a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Sign-Up & Login Links */
+  .auth-link {
+    margin-top: 15px;
+    font-size: 14px;
+  }
+  
+  .auth-link a {
+    color: blue;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .auth-link a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Error Message*/ 
+  .error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 4px;
+  }
+  
+  input.error {
+  border: 2px solid red;
+  outline: none;
+  }
+  
+  .messageDiv{
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    opacity:0;
+    animation:fadeOut 7s forward;
+  }

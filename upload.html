@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>YEOM - Upload</title>
+  <link rel="stylesheet" href="upload.css" />
+</head>
+<body>
+  <main>
+      <div id="upload-container">
+        <div class="image-preview-container">
+          <img id="image-preview" src="" alt="Selected Image Preview" />
+        </div>
+      <select id="section">
+        <option value="">Select Section</option>
+        <option value="streetwear">street wear</option>
+        <option value="Formal">formal</option>
+        <option value="Casual">casual</option>
+      </select>
+
+      <!-- Upload Button -->
+      <button id="upload-btn">Upload Post</button>
+    </div>
+  </main>
+<!-- Important: type="module" is needed for import/export to work -->
+  <script type="module" src="upload.js"></script>
+</body>
+</html>

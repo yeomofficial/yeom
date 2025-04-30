@@ -1,0 +1,133 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    padding-top: 45px;
+    background-color: white;
+  }
+  
+  header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: white;
+    padding: clamp(8px, 2vh, 16px) clamp(8px, 2vw, 16px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.10);
+    z-index: 1000;
+  }
+
+  .header-img {
+    width: clamp(80px, 20vw, 120px);
+    height: auto;
+    display: block;
+    justify-content: center;
+  }
+
+  .settings-img {
+    width: clamp(24px, 10vw, 36px);
+    height: auto;
+    padding-right: 30px;
+  }
+  
+  .profile-section {
+    padding: 20px;
+  }
+  
+  .profile-header {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  #profilePhoto {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  #loggedInUsername {
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  #editProfileBtn {
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  
+  .counts {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+  }
+  
+  .counts div {
+    text-align: center;
+  }
+  
+  .post-save-tabs {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    border-top: 1px solid #ccc;
+  }
+  
+  .post-save-tabs button {
+    flex: 1;
+    padding: 12px 0;
+    background: none;
+    border: none;
+    font-weight: bold;
+    font-size: 16px;
+    color: #555;
+    cursor: pointer;
+  }
+  
+  .post-save-tabs button.active {
+    border-bottom: 2px solid black;
+    color: black;
+  }
+  
+  .user-posts {
+    padding: 20px;
+    min-height: 300px;
+    text-align: center;
+  }
+
+  .home-img,
+  .search-img,
+  .upload-img,
+  .profile-img {
+    width: clamp(24px, 10vw, 36px);
+    height: auto;
+  }
+  
+  ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+nav {
+    background-color: white;
+    border-top: 1px solid #ccc;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile Info</title>
+  <link rel="stylesheet" href="info.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Message for success/error -->
+    <div id="message" class="hidden"></div>
+    <h2>Complete Profile</h2>
+    <!-- Form Fields -->
+    <label>Username</label>
+    <input type="text" id="username" placeholder="Enter your username" />
+
+    <label>Select Gender</label>
+    <select id="gender">
+      <option value="">Select your gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label>Date of Birth</label>
+    <input type="date" id="dob" />
+
+    <label>Fashion Preference</label>
+    <select id="fashion">
+      <option value="">Select your style</option>
+      <option value="Streetwear">Streetwear</option>
+      <option value="Casual">Casual</option>
+      <option  value="Formal">Formal</option>
+      <option value="Vintage">Vintage</option>
+    </select>
+
+    <!-- Submit -->
+    <button id="submit">Add Profile</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    flatpickr("#dob", {
+      dateFormat: "Y-m-d",
+      maxDate: "today",
+      defaultDate: "2000-01-01"
+    });
+  </script>
+  
+  <script type="module" src="info.js"></script>
+</body>
+</html>
