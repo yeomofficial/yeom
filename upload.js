@@ -1,8 +1,6 @@
-// Cloudinary configuration
-const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/dwauleaof/image/upload';  // Replace with your Cloud Name
-const uploadPreset = 'yeom_unsigned';  // Replace with your upload preset name
+const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/dwauleaof/image/upload';
+const uploadPreset = 'yeom_unsigned';
 
-// Firebase setup (for Firestore)
 import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js';
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js';
 
@@ -21,13 +19,22 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Get HTML elements
+// HTML elements
 const imagePreview = document.getElementById('image-preview');
 const sectionDropdown = document.getElementById('section');
 const uploadBtn = document.getElementById('upload-btn');
 const uploadContainer = document.getElementById('upload-container');
+const messageBox = document.getElementById('message-box');
 
-// Progress bar setup
+// Message function
+function showMessage(text, type = "success") {
+  if (!messageBox) return;
+  messageBox.textContent = text;
+  messageBox.className = `message-box ${type}`;
+  messageBox.style.display = 'block';
+}
+
+// Progress bar
 const progressBar = document.createElement('progress');
 progressBar.value = 0;
 progressBar.max = 100;
@@ -41,7 +48,7 @@ progressPercentage.style.marginTop = '10px';
 progressPercentage.style.display = 'none';
 uploadContainer.appendChild(progressPercentage);
 
-// Load selected image from localStorage
+// Load image from localStorage
 const selectedImageUrl = localStorage.getItem('selectedImage');
 if (selectedImageUrl && imagePreview) {
   imagePreview.src = selectedImageUrl;
@@ -49,43 +56,39 @@ if (selectedImageUrl && imagePreview) {
   imagePreview.style.width = 'auto';
   imagePreview.style.height = 'auto';
 } else {
-  console.error('No selected image found.');
   uploadContainer.innerHTML = '<p>No image selected. Please go back and select an image.</p>';
 }
 
-// Enable upload button only if a section is selected
+// Enable/disable upload button
 sectionDropdown.addEventListener('change', () => {
   uploadBtn.disabled = !sectionDropdown.value;
 });
 
-// Handle upload button click
+// Upload handler
 uploadBtn.addEventListener('click', async () => {
   const selectedSection = sectionDropdown.value;
 
   if (!selectedSection) {
-    alert('Please select a section.');
+    showMessage('Please select a section.', 'error');
     return;
   }
 
   if (!selectedImageUrl) {
-    alert('No image to upload. Please go back and select an image.');
+    showMessage('No image to upload. Please go back and select an image.', 'error');
     return;
   }
 
   try {
     const file = dataURLtoFile(selectedImageUrl, 'upload.jpg');
-
-    // Set the Cloudinary public ID to simulate folder structure
     const publicId = `${selectedSection}/image_${Date.now()}`;
 
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_preset', uploadPreset);
-    formData.append('public_id', publicId);  // This sets the "folder" structure
+    formData.append('public_id', publicId);
 
     progressBar.style.display = 'block';
     progressPercentage.style.display = 'block';
-    const startTime = Date.now();
 
     const response = await fetch(cloudinaryUrl, {
       method: 'POST',
@@ -93,17 +96,10 @@ uploadBtn.addEventListener('click', async () => {
     });
 
     const data = await response.json();
+    const downloadURL = data.secure_url;
 
-    const endTime = Date.now();
-    console.log(`Upload completed in ${(endTime - startTime) / 1000} seconds.`);
+    const username = localStorage.getItem('username') || "anonymous";
 
-    const downloadURL = data.secure_url;  // Cloudinary URL
-
-    console.log('Download URL:', downloadURL);
-
-    const username = localStorage.getItem('username');
-
-    // Add post info to Firestore
     await addDoc(collection(db, 'posts'), {
       section: selectedSection,
       imageUrl: downloadURL,
@@ -111,19 +107,19 @@ uploadBtn.addEventListener('click', async () => {
       username: username,
     });
 
-    console.log('Post added to Firestore.');
-
     localStorage.removeItem('selectedImage');
-    window.location.href = 'home.html';
+    showMessage('Upload successful! Redirecting...', 'success');
+    setTimeout(() => {
+      window.location.href = 'home.html';
+    }, 1500);
   } catch (error) {
-    console.error('Error uploading file:', error);
-    alert('Upload failed. Try again.');
+    showMessage('Upload failed. Please try again.', 'error');
     progressBar.style.display = 'none';
     progressPercentage.style.display = 'none';
   }
 });
 
-// Convert Data URL to File (helper function)
+// Helper: convert data URL to file
 function dataURLtoFile(dataUrl, filename) {
   const arr = dataUrl.split(',');
   const mime = arr[0].match(/:(.*?);/)[1];
