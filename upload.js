@@ -3,6 +3,10 @@ const uploadPreset = 'yeom_unsigned';
 
 import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js';
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js';
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js';
+import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js';
+
+
 
 // Firebase configuration
 const firebaseConfig = {
@@ -18,6 +22,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 // HTML elements
 const imagePreview = document.getElementById('image-preview');
@@ -98,7 +103,15 @@ uploadBtn.addEventListener('click', async () => {
     const data = await response.json();
     const downloadURL = data.secure_url;
 
-    const username = localStorage.getItem('username') || "anonymous";
+    let username = "anonymous";
+    const user = auth.currentUser;
+      if (user) {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          username = userDoc.data().username || "anonymous";
+         }
+       }
+
 
     await addDoc(collection(db, 'posts'), {
       section: selectedSection,
