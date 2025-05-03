@@ -25,7 +25,7 @@ const db = getFirestore();
 
 onAuthStateChanged(auth, (user) => {
   if (!user) {
-    window.location.href = "login.html";
+    window.location.href = "index.html";
     return;
   }
 
@@ -33,8 +33,7 @@ onAuthStateChanged(auth, (user) => {
   const profileUserId = urlParams.get("uid") || localStorage.getItem("loggedInUserId");
 
   if (!profileUserId) {
-    console.error("User ID not found.");
-    return;
+    return; // silently fail or show a UI message if needed
   }
 
   const docRef = doc(db, "users", profileUserId);
@@ -47,12 +46,7 @@ onAuthStateChanged(auth, (user) => {
         if (profileUserId !== user.uid) {
           document.getElementById("editProfileBtn").style.display = "none";
         }
-      } else {
-        console.log("No such user.");
       }
-    })
-    .catch((error) => {
-      console.error("Error fetching profile:", error);
     });
 });
 
