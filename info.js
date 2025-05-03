@@ -35,16 +35,15 @@ document.getElementById("submit").addEventListener("click", async () => {
     return;
   }
 
-  const usernameRegex = /^[a-zA-Z0-9_]+$/;
+  const usernameRegex = /^[a-z0-9_]+$/;
   if (!usernameRegex.test(username)) {
-    showMessage("Username can only contain letters, numbers, and underscores (no spaces or symbols).", "error");
+    showMessage("Username can only contain lowercase letters, numbers, and underscores (no capital letters, spaces, or symbols).", "error");
     return;
   }
 
   try {
     showMessage("Checking username availability...", "success");
 
-    // Check if username is already taken
     const usernameQuery = query(collection(db, "users"), where("username", "==", username));
     const querySnapshot = await getDocs(usernameQuery);
 
@@ -53,7 +52,6 @@ document.getElementById("submit").addEventListener("click", async () => {
       return;
     }
 
-    // Ensure user is logged in
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         localStorage.setItem("loggedInUserId", user.uid);
@@ -65,7 +63,7 @@ document.getElementById("submit").addEventListener("click", async () => {
           dob,
           fashion,
           createdAt: new Date()
-        });
+        }, { merge: true });
 
         showMessage("Profile added successfully! Redirecting...", "success");
 
@@ -83,6 +81,5 @@ document.getElementById("submit").addEventListener("click", async () => {
     });
   } catch (error) {
     showMessage("There was an error saving your profile. Please try again.", "error");
-    console.error(error);
   }
 });
