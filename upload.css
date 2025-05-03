@@ -1,11 +1,9 @@
-/* Basic Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Body Styling */
 body {
   font-family: Arial, sans-serif;
   background-color: #f7f7f7;
@@ -16,7 +14,6 @@ body {
   margin: 0;
 }
 
-/* Main Container */
 #upload-container {
   background-color: white;
   padding: 20px;
@@ -87,3 +84,22 @@ label {
   display: block;
   font-weight: bold;
 }
+
+  .message-box {
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    display: none;
+    text-align: center;
+  }
+
+  .message-box.success {
+    background-color: black;
+    color: white;
+  }
+
+  .message-box.error {
+    background-color: black;
+    color: white;
+  }
