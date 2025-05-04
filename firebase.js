@@ -68,6 +68,8 @@ signUp.addEventListener("click", (event) => {
       const user = userCredential.user;
       const userData = {
         email: email,
+        spotters: 0,
+        spotting: 0
       };
       showMessage("Account created successfully", "signUpMessage");
       const docRef = doc(db, "users", user.uid);
