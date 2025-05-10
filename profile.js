@@ -6,7 +6,12 @@ import {
 import {
   getFirestore,
   getDoc,
-  doc
+  doc,
+  updateDoc,
+  increment,
+  collection,
+  addDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -23,7 +28,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
   if (!user) {
     window.location.href = "index.html";
     return;
@@ -32,37 +37,80 @@ onAuthStateChanged(auth, (user) => {
   const urlParams = new URLSearchParams(window.location.search);
   const profileUserId = urlParams.get("uid") || localStorage.getItem("loggedInUserId");
 
-  if (!profileUserId) {
-    return; // silently fail or show a UI message if needed
-  }
+  if (!profileUserId) return;
 
-  const docRef = doc(db, "users", profileUserId);
-  getDoc(docRef)
-    .then((docSnap) => {
-      if (docSnap.exists()) {
-        const userData = docSnap.data();
-        document.getElementById("loggedInUsername").innerText = "@" + userData.username;
+  const currentUserRef = doc(db, "users", user.uid);
+  const profileUserRef = doc(db, "users", profileUserId);
 
-        if (profileUserId !== user.uid) {
-          document.getElementById("editProfileBtn").style.display = "none";
+  const currentUserSnap = await getDoc(currentUserRef);
+  const profileSnap = await getDoc(profileUserRef);
+
+  if (profileSnap.exists()) {
+    const profileData = profileSnap.data();
+    document.getElementById("loggedInUsername").innerText = "@" + profileData.username;
+
+    const isMyProfile = profileUserId === user.uid;
+
+    if (!isMyProfile) {
+      document.getElementById("editProfileBtn").style.display = "none";
+
+      const spotBtn = document.createElement("button");
+      spotBtn.id = "spotBtn";
+      spotBtn.classList.add("spot-button");
+
+      const isSpotting = currentUserSnap.data().spottingIds?.includes(profileUserId);
+      spotBtn.textContent = isSpotting ? "Unspot" : "Spot";
+
+      spotBtn.addEventListener("click", async () => {
+        const currentData = (await getDoc(currentUserRef)).data();
+        const profileData = (await getDoc(profileUserRef)).data();
+
+        let updatedSpottingIds = currentData.spottingIds || [];
+
+        if (updatedSpottingIds.includes(profileUserId)) {
+          // Unspot
+          updatedSpottingIds = updatedSpottingIds.filter(id => id !== profileUserId);
+          await updateDoc(currentUserRef, {
+            spottingIds: updatedSpottingIds,
+            spotting: increment(-1)
+          });
+          await updateDoc(profileUserRef, {
+            spotters: increment(-1)
+          });
+          spotBtn.textContent = "Spot";
+        } else {
+          // Spot
+          updatedSpottingIds.push(profileUserId);
+          await updateDoc(currentUserRef, {
+            spottingIds: updatedSpottingIds,
+            spotting: increment(1)
+          });
+          await updateDoc(profileUserRef, {
+            spotters: increment(1)
+          });
+          spotBtn.textContent = "Unspot";
+
+          await addDoc(collection(db, "notifications"), {
+            userId: profileUserId,
+            type: "new_spotter",
+            message: "You got a new spotter!",
+            timestamp: serverTimestamp(),
+            seen: false
+          });
         }
-      }
-    });
-});
 
-// Tab switching
-const postsTab = document.getElementById("postsTab");
-const savedTab = document.getElementById("savedTab");
-const userPosts = document.getElementById("userPosts");
+        // Refresh counts
+        const updatedProfileSnap = await getDoc(profileUserRef);
+        const updatedProfile = updatedProfileSnap.data();
 
-postsTab.addEventListener("click", () => {
-  postsTab.classList.add("active");
-  savedTab.classList.remove("active");
-  userPosts.innerHTML = '<p style="margin-top: 50px;">User posts will appear here!</p>';
-});
+        document.querySelector(".counts div:nth-child(2) strong").innerText = updatedProfile.spotters || 0;
+        document.querySelector(".counts div:nth-child(3) strong").innerText = updatedProfile.spotting || 0;
+      });
 
-savedTab.addEventListener("click", () => {
-  savedTab.classList.add("active");
-  postsTab.classList.remove("active");
-  userPosts.innerHTML = '<p style="margin-top: 50px;">Saved posts will appear here!</p>';
+      document.querySelector(".profile-header").appendChild(spotBtn);
+    }
+
+    document.querySelector(".counts div:nth-child(2) strong").innerText = profileData.spotters || 0;
+    document.querySelector(".counts div:nth-child(3) strong").innerText = profileData.spotting || 0;
+  }
 });
