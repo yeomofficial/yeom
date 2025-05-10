@@ -95,6 +95,7 @@ li {
 
   .user-result button {
     margin-top: 10px;
-    width: 100%; /* Make the button full width */
+    width: 100%; 
+    height: auto;
   }
 }
