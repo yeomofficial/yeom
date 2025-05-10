@@ -131,3 +131,18 @@ nav {
     width: 100%;
   }
   
+  .spot-button {
+    padding: 8px 16px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    margin-top: 12px;
+  }
+  
+  .spot-button:hover {
+    background-color: #333;
+  }
