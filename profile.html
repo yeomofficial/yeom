@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Profile</title>
   <link rel="stylesheet" href="profile.css">
 </head>
@@ -17,11 +16,12 @@
     <div class="profile-header">
       <img id="profilePhoto" src="person.png" alt="Profile Photo">
       <h2 id="loggedInUsername">@username</h2>
+      <button id="spotButton" style="display: none;">Spot</button>
       <button id="editProfileBtn">Edit Profile</button>
       <div class="counts">
         <div><strong>0</strong><br>Posts</div>
-        <div><strong>0</strong><br>Spotters</div>
-        <div><strong>0</strong><br>Spotting</div>
+        <div><strong id="spottersCount"></strong><br>Spotters</div>
+        <div><strong id="spottingCount"></strong><br>Spotting</div>
       </div>
     </div>
 
@@ -47,4 +47,3 @@
   <script type="module" src="profile.js"></script>
 </body>
 </html>
-  
