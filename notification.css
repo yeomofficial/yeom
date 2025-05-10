@@ -1,0 +1,22 @@
+body {
+    font-family: sans-serif;
+    background: #fff;
+    padding: 20px;
+  }
+  
+  .notification.unseen {
+    font-weight: bold;
+    background-color: #f9f9f9;
+  }
+  
+  .notification-time {
+    color: #999;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  .notification {
+    border-bottom: 1px solid #eee;
+    padding: 15px 10px;
+    font-size: 14px;
+  }
