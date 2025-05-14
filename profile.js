@@ -49,6 +49,9 @@ onAuthStateChanged(auth, async (user) => {
     const profileData = profileSnap.data();
     document.getElementById("loggedInUsername").innerText = "@" + profileData.username;
 
+    const profileImg = document.getElementById("profileImage");
+    profileImg.src = profileData.profile || "person.png";
+
     const isMyProfile = profileUserId === user.uid;
 
     if (!isMyProfile) {
