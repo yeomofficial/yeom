@@ -1,0 +1,134 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: white;
+  color: #111;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 40px;
+  min-height: 100vh;
+}
+
+.edit-profile-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 700px; /* wider container */
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+h2 {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.edit-profile-container {
+  width: 100%;
+  background: #fff;
+  padding: 28px 24px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+/* Optional: Remove this if unused */
+.edit-profile-container {
+  margin-top: 0;
+}
+
+.profile-pic-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.profile-pic {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid #ccc;
+  transition: border 0.3s ease;
+}
+
+.profile-pic:hover {
+  border-color: #888;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  transition: border 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: #111;
+  outline: none;
+}
+
+.save-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  background-color: #ccc;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: not-allowed;
+  transition: background-color 0.3s ease;
+}
+
+.save-btn.active {
+  background-color: #111;
+  cursor: pointer;
+}
+
+.message {
+  position: absolute;
+  top: 10px;
+  text-align: center;
+  width: 100%;
+  font-weight: bold;
+  color: green;
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
+  .profile-pic {
+    width: 100px;
+    height: 100px;
+  }
+
+  .edit-profile-container {
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Profile</title>
+  <link rel="stylesheet" href="edit-profile.css" />
+</head>
+<body>
+  <div class="edit-profile-wrapper">
+  <h2>Edit Profile</h2>
+  <div id="message" class="message"></div>
+
+  <div class="edit-profile-container">
+    <!-- Profile Picture -->
+    <div class="profile-pic-wrapper">
+      <img id="profilePic" src="person.png" alt="Profile" class="profile-pic" />
+      <input type="file" id="fileInput" accept="image/*" hidden />
+    </div>
+
+    <!-- Username -->
+    <label for="username" class="form-label">Username</label>
+    <input id="username" class="form-input" type="text" placeholder="Enter username" />
+
+    <!-- Gender -->
+    <label for="gender" class="form-label">Gender</label>
+    <select id="gender" class="form-input">
+      <option value="">Select gender</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label for="fashion" class="form-label">Fashion Preferences</label>
+    <select id="fashion" class="form-input">
+      <option value="">Select style</option>
+      <option value="Streetwear">Streetwear</option>
+      <option value="Casual">Casual</option>
+      <option value="Vintage">Vintage</option>
+      <option value="Minimalist">Minimalist</option>
+      <option value="Sporty">Sporty</option>
+      <option value="Elegant">Elegant</option>
+      <option value="Oldmoney">Old Money</option>
+    </select>
+
+    <button id="saveBtn" class="save-btn" disabled>Save</button>
+  </div>
+  </div>
+
+  <script type="module" src="edit-profile.js"></script>
+</body>
+</html>
