@@ -37,17 +37,28 @@ body {
   }
   
   .profile-header {
-    text-align: center;
-    margin-top: 20px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+.main-profile-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+  display: block;
+}
   
-  #profilePhoto {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
+.profile-img {
+  width: clamp(24px, 10vw, 36px);
+  height: auto;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
   #loggedInUsername {
     margin-top: 10px;
     font-size: 20px;
@@ -146,3 +157,4 @@ nav {
   .spot-button:hover {
     background-color: #333;
   }
+  
