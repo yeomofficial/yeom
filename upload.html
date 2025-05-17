@@ -7,12 +7,19 @@
   <link rel="stylesheet" href="upload.css" />
 </head>
 <body>
+  <div class="back-icon" onclick="history.back()">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+      viewBox="0 0 24 24" stroke="black" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6" />
+    </svg>
+  </div>
+
   <main>
     <div id="message-box" class="message-box"></div>
-      <div id="upload-container">
-        <div class="image-preview-container">
-          <img id="image-preview" src="" alt="Selected Image Preview" />
-        </div>
+    <div id="upload-container">
+      <div class="image-preview-container">
+        <img id="image-preview" src="" alt="Selected Image Preview" />
+      </div>
       <select id="section">
         <option value="">Select Section</option>
         <option value="streetwear">Street wear</option>
@@ -26,7 +33,7 @@
       <button id="upload-btn">Upload Post</button>
     </div>
   </main>
-<!-- Important: type="module" is needed for import/export to work -->
+
   <script type="module" src="upload.js"></script>
 </body>
 </html>
