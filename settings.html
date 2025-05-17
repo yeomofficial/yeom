@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Settings - YEOM</title>
   <link rel="stylesheet" href="settings.css">
 </head>
 <body>
-    <div class="settings-container">
-        <h2>Settings</h2>
-        <div id="message-box" class="message-box"></div>
-        <button class="logout-btn" onclick="logout()">Logout</button>
-      </div>
-      
+     <div class="back-icon" onclick="history.back()">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+      viewBox="0 0 24 24" stroke="black" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6" />
+    </svg>
+  </div>
 
+  <div class="settings-container">
+    <h2>Settings</h2>
+    <div id="message-box" class="message-box"></div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
   <script type="module" src="settings.js"></script>
 </body>
 </html>
