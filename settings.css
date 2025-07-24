@@ -28,7 +28,7 @@ body {
     gap: 0.5rem;
     cursor: pointer;
     tarnsition: background-color 0.3s ease;
-    margin-bottom: 1%;
+    margin-bottom: 3rem;
   }
 
   .account:hover {
@@ -36,13 +36,17 @@ body {
   }
 
   .set-img {
-    width: 3%;
-    height: 3%;
+    height: 3rem;
+    width: 3rem;
+  }
+
+  .content {
+    font-size: 1rem;
   }
   
   .chevron {
-    width: 3%;
-    height: auto;
+    width: 2rem;
+    height: 2rem;
     margin-left: auto;
   }
 
