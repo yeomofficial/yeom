@@ -3,11 +3,13 @@ body {
     padding: 20px;
     background: white;
   }
-  
-  .settings-container {
-    max-width: 400px;
-    margin: auto;
-    text-align: center;
+
+  .settings-header {
+    text-align: left;
+  }
+
+  .settings-subheader {
+    margin-bottom: 2%;
   }
   
   .logout-btn {
@@ -18,6 +20,30 @@ body {
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
+  }
+
+  .account {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    tarnsition: background-color 0.3s ease;
+    margin-bottom: 1%;
+  }
+
+  .account:hover {
+    background-color: #e9e8e8;
+  }
+
+  .set-img {
+    width: 3%;
+    height: 3%;
+  }
+  
+  .chevron {
+    width: 3%;
+    height: auto;
+    margin-left: auto;
   }
 
   .message-box {
