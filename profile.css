@@ -118,7 +118,7 @@ body {
 
   .home-img,
   .search-img,
-  .lumi-img
+  .lumi-img,
   .upload-img,
   .profile-img {
     width: clamp(24px, 10vw, 36px);
