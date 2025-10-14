@@ -73,7 +73,7 @@ document.getElementById("submit").addEventListener("click", async () => {
         document.getElementById("fashion").value = "";
 
         setTimeout(() => {
-          window.location.replace = "home.html";
+          window.location.href = "home.html";
         }, 1500);
       } else {
         showMessage("User is not logged in. Please log in and try again.", "error");
@@ -83,4 +83,5 @@ document.getElementById("submit").addEventListener("click", async () => {
     showMessage("There was an error saving your profile. Please try again.", "error");
   }
 });
+
 
