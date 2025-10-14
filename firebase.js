@@ -125,7 +125,7 @@ signIn.addEventListener("click", (event) => {
       showMessage("Login successful", "signInMessage");
       const user = userCredential.user;
       localStorage.setItem("loggedInUserId", user.uid);
-      window.location.href = "home.html";
+      window.location.replace("home.html");
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -136,3 +136,4 @@ signIn.addEventListener("click", (event) => {
       }
     });
 });
+
