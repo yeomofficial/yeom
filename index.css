@@ -12,15 +12,7 @@ body {
 }
 
 /* Container for Login & Signup */
-.auth-container {
-    background: white;
-    border-radius: 15px; /* Rounded corners */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Light shadow */
-    padding: 25px;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-}
+
 
 /* Heading Styles */
 h2 {
@@ -164,7 +156,7 @@ input.error {
 
 /* YEOM logo image */
 .header-img {
-    width: 120px;          /* Adjust if you want bigger/smaller */
+    width: 10%;          /* Adjust if you want bigger/smaller */
     height: auto;
     display: block;
     margin: 0 auto 10px;   /* Center + space below */
@@ -179,6 +171,7 @@ input.error {
     margin-bottom: 25px;
     color: black;
     }
+
 
 
 
