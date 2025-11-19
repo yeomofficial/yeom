@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: Montserrat, sans-serif;
     background-color: #f8f8f8; /* Light gray background */
     display: flex;
     justify-content: center;
@@ -175,3 +175,4 @@ input.error {
     margin-bottom: 25px;
     color: black;
     }
+
