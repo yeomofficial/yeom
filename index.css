@@ -1,38 +1,61 @@
-/* Import Montserrat */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+/* Import montserrat */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #f8f8f8; /* Light gray background */
+    background-color: #ffffff;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start;
+    padding-top: 50px;
     margin: 0;
 }
 
-/* Container for Login & Signup */
-
-
-/* Heading Styles */
-h2 {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
+/* No border, no shadow — clean full-screen design */
+.auth-container {
+    width: 90%;
+    max-width: 400px;
     text-align: center;
 }
 
-/* Input Fields */
+/* Logo image at the top */
+.header-img {
+    width: 150px;          /* Slightly bigger for visibility */
+    height: auto;
+    display: block;
+    margin: 0 auto 20px;
+    object-fit: contain;
+}
+
+/* Welcome text (semi-bold only) */
+.welcome-text {
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+/* Input fields */
 input[type="email"],
 input[type="password"] {
-    width: calc(100% - 20px);
-    padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-family: 'Montserrat', sans-serif;
+    width: 100%;
+    padding: 14px;
+    margin: 14px 0;
+    border: 1px solid #ddd;
+    border-radius: 12px;
     font-size: 16px;
+}
+
+/* Checkbox + Terms */
+.terms {
+    font-size: 14px;
+    margin: 10px 0 20px;
+    line-height: 1.5;
+    text-align: left;
+}
+
+.terms a {
+    color: #0066ff;
+    text-decoration: none;
 }
 
 /* Buttons */
@@ -40,11 +63,11 @@ button {
     width: 100%;
     background-color: black;
     color: white;
-    padding: 12px;
+    padding: 14px;
     border: none;
-    border-radius: 8px;
-    font-family: 'Montserrat', sans-serif;
+    border-radius: 10px;
     font-size: 16px;
+    margin-top: 10px;
     cursor: pointer;
 }
 
@@ -52,130 +75,47 @@ button:hover {
     background-color: #333;
 }
 
-/* Terms & Conditions Link */
-.terms {
-    font-size: 14px;
-    font-family: 'Montserrat', sans-serif;
-    margin: 15px 0;
-    align-items: center;
-}
-
-.terms a {
-    color: blue;
-    text-decoration: none;
-}
-
-.terms a:hover {
-    text-decoration: underline;
-}
-
-/* Checkbox */
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    margin: 10px 0;
-}
-
-.checkbox-container input {
-    margin-right: 10px;
-}
-
-/* Styles for the authentication link section */
+/* Login link */
 .auth-link {
-    margin-top: 15px;
-    font-size: 14px;
-    text-align: center;
-}
-
-.auth-link a {
-    color: blue;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.auth-link a:hover {
-    text-decoration: underline;
-}
-
-/* Duplicate cleanup kept as-is for safety */
-.auth-link {
-    margin-top: 15px;
+    margin-top: 20px;
     font-size: 14px;
 }
 
 .auth-link a {
-    color: blue;
+    color: #0066ff;
+    font-weight: 600;
     text-decoration: none;
-    font-weight: bold;
 }
 
-.auth-link a:hover {
-    text-decoration: underline;
-}
-
-/* Error Message */ 
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: 4px;
-}
-
-input.error {
-    border: 2px solid red;
-    outline: none;
-}
-
-.messageDiv {
-    background-color: black;
-    color: white;
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 5px;
-    font-size: 1rem;
-    opacity: 0;
-    animation: fadeOut 7s forward;
-}
-
+/* Forgot password */
 .forgot-password {
     text-align: left;
-    margin: 0;
-    margin-top: 12px;
-    margin-bottom: 12px;
-    font-size: 14px;
+    margin: 12px 0;
 }
 
 .forgot-password a {
-    color: blue;
+    color: #0066ff;
     text-decoration: none;
 }
 
-.forgot-password a:hover {
-    text-decoration: underline;
+/* Error messages */
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: -5px;
+    margin-bottom: 10px;
 }
 
-/* YEOM logo image */
-.header-img {
-    width: 300px;          /* Adjust if you want bigger/smaller */
-    height: auto;
-    display: block;
-    margin: 0 auto 10px;   /* Center + space below */
-    object-fit: contain;
+/* Notification */
+.messageDiv{
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 6px;
 }
 
-/* Welcome text (Semi-bold) */
-.welcome-text {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;  /* semi-bold */
-    font-size: 22px;
-    margin-bottom: 25px;
-    color: black;
-    }
-
-
-
-
-
-
-
-
+/* Remove red box outline */
+input.error {
+    border: 2px solid red;
+}
