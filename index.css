@@ -59,6 +59,10 @@ input[type="password"] {
     line-height: 1.5;
 }
 
+.terms input[type="checkbox"] {
+    margin-bottom: 8px;     
+}
+
 .terms a {
     color: #0066ff;
     text-decoration: none;
@@ -126,6 +130,7 @@ button:hover {
 input.error {
     border: 2px solid red;
 }
+
 
 
 
