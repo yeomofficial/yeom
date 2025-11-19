@@ -17,10 +17,16 @@
 
   <!-- Signup Form -->
   <div id="signupForm" class="auth-container form-section">
-    <h2>Sign Up for YEOM</h2>
+
+    <!-- Added New UI (matches screenshot) -->
+    <img class="logo">Y E O M</img>
+    <h2 class="welcome-text">Welcome to Yeom</h2>
+
     <div id="signUpMessage" class="messageDiv" style="display:none"></div>
+
     <input type="email" id="rEmail" placeholder="Enter Email" required />
     <div id="emailInputError" class="error-message"></div>
+
     <input type="password" id="rPassword" placeholder="Enter Password" required minlength="6" />
     <div id="passwordInputError" class="error-message"></div>
 
@@ -36,6 +42,7 @@
     </div>
 
     <button id="signup-btn" class="auth-button">Sign Up</button>
+
     <p class="auth-link">
       Already have an account? <a id="goToLogin" href="#login">Log in</a>
     </p>
@@ -44,11 +51,18 @@
   <!-- Login Form -->
   <div id="loginForm" class="auth-container form-section">
     <h2>Login to Your Account</h2>
+
     <div id="signInMessage" class="messageDiv" style="display:none;"></div>
+
     <input type="email" id="loginEmail" placeholder="Enter Email" required />
     <input type="password" id="loginPassword" placeholder="Enter Password" required />
-    <p class="forgot-password"><a href="forgot-password.html" id="forgot-password-link">Forgot Password?</a></p>
+
+    <p class="forgot-password">
+      <a href="forgot-password.html" id="forgot-password-link">Forgot Password?</a>
+    </p>
+
     <button id="loginBtn" class="auth-button">Login</button>
+
     <p class="auth-link">
       Don't have an account? <a id="goToSignup" href="#signup">Sign up</a>
     </p>
