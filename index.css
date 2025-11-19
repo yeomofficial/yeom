@@ -20,7 +20,7 @@ body {
 
 /* YEOM logo image – now responsive and BIG */
 .header-img {
-    width: 55%;        
+    width: 65%;        
     max-width: 220px;    
     min-width: 140px;
     height: auto;
@@ -42,7 +42,7 @@ input[type="email"],
 input[type="password"] {
     width: 100%;
     padding: 14px;
-    margin: 14px 0;
+    margin: 8px 0;
     border: 1px solid #ddd;
     border-radius: 12px;
     font-size: 16px;
@@ -122,4 +122,5 @@ button:hover {
 input.error {
     border: 2px solid red;
 }
+
 
