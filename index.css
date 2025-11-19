@@ -33,7 +33,7 @@ body {
 .welcome-text {
     font-size: 26px;
     font-weight: 600;
-    margin-bottom: 25px;
+    margin-bottom: 35px;
     margin-top: 15px;        /* extra breathing space above welcome */
 }
 
@@ -122,6 +122,7 @@ button:hover {
 input.error {
     border: 2px solid red;
 }
+
 
 
 
