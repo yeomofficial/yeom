@@ -156,7 +156,7 @@ input.error {
 
 /* YEOM logo image */
 .header-img {
-    width: 70%;          /* Adjust if you want bigger/smaller */
+    width: 300px;          /* Adjust if you want bigger/smaller */
     height: auto;
     display: block;
     margin: 0 auto 10px;   /* Center + space below */
@@ -171,6 +171,7 @@ input.error {
     margin-bottom: 25px;
     color: black;
     }
+
 
 
 
