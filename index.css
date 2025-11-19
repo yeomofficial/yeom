@@ -55,8 +55,8 @@ input[type="password"] {
     justify-content: space-around;
     align-items: center;
     text-align: center;
-    margin-top: 30px;   
-    margin-bottom: 25px;   
+    margin-top: 40px;   
+    margin-bottom: 30px;   
     line-height: 1.5;
 }
 
@@ -130,6 +130,7 @@ button:hover {
 input.error {
     border: 2px solid red;
 }
+
 
 
 
