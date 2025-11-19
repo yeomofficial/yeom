@@ -24,6 +24,7 @@ body {
 
 /* Heading Styles */
 h2 {
+    font-family: 'Montserrat', sans-serif;
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
@@ -38,6 +39,7 @@ input[type="password"] {
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
     font-size: 16px;
 }
 
@@ -49,6 +51,7 @@ button {
     padding: 12px;
     border: none;
     border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     cursor: pointer;
 }
@@ -60,6 +63,7 @@ button:hover {
 /* Terms & Conditions Link */
 .terms {
     font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
     margin: 15px 0;
     align-items: center;
 }
@@ -175,6 +179,7 @@ input.error {
     margin-bottom: 25px;
     color: black;
     }
+
 
 
 
