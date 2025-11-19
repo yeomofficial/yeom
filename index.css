@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
 body {
-    font-family: Montserrat;
+    font-family: 'Montserrat';
     background-color: #f8f8f8; /* Light gray background */
     display: flex;
     justify-content: center;
@@ -175,5 +175,6 @@ input.error {
     margin-bottom: 25px;
     color: black;
     }
+
 
 
