@@ -18,20 +18,23 @@ body {
     text-align: center;
 }
 
-/* Logo image at the top */
+/* YEOM logo image – now responsive and BIG */
 .header-img {
-    width: 150px;          /* Slightly bigger for visibility */
+    width: 55%;        
+    max-width: 220px;    
+    min-width: 140px;
     height: auto;
     display: block;
-    margin: 0 auto 20px;
+    margin: 0 auto 35px; 
     object-fit: contain;
 }
 
-/* Welcome text (semi-bold only) */
+/* Welcome text */
 .welcome-text {
     font-size: 26px;
     font-weight: 600;
     margin-bottom: 25px;
+    margin-top: 15px;        /* extra breathing space above welcome */
 }
 
 /* Input fields */
@@ -119,3 +122,4 @@ button:hover {
 input.error {
     border: 2px solid red;
 }
+
