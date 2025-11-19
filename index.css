@@ -33,7 +33,7 @@ body {
 .welcome-text {
     font-size: 26px;
     font-weight: 600;
-    margin-bottom: 35px;
+    margin-bottom: 40px;
     margin-top: 15px;        /* extra breathing space above welcome */
 }
 
@@ -51,7 +51,7 @@ input[type="password"] {
 /* Checkbox + Terms */
 .terms {
     font-size: 14px;
-    margin: 10px 0 20px;
+    margin: 15px 0 25px;
     line-height: 1.5;
     text-align: left;
 }
@@ -93,7 +93,7 @@ button:hover {
 /* Forgot password */
 .forgot-password {
     text-align: left;
-    margin: 12px 0;
+    margin: 17px 0;
 }
 
 .forgot-password a {
@@ -122,6 +122,7 @@ button:hover {
 input.error {
     border: 2px solid red;
 }
+
 
 
 
