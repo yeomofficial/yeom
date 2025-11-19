@@ -51,7 +51,7 @@ input[type="password"] {
 /* Checkbox + Terms */
 .terms {
     display: flex;
-    flex-direction: row;
+    justify-content: space-around;
     align-items: center;
     text-align: center;
     margin-top: 20px;   
@@ -130,13 +130,6 @@ button:hover {
 input.error {
     border: 2px solid red;
 }
-
-
-
-
-
-
-
 
 
 
