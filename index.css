@@ -55,11 +55,12 @@ input[type="password"] {
 .password-wrapper input {
   width: 100%;
   padding: 14px;
-  padding-right: 45px; /* space for icon */
+  padding-right: 45px;  
   margin: 6px 0;
-  border: 1px solid #dcdcdc;
-  border-radius: 10px;
-  font-size: 15px;
+  border: 1px solid #ddd; 
+  border-radius: 12px;
+  font-size: 16px;
+  box-sizing: border-box;
 }
 
 .toggle-eye {
@@ -158,6 +159,7 @@ button:hover {
 input.error {
     border: 2px solid red;
 }
+
 
 
 
