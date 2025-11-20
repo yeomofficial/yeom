@@ -47,6 +47,37 @@ input[type="password"] {
     box-sizing: border-box;
 }
 
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding: 14px;
+  padding-right: 45px; /* space for icon */
+  margin: 6px 0;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.toggle-eye {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 22px;
+  opacity: 0.6;
+  user-select: none;
+}
+
+.toggle-eye:hover {
+  opacity: 1;
+}
+
+
 .terms {
     display: flex;
     align-items: center;
@@ -127,6 +158,7 @@ button:hover {
 input.error {
     border: 2px solid red;
 }
+
 
 
 
