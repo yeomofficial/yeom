@@ -18,14 +18,12 @@ body {
     text-align: center;
 }
 
-/* YEOM logo image – now responsive and BIG */
 .header-img {
-    width: 65%;        
-    max-width: 220px;    
-    min-width: 140px;
-    height: auto;
+    width: 58%;             
+    max-width: 260px;        
+    min-width: 150px;     
+    margin: 0 auto 35px;   
     display: block;
-    margin: 0 auto 50px; 
     object-fit: contain;
 }
 
@@ -49,15 +47,14 @@ input[type="password"] {
     box-sizing: border-box;
 }
 
-/* Checkbox + Terms */
 .terms {
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    text-align: center;
-    margin-top: 40px;   
-    margin-bottom: 30px;   
-    line-height: 1.5;
+    justify-content: flex-start;
+    gap: 8px;
+    margin: 12px 0 20px;
+    font-size: 14px;
+    text-align: left;
 }
 
 .terms input[type="checkbox"] {
@@ -130,6 +127,7 @@ button:hover {
 input.error {
     border: 2px solid red;
 }
+
 
 
 
