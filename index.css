@@ -107,6 +107,7 @@ button {
     border: none;
     border-radius: 10px;
     font-size: 16px;
+    font-weight: 500;
     cursor: pointer;
 }
 
@@ -158,6 +159,7 @@ button:hover {
 input.error {
     border: 2px solid red;
 }
+
 
 
 
