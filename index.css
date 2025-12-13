@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: #ffffff;
@@ -10,30 +14,36 @@ body {
     margin: 0;
 }
 
+/* Container */
+
 .auth-container {
     width: 90%;
     max-width: 400px;
     text-align: center;
 }
 
+/* Header image */
+
 .header-img {
-    width: 58%;             
-    max-width: 260px;        
-    min-width: 150px;     
-    margin: 0 auto 35px;   
+    width: 58%;
+    max-width: 260px;
+    min-width: 150px;
+    margin: 0 auto 35px;
     display: block;
     object-fit: contain;
 }
 
 /* Welcome text */
+
 .welcome-text {
     font-size: 26px;
     font-weight: 600;
     margin-bottom: 40px;
-    margin-top: 15px;        /* extra breathing space above welcome */
+    margin-top: 15px;
 }
 
-/* Input fields */
+/* Inputs */
+
 input[type="email"],
 input[type="password"] {
     width: 100%;
@@ -43,39 +53,78 @@ input[type="password"] {
     border-radius: 12px;
     font-size: 16px;
     box-sizing: border-box;
+    transition: border-color 0.2s ease;
 }
 
+input::placeholder {
+    color: #aaa;
+}
+
+input:focus {
+    outline: none;
+    border-color: #111;
+}
+
+/* Error input state (soft, not aggressive) */
+
+input.error {
+    border: 1px solid #c63636;
+}
+
+input.error:focus {
+    border-color: #c63636;
+}
+
+/* Password wrapper */
+
 .password-wrapper {
-  position: relative;
-  width: 100%;
+    position: relative;
+    width: 100%;
 }
 
 .password-wrapper input {
-  width: 100%;
-  padding: 14px;
-  padding-right: 45px;  
-  margin: 6px 0;
-  border: 1px solid #ddd; 
-  border-radius: 12px;
-  font-size: 16px;
-  box-sizing: border-box;
+    padding-right: 45px;
 }
 
+/* Password toggle */
+
 .toggle-eye {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  font-size: 22px;
-  opacity: 0.6;
-  user-select: none;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 22px;
+    opacity: 0.6;
+    user-select: none;
+    transition: opacity 0.2s ease;
 }
 
 .toggle-eye:hover {
-  opacity: 1;
+    opacity: 1;
 }
 
+/* Inline error messages (quiet + premium) */
+
+.error-message {
+    color: #c63636;
+    font-size: 13px;
+    margin-top: 6px;
+    margin-bottom: 12px;
+    line-height: 1.4;
+    min-height: 14px;
+
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.error-message:not(:empty) {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Terms */
 
 .terms {
     display: flex;
@@ -89,7 +138,7 @@ input[type="password"] {
 }
 
 .terms input[type="checkbox"] {
-    margin-bottom: 8px;     
+    margin-bottom: 8px;
 }
 
 .terms a {
@@ -98,7 +147,8 @@ input[type="password"] {
     font-weight: 500;
 }
 
-/* Buttons */
+/* Button */
+
 button {
     width: 100%;
     background-color: black;
@@ -109,13 +159,38 @@ button {
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 
 button:hover {
     background-color: #333;
 }
 
-/* Login link */
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Button loading (no jump, no flicker) */
+
+.auth-button {
+    position: relative;
+}
+
+.btn-loading {
+    display: none;
+}
+
+.auth-button.loading .btn-text {
+    visibility: hidden;
+}
+
+.auth-button.loading .btn-loading {
+    display: inline;
+}
+
+/* Auth link */
+
 .auth-link {
     margin-top: 28px;
     font-size: 14px;
@@ -125,9 +200,11 @@ button:hover {
     color: #0066ff;
     font-weight: 600;
     text-decoration: none;
+    cursor: pointer;
 }
 
 /* Forgot password */
+
 .forgot-password {
     text-align: left;
     margin: 17px 0;
@@ -137,44 +214,3 @@ button:hover {
     color: #0066ff;
     text-decoration: none;
 }
-
-/* Error messages */
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: -5px;
-    margin-bottom: 10px;
-}
-
-/* Notification */
-.messageDiv{
-    background-color: black;
-    color: white;
-    padding: 10px 20px;
-    margin-top: 10px;
-    border-radius: 6px;
-}
-
-/* Remove red box outline */
-input.error {
-    border: 2px solid red;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
