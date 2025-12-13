@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YEOM app</title>
+
+  <link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+  <script type="module" src="firebase.js" defer></script>
+</head>
+
+<body>
+
+  <!-- Signup Form ONLY -->
+  <div class="auth-container">
+
+    <img class="header-img" src="yeom_img.png" alt="Yeom logo" />
+
+    <h2 class="welcome-text">Welcome back to Yeom</h2>
+
+    <form id="signup-form" novalidate>
+
+      <input type="email" id="rEmail" placeholder="Enter Email" required />
+      <div id="rEmailError" class="error-message"></div>
+
+      <div class="password-wrapper">
+        <input
+          type="password"
+          id="rPassword"
+          placeholder="Enter password"
+          required
+          minlength="6"
+        />
+        <span class="material-symbols-outlined toggle-eye" id="togglePassword">
+          visibility
+        </span>
+      </div>
+      <div id="rPasswordError" class="error-message"></div>
+
+      <div class="terms">
+        <input type="checkbox" id="terms-checkbox" />
+        <label>
+          I agree to the
+          <a href="https://docs.google.com/document/d/1piP8euZY5NUfJtm5iakBtYnfwsXbO3tc7OJG_jU2n1s/edit?usp=drivesdk" target="_blank">
+            Terms and Conditions
+          </a>
+        </label>
+      </div>
+      <div id="terms-error" class="error-message"></div>
+
+      <button type="submit" id="signup-btn">
+        <span class="btn-text">Sign Up</span>
+        <span class="btn-loading" style="display:none;">Creating account...</span>
+      </button>
+
+    </form>
+
+    <p class="auth-link">
+      Don't have an account?
+      <a href="index.html">Sign up</a>
+    </p>
+
+  </div>
+
+</body>
+</html>
