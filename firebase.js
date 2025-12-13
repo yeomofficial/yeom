@@ -31,28 +31,29 @@ const button = document.getElementById("signup-btn");
 function showError(inputId, message) {
   const input = document.getElementById(inputId);
   const error = document.getElementById(inputId + "Error");
+
   input.classList.add("error");
   error.textContent = message;
+  error.classList.add("show");
 }
 
 function clearError(inputId) {
   const input = document.getElementById(inputId);
   const error = document.getElementById(inputId + "Error");
+
   input.classList.remove("error");
   error.textContent = "";
+  error.classList.remove("show");
 }
 
 function clearAllErrors() {
   clearError("rEmail");
   clearError("rPassword");
-  document.getElementById("terms-error").textContent = "";
-}
 
-function setLoading(state) {
-  button.disabled = state;
-  button.classList.toggle("loading", state);
+  const termsError = document.getElementById("terms-error");
+  termsError.textContent = "";
+  termsError.classList.remove("show");
 }
-
 /* Password toggle */
 const togglePassword = document.getElementById("togglePassword");
 const passwordInput = document.getElementById("rPassword");
@@ -137,3 +138,4 @@ form.addEventListener("submit", async (e) => {
     setLoading(false);
   }
 });
+
