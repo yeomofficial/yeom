@@ -110,7 +110,7 @@ input.error:focus {
     color: #c63636;
     font-size: 13px;
     margin-top: 4px;
-    margin-bottom: 0px;
+    margin-bottom: 4px;
     line-height: 1.4;
     min-height: 14px;
 
@@ -215,10 +215,3 @@ button:disabled {
     color: #0066ff;
     text-decoration: none;
 }
-
-
-
-
-
-
-
