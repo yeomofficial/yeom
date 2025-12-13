@@ -135,7 +135,7 @@ input.error:focus {
     margin-top: 20px;
     font-size: 14px;
     text-align: left;
-    margin-bottom: 2px;
+    margin-bottom: 28px;
 }
 
 .terms input[type="checkbox"] {
@@ -215,6 +215,7 @@ button:disabled {
     color: #0066ff;
     text-decoration: none;
 }
+
 
 
 
