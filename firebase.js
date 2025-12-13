@@ -92,9 +92,10 @@ form.addEventListener("submit", async (e) => {
   }
 
   if (!termsChecked) {
-    document.getElementById("terms-error").textContent =
-      "Please accept the Terms and Conditions.";
-    valid = false;
+  const termsError = document.getElementById("terms-error");
+  termsError.textContent = "Please accept the Terms and Conditions.";
+  termsError.classList.add("show");
+  valid = false;
   }
 
   if (!valid) return;
@@ -138,4 +139,5 @@ form.addEventListener("submit", async (e) => {
     setLoading(false);
   }
 });
+
 
