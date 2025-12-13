@@ -133,14 +133,9 @@ input.error:focus {
     justify-content: flex-start;
     gap: 8px;
     margin-top: 20px;
-    margin-bottom: 28px;
     font-size: 14px;
     text-align: left;
-    margin-bottom: 8px;
-}
-
-#terms-error {
-  background: yellow;
+    margin-bottom: 2px;
 }
 
 .terms input[type="checkbox"] {
@@ -220,6 +215,7 @@ button:disabled {
     color: #0066ff;
     text-decoration: none;
 }
+
 
 
 
