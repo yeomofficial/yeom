@@ -25,9 +25,10 @@ const db = getFirestore(app);
 
 /* Elements */
 const form = document.getElementById("signup-form");
-const button = document.getElementById("signup-btn");
+const passwordInput = document.getElementById("rPassword");
 
-/* Helpers */
+/* ---------- Error helpers ---------- */
+
 function showError(inputId, message) {
   const input = document.getElementById(inputId);
   const error = document.getElementById(inputId + "Error");
@@ -54,17 +55,19 @@ function clearAllErrors() {
   termsError.textContent = "";
   termsError.classList.remove("show");
 }
-/* Password toggle */
+
+/* ---------- Password toggle ---------- */
+
 const togglePassword = document.getElementById("togglePassword");
-const passwordInput = document.getElementById("rPassword");
 
 togglePassword.addEventListener("click", () => {
-  const isPassword = passwordInput.type === "password";
-  passwordInput.type = isPassword ? "text" : "password";
-  togglePassword.textContent = isPassword ? "visibility_off" : "visibility";
+  const isHidden = passwordInput.type === "password";
+  passwordInput.type = isHidden ? "text" : "password";
+  togglePassword.textContent = isHidden ? "visibility_off" : "visibility";
 });
 
-/* Signup */
+/* ---------- Signup ---------- */
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   clearAllErrors();
@@ -92,15 +95,13 @@ form.addEventListener("submit", async (e) => {
   }
 
   if (!termsChecked) {
-  const termsError = document.getElementById("terms-error");
-  termsError.textContent = "Please accept the Terms and Conditions.";
-  termsError.classList.add("show");
-  valid = false;
+    const termsError = document.getElementById("terms-error");
+    termsError.textContent = "Please accept the Terms and Conditions.";
+    termsError.classList.add("show");
+    valid = false;
   }
 
   if (!valid) return;
-
-  setLoading(true);
 
   try {
     const userCredential = await createUserWithEmailAndPassword(
@@ -118,26 +119,18 @@ form.addEventListener("submit", async (e) => {
       createdAt: Date.now()
     });
 
-    /* Silent success → no message, no box */
+    // Prevent back navigation
     location.replace("info.html");
 
   } catch (error) {
-    switch (error.code) {
-      case "auth/email-already-in-use":
-        showError("rEmail", "This email is already registered.");
-        break;
-      case "auth/invalid-email":
-        showError("rEmail", "Invalid email address.");
-        break;
-      case "auth/weak-password":
-        showError("rPassword", "Password is too weak.");
-        break;
-      default:
-        showError("rEmail", "Signup failed. Please try again.");
+    if (error.code === "auth/email-already-in-use") {
+      showError("rEmail", "This email is already registered.");
+    } else if (error.code === "auth/invalid-email") {
+      showError("rEmail", "Invalid email address.");
+    } else if (error.code === "auth/weak-password") {
+      showError("rPassword", "Password is too weak.");
+    } else {
+      showError("rEmail", "Signup failed. Please try again.");
     }
-  } finally {
-    setLoading(false);
   }
 });
-
-
