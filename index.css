@@ -120,8 +120,9 @@ input.error:focus {
 }
 
 .error-message.show {
-    opacity: 1;
-    transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 60px;
 }
 
 /* Terms */
@@ -214,4 +215,5 @@ button:disabled {
     color: #0066ff;
     text-decoration: none;
 }
+
 
