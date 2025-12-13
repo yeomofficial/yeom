@@ -9,7 +9,8 @@ import {
   doc
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-/* Firebase config */
+/* ---------------- Firebase ---------------- */
+
 const firebaseConfig = {
   apiKey: "AIzaSyC1O-WVb95Z77o2JelptaZ8ljRPdNVDIeY",
   authDomain: "yeom-official.firebaseapp.com",
@@ -23,11 +24,13 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-/* Elements */
+/* ---------------- Elements ---------------- */
+
 const form = document.getElementById("signup-form");
+const button = document.getElementById("signup-btn");
 const passwordInput = document.getElementById("rPassword");
 
-/* ---------- Error helpers ---------- */
+/* ---------------- UI Helpers ---------------- */
 
 function showError(inputId, message) {
   const input = document.getElementById(inputId);
@@ -56,7 +59,22 @@ function clearAllErrors() {
   termsError.classList.remove("show");
 }
 
-/* ---------- Password toggle ---------- */
+function setButtonState(loading) {
+  const text = button.querySelector(".btn-text");
+  const loadingText = button.querySelector(".btn-loading");
+
+  button.disabled = loading;
+  text.style.display = loading ? "none" : "inline";
+  loadingText.style.display = loading ? "inline" : "none";
+}
+
+function toggleFormDisabled(state) {
+  document
+    .querySelectorAll("#signup-form input")
+    .forEach(input => input.disabled = state);
+}
+
+/* ---------------- Password Toggle ---------------- */
 
 const togglePassword = document.getElementById("togglePassword");
 
@@ -66,7 +84,7 @@ togglePassword.addEventListener("click", () => {
   togglePassword.textContent = isHidden ? "visibility_off" : "visibility";
 });
 
-/* ---------- Signup ---------- */
+/* ---------------- Signup Logic ---------------- */
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -75,16 +93,6 @@ form.addEventListener("submit", async (e) => {
   const email = document.getElementById("rEmail").value.trim();
   const password = passwordInput.value;
   const termsChecked = document.getElementById("terms-checkbox").checked;
-
-  function setButtonState(loading) {
-  const btn = document.getElementById("signup-btn");
-  const text = btn.querySelector(".btn-text");
-  const loadingText = btn.querySelector(".btn-loading");
-
-  btn.disabled = loading;
-  text.style.display = loading ? "none" : "inline";
-  loadingText.style.display = loading ? "inline" : "none";
-  }
 
   let valid = true;
 
@@ -113,6 +121,10 @@ form.addEventListener("submit", async (e) => {
 
   if (!valid) return;
 
+  /* UX: commit moment */
+  setButtonState(true);
+  toggleFormDisabled(true);
+
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -133,6 +145,9 @@ form.addEventListener("submit", async (e) => {
     location.replace("info.html");
 
   } catch (error) {
+    toggleFormDisabled(false);
+    setButtonState(false);
+
     if (error.code === "auth/email-already-in-use") {
       showError("rEmail", "This email is already registered.");
     } else if (error.code === "auth/invalid-email") {
@@ -144,4 +159,3 @@ form.addEventListener("submit", async (e) => {
     }
   }
 });
-
