@@ -76,6 +76,16 @@ form.addEventListener("submit", async (e) => {
   const password = passwordInput.value;
   const termsChecked = document.getElementById("terms-checkbox").checked;
 
+  function setButtonState(loading) {
+  const btn = document.getElementById("signup-btn");
+  const text = btn.querySelector(".btn-text");
+  const loadingText = btn.querySelector(".btn-loading");
+
+  btn.disabled = loading;
+  text.style.display = loading ? "none" : "inline";
+  loadingText.style.display = loading ? "inline" : "none";
+  }
+
   let valid = true;
 
   if (!email) {
@@ -134,3 +144,4 @@ form.addEventListener("submit", async (e) => {
     }
   }
 });
+
