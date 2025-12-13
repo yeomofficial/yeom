@@ -109,8 +109,8 @@ input.error:focus {
 .error-message {
     color: #c63636;
     font-size: 13px;
-    margin-top: 6px;
-    margin-bottom: 12px;
+    margin-top: 3px;
+    margin-bottom: 6px;
     line-height: 1.4;
     min-height: 14px;
 
@@ -215,6 +215,7 @@ button:disabled {
     color: #0066ff;
     text-decoration: none;
 }
+
 
 
 
