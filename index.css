@@ -37,7 +37,7 @@ body {
 
 .welcome-text {
     font-size: 26px;
-    font-weight: 600;
+    font-weight: 300;
     margin-bottom: 40px;
     margin-top: 15px;
 }
@@ -217,4 +217,5 @@ button:disabled {
     color: #0066ff;
     text-decoration: none;
 }
+
 
