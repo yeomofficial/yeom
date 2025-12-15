@@ -210,7 +210,6 @@ button:disabled {
 
 .forgot-password {
     text-align: left;
-    margin: 17px 0;
     margin-top:20px;
     margin-bottom: 28px;
 }
@@ -219,6 +218,7 @@ button:disabled {
     color: #0066ff;
     text-decoration: none;
 }
+
 
 
 
