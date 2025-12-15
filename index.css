@@ -212,12 +212,14 @@ button:disabled {
     text-align: left;
     margin: 17px 0;
     margin-top:20px;
+    margin-bottom: 28px;
 }
 
 .forgot-password a {
     color: #0066ff;
     text-decoration: none;
 }
+
 
 
 
