@@ -10,7 +10,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding-top: 100px;
+    padding-top: 90px;
     margin: 0;
 }
 
@@ -218,6 +218,7 @@ button:disabled {
     color: #0066ff;
     text-decoration: none;
 }
+
 
 
 
