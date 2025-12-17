@@ -10,7 +10,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding-top: 90px;
+    padding-top: 100px;
     margin: 0;
 }
 
@@ -39,8 +39,8 @@ body {
 .welcome-text {
     font-size: 26px;
     font-weight: 300;
-    margin-bottom: 40px;
-    margin-top: 20px;
+    margin-bottom: 30px;
+    margin-top: 40px;
 }
 
 /* Inputs */
@@ -219,6 +219,7 @@ button:disabled {
     color: #0066ff;
     text-decoration: none;
 }
+
 
 
 
