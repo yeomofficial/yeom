@@ -28,10 +28,10 @@ body {
     width: 58%;
     max-width: 260px;
     min-width: 150px;
-    margin: 0 auto 35px;
+    margin: 0 auto;
     display: block;
     object-fit: contain;
-    margin-bottom: 20px;
+    margin-bottom: 48px;
 }
 
 /* Welcome text */
@@ -39,8 +39,8 @@ body {
 .welcome-text {
     font-size: 26px;
     font-weight: 300;
-    margin-bottom: 30px;
-    margin-top: 40px;
+    margin-top: 0;
+    margin-bottom: 32px;
 }
 
 /* Inputs */
@@ -219,6 +219,7 @@ button:disabled {
     color: #0066ff;
     text-decoration: none;
 }
+
 
 
 
