@@ -31,7 +31,7 @@ body {
     margin: 0 auto;
     display: block;
     object-fit: contain;
-    margin-bottom: 48px;
+    margin-bottom: 38px;
 }
 
 /* Welcome text */
@@ -219,6 +219,7 @@ button:disabled {
     color: #0066ff;
     text-decoration: none;
 }
+
 
 
 
