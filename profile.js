@@ -1,8 +1,3 @@
-// Test if JS is running
-document.body.style.backgroundColor = "#ffcccc"; // light red/pink
-setTimeout(() => {
-  document.body.style.backgroundColor = "white"; // revert after 2s
-}, 2000);
 import { auth, db } from "./firebase.js";
 
 import {
@@ -113,5 +108,6 @@ onAuthStateChanged(auth, async (user) => {
   document.getElementById("spottingCount").innerText =
     profileData.spotting || 0;
 });
+
 
 
