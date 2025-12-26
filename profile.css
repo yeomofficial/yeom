@@ -6,18 +6,7 @@ body {
     background-color: white;
   }
   
-  header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: white;
-    padding: clamp(8px, 2vh, 16px) clamp(8px, 2vw, 16px);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.10);
-    z-index: 1000;
-  }
+  
 
   .header-img {
     width: clamp(80px, 20vw, 120px);
@@ -159,3 +148,4 @@ nav {
     background-color: #333;
   }
   
+
