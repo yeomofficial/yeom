@@ -1,3 +1,19 @@
+import { auth, db } from "./firebase.js";
+
+import {
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  increment,
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
     window.location.replace("index.html");
@@ -101,3 +117,4 @@ onAuthStateChanged(auth, async (user) => {
   document.querySelector(".counts div:nth-child(3) strong").innerText =
     profileData.spotting || 0;
 });
+
