@@ -11,19 +11,43 @@
 
   <header>
     <img src="yeom_img.png" class="header-img">
-    <a href="settings.html"><img class="settings-img" src="setting.png"></a>
+    <a href="settings.html">
+      <img class="settings-img" src="setting.png">
+    </a>
   </header>
 
   <section class="profile-section">
     <div class="profile-header">
-      <img id="profileImage" class="main-profile-img" src="person.png" alt="Profile Picture">
-      <h2 id="loggedInUsername">@username</h2>
+
+      <img
+        id="profileImage"
+        class="main-profile-img"
+        src="person.png"
+        alt="Profile Picture"
+      >
+
+      <!-- REAL NAME (from Firestore) -->
+      <h2 id="profileName"></h2>
+
+      <!-- USERNAME / HANDLE -->
+      <p id="loggedInUsername">@username</p>
+
       <button id="spotButton" style="display: none;">Spot</button>
-      <a href="edit-profile.html"><button id="editProfileBtn">Edit Profile</button></a>
+
+      <a href="edit-profile.html">
+        <button id="editProfileBtn">Edit Profile</button>
+      </a>
+
       <div class="counts">
-        <div><strong>0</strong><br>Posts</div>
-        <div><strong id="spottersCount"></strong><br>Spotters</div>
-        <div><strong id="spottingCount"></strong><br>Spotting</div>
+        <div>
+          <strong>0</strong><br>Posts
+        </div>
+        <div>
+          <strong id="spottersCount">0</strong><br>Spotters
+        </div>
+        <div>
+          <strong id="spottingCount">0</strong><br>Spotting
+        </div>
       </div>
     </div>
 
@@ -39,40 +63,58 @@
 
   <nav>
     <ul>
-      <li><a href="home.html"><img class="home-img" src="home.png" /></a></li>
-      <li><a href="search.html"><img class="search-img" src="search.png" /></a></li>
-      <li><a href="lumi.html"><img class="lumi-img" src="lumi2.png" alt="AI Assistant"></a></li>
-      <li><a href="#"><img class="upload-img" src="upload.png" id="uploadIcon" /></a></li>
-      <li><a href="profile.html" id="profile-link"><img class="profile-img" src="profile.png" alt="Profile Icon"></a></li>
+      <li>
+        <a href="home.html">
+          <img class="home-img" src="home.png">
+        </a>
+      </li>
+      <li>
+        <a href="search.html">
+          <img class="search-img" src="search.png">
+        </a>
+      </li>
+      <li>
+        <a href="lumi.html">
+          <img class="lumi-img" src="lumi2.png" alt="AI Assistant">
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <img class="upload-img" src="upload.png" id="uploadIcon">
+        </a>
+      </li>
+      <li>
+        <a href="profile.html" id="profile-link">
+          <img class="profile-img" src="profile.png" alt="Profile Icon">
+        </a>
+      </li>
     </ul>
   </nav>
 
-  <input type="file" id="fileInput" accept="image/*" style="display: none;" />
+  <input type="file" id="fileInput" accept="image/*" style="display: none;">
 
   <script type="module" src="profile.js"></script>
 
   <script type="module">
-  const uploadIcon = document.querySelector('.upload-img');
-  const fileInput = document.getElementById('fileInput');
+    const uploadIcon = document.querySelector('.upload-img');
+    const fileInput = document.getElementById('fileInput');
 
-  uploadIcon.addEventListener('click', () => {
-    fileInput.click();
-  });
+    uploadIcon.addEventListener('click', () => {
+      fileInput.click();
+    });
 
-  fileInput.addEventListener('change', (event) => {
-    const file = event.target.files[0];
+    fileInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
 
-    if (file) {
       const reader = new FileReader();
       reader.onload = function (e) {
-        const imageUrl = e.target.result;
-        localStorage.setItem('selectedImage', imageUrl);
+        localStorage.setItem('selectedImage', e.target.result);
         window.location.href = 'upload.html';
       };
       reader.readAsDataURL(file);
-    }
-  });
-</script>
+    });
+  </script>
+
 </body>
 </html>
-
