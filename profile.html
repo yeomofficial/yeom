@@ -90,32 +90,10 @@
 
   <script type="module" src="profile.js"></script>
   
-  <script type="module">
-    const uploadIcon = document.querySelector('.upload-img');
-    const fileInput = document.getElementById('fileInput');
-    uploadIcon.addEventListener('click', () => {
-      fileInput.click();
-    });
-
-    fileInput.addEventListener('change', (event) => {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        localStorage.setItem('selectedImage', e.target.result);
-        window.location.href = 'upload.html';
-      };
-      reader.readAsDataURL(file);
-    });
-  </script>
+  
 
 </body>
 </html>
-
-
-
-
 
 
 
