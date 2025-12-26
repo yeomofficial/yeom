@@ -1,3 +1,4 @@
+alert("PROFILE JS LOADED");
 import { auth, db } from "./firebase.js";
 
 import {
@@ -108,6 +109,7 @@ onAuthStateChanged(auth, async (user) => {
   document.getElementById("spottingCount").innerText =
     profileData.spotting || 0;
 });
+
 
 
 
