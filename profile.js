@@ -17,6 +17,9 @@ onAuthStateChanged(auth, async (user) => {
 
   const profileData = profileSnap.data();
 
+  document.getElementById("profileName").innerText =
+  profileData.name || "";
+
   document.getElementById("loggedInUsername").innerText =
     "@" + profileData.username;
 
@@ -93,3 +96,4 @@ onAuthStateChanged(auth, async (user) => {
   document.querySelector(".counts div:nth-child(3) strong").innerText =
     profileData.spotting || 0;
 });
+
