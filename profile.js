@@ -1,6 +1,6 @@
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
-    window.location.href = "index.html";
+    window.location.replace("index.html");
     return;
   }
 
@@ -10,21 +10,25 @@ onAuthStateChanged(auth, async (user) => {
   const currentUserRef = doc(db, "users", user.uid);
   const profileUserRef = doc(db, "users", profileUserId);
 
-  const currentUserSnap = await getDoc(currentUserRef);
-  const profileSnap = await getDoc(profileUserRef);
+  const [currentUserSnap, profileSnap] = await Promise.all([
+    getDoc(currentUserRef),
+    getDoc(profileUserRef)
+  ]);
 
   if (!profileSnap.exists()) return;
 
   const profileData = profileSnap.data();
+  const currentUserData = currentUserSnap.exists()
+    ? currentUserSnap.data()
+    : {};
 
-  document.getElementById("profileName").innerText =
-  profileData.name || "";
-
+  // Username (this is correct and will now work)
   document.getElementById("loggedInUsername").innerText =
     "@" + profileData.username;
 
-  const profileImg = document.getElementById("profileImage");
-  profileImg.src = profileData.profile || "person.png";
+  // Profile image
+  document.getElementById("profileImage").src =
+    profileData.profile || "person.png";
 
   const isMyProfile = profileUserId === user.uid;
 
@@ -35,17 +39,18 @@ onAuthStateChanged(auth, async (user) => {
     spotBtn.id = "spotBtn";
     spotBtn.classList.add("spot-button");
 
-    const isSpotting =
-      currentUserSnap.data()?.spottingIds?.includes(profileUserId);
+    const spottingIds = currentUserData.spottingIds || [];
+    const isSpotting = spottingIds.includes(profileUserId);
 
     spotBtn.textContent = isSpotting ? "Unspot" : "Spot";
 
     spotBtn.addEventListener("click", async () => {
-      const currentData = (await getDoc(currentUserRef)).data();
-      let updatedSpottingIds = currentData.spottingIds || [];
+      let updatedSpottingIds = [...spottingIds];
 
       if (updatedSpottingIds.includes(profileUserId)) {
-        updatedSpottingIds = updatedSpottingIds.filter(id => id !== profileUserId);
+        updatedSpottingIds = updatedSpottingIds.filter(
+          id => id !== profileUserId
+        );
 
         await updateDoc(currentUserRef, {
           spottingIds: updatedSpottingIds,
@@ -96,4 +101,3 @@ onAuthStateChanged(auth, async (user) => {
   document.querySelector(".counts div:nth-child(3) strong").innerText =
     profileData.spotting || 0;
 });
-
