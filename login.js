@@ -83,28 +83,26 @@ form.addEventListener("submit", async (e) => {
   const email = document.getElementById("rEmail").value.trim();
   const password = passwordInput.value;
 
-  let valid = true;
-
-  if (!email) {
-    showError("rEmail", "Email is required.");
-    valid = false;
+  if (!email || !password) {
+    if (!email) showError("rEmail", "Email is required.");
+    if (!password) showError("rPassword", "Password is required.");
+    return;
   }
-
-  if (!password) {
-    showError("rPassword", "Password is required.");
-    valid = false;
-  }
-
-  if (!valid) return;
 
   setButtonState(true);
   toggleFormDisabled(true);
 
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
 
-    // Success → profile / home
-    location.replace("profile.html");
+    const uid = userCredential.user.uid;
+
+    // IMPORTANT FIX
+    location.replace(`profile.html?uid=${uid}`);
 
   } catch (error) {
     toggleFormDisabled(false);
@@ -114,8 +112,6 @@ form.addEventListener("submit", async (e) => {
       showError("rEmail", "No account found with this email.");
     } else if (error.code === "auth/wrong-password") {
       showError("rPassword", "Incorrect password.");
-    } else if (error.code === "auth/invalid-email") {
-      showError("rEmail", "Invalid email address.");
     } else {
       showError("rEmail", "Login failed. Try again.");
     }
