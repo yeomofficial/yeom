@@ -38,11 +38,11 @@ onAuthStateChanged(auth, async (user) => {
     ? currentUserSnap.data()
     : {};
 
-  // Username (this is correct and will now work)
+  // USERNAME
   document.getElementById("loggedInUsername").innerText =
     "@" + profileData.username;
 
-  // Profile image
+  // PROFILE IMAGE
   document.getElementById("profileImage").src =
     profileData.profile || "person.png";
 
@@ -52,24 +52,21 @@ onAuthStateChanged(auth, async (user) => {
     document.getElementById("editProfileBtn").style.display = "none";
 
     const spotBtn = document.createElement("button");
-    spotBtn.id = "spotBtn";
-    spotBtn.classList.add("spot-button");
+    spotBtn.className = "spot-button";
 
     const spottingIds = currentUserData.spottingIds || [];
     const isSpotting = spottingIds.includes(profileUserId);
 
     spotBtn.textContent = isSpotting ? "Unspot" : "Spot";
 
-    spotBtn.addEventListener("click", async () => {
-      let updatedSpottingIds = [...spottingIds];
+    spotBtn.onclick = async () => {
+      let updatedIds = [...spottingIds];
 
-      if (updatedSpottingIds.includes(profileUserId)) {
-        updatedSpottingIds = updatedSpottingIds.filter(
-          id => id !== profileUserId
-        );
+      if (isSpotting) {
+        updatedIds = updatedIds.filter(id => id !== profileUserId);
 
         await updateDoc(currentUserRef, {
-          spottingIds: updatedSpottingIds,
+          spottingIds: updatedIds,
           spotting: increment(-1),
         });
 
@@ -79,10 +76,10 @@ onAuthStateChanged(auth, async (user) => {
 
         spotBtn.textContent = "Spot";
       } else {
-        updatedSpottingIds.push(profileUserId);
+        updatedIds.push(profileUserId);
 
         await updateDoc(currentUserRef, {
-          spottingIds: updatedSpottingIds,
+          spottingIds: updatedIds,
           spotting: increment(1),
         });
 
@@ -100,21 +97,14 @@ onAuthStateChanged(auth, async (user) => {
 
         spotBtn.textContent = "Unspot";
       }
-
-      const updatedProfile = (await getDoc(profileUserRef)).data();
-
-      document.querySelector(".counts div:nth-child(2) strong").innerText =
-        updatedProfile.spotters || 0;
-      document.querySelector(".counts div:nth-child(3) strong").innerText =
-        updatedProfile.spotting || 0;
-    });
+    };
 
     document.querySelector(".profile-header").appendChild(spotBtn);
   }
 
-  document.querySelector(".counts div:nth-child(2) strong").innerText =
+  document.getElementById("spottersCount").innerText =
     profileData.spotters || 0;
-  document.querySelector(".counts div:nth-child(3) strong").innerText =
+
+  document.getElementById("spottingCount").innerText =
     profileData.spotting || 0;
 });
-
