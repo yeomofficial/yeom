@@ -102,7 +102,7 @@ form.addEventListener("submit", async (e) => {
     const uid = userCredential.user.uid;
 
     // IMPORTANT FIX
-    location.replace(`profile.html?uid=${uid}`);
+    location.replace(`home.html?uid=${uid}`);
 
   } catch (error) {
     toggleFormDisabled(false);
