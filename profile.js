@@ -1,3 +1,7 @@
+document.body.insertAdjacentHTML(
+  "afterbegin",
+  "<div style='position:fixed;top:0;left:0;background:red;color:white;z-index:9999'>JS LOADED</div>"
+);
 import { auth, db } from "./firebase.js";
 
 import {
@@ -108,3 +112,4 @@ onAuthStateChanged(auth, async (user) => {
   document.getElementById("spottingCount").innerText =
     profileData.spotting || 0;
 });
+
