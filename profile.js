@@ -1,3 +1,4 @@
+alert("profile.js is running");
 import { auth, db } from "./firebase.js";
 import {
   onAuthStateChanged
@@ -135,3 +136,4 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
