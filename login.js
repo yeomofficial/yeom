@@ -59,7 +59,7 @@ function setButtonState(loading) {
 }
 
 function toggleFormDisabled(state) {
-  document/fw
+  document
     .querySelectorAll("#login-form input")
     .forEach(input => (input.disabled = state));
 }
