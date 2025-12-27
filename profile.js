@@ -1,5 +1,4 @@
-alert("profile.js is running");
-import { auth, db } from "./firebase.js";
+import { auth, db } from "./fbase.js";
 import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
@@ -136,4 +135,5 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
 
