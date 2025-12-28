@@ -7,8 +7,8 @@
   "theme_color": "#ffffff",
   "icons": [
     {
-      "src": "favicon-32x32.png",
-      "sizes": "32x32",
+      "src": "yeom.png",
+      "sizes": "512×512",
       "type": "image/png"
     }
   ]
