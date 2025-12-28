@@ -1,6 +1,6 @@
 {
-  "name": "YEOM",
-  "short_name": "YEOM",
+  "name": "Yeom",
+  "short_name": "Yeom",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
