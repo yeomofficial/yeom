@@ -36,16 +36,7 @@ function createPost({ username, imageUrl }) {
     <span class="username">${username}</span>
 
     <button class="post-menu" aria-label="Post options">
-      <svg
-        viewBox="0 0 24 24"
-        width="18"
-        height="18"
-        aria-hidden="true"
-      >
-        <path
-          d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-        />
-      </svg>
+      <span class="material-symbols-outlined">more_horiz</span>
     </button>
   </div>
 
@@ -148,6 +139,7 @@ fileInput.addEventListener("change", (e) => {
 
 // -------------------- INIT --------------------
 loadPosts();
+
 
 
 
