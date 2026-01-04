@@ -103,6 +103,7 @@ body {
 
 .post-menu {
   background: none;
+  margin-left: auto;
   border: none;
   padding: 0;
 
@@ -198,6 +199,7 @@ body {
   width: 26px;
   height: 26px;
 }
+
 
 
 
