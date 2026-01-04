@@ -102,18 +102,21 @@ body {
 /* ---------- POST MENU (3 DOTS) ---------- */
 
 .post-menu {
+  flex: 0 0 auto;      
   background: none;
   border: none;
-  padding: 0;
+
   width: 28px;
   height: 28px;
 
-  display: flex;
+  padding: 0;
+  margin: 0;
+
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 
   cursor: pointer;
-  overflow: hidden;
 }
 
 .post-menu img {
@@ -195,4 +198,5 @@ body {
   width: 26px;
   height: 26px;
 }
+
 
