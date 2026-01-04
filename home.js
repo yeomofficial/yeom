@@ -33,12 +33,21 @@ function createPost({ username, imageUrl }) {
 
   post.innerHTML = `
     <div class="post-header">
-      <span class="username">${username}</span>
+    <span class="username">${username}</span>
 
-      <button class="post-menu" aria-label="Post options">
-        <img src="more_horiz_25dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="More options" />
-      </button>
-    </div>
+    <button class="post-menu" aria-label="Post options">
+      <svg
+        viewBox="0 0 24 24"
+        width="18"
+        height="18"
+        aria-hidden="true"
+      >
+        <path
+          d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+        />
+      </svg>
+    </button>
+  </div>
 
     <div class="post-img-container">
       <img class="post-img" src="${imageUrl}" alt="${username}'s post" />
@@ -139,6 +148,7 @@ fileInput.addEventListener("change", (e) => {
 
 // -------------------- INIT --------------------
 loadPosts();
+
 
 
 
