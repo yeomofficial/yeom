@@ -26,12 +26,19 @@ const uploadIcon = document.querySelector(".upload-img");
 const fileInput = document.getElementById("fileInput");
 
 // -------------------- POST COMPONENT --------------------
+
 function createPost({ username, imageUrl }) {
   const post = document.createElement("article");
   post.className = "post";
 
   post.innerHTML = `
-    <div class="username-overlay">${username}</div>
+    <div class="post-header">
+      <span class="username">${username}</span>
+
+      <button class="post-menu" aria-label="Post options">
+        <img src="dots.png" alt="More options" />
+      </button>
+    </div>
 
     <div class="post-img-container">
       <img class="post-img" src="${imageUrl}" alt="${username}'s post" />
@@ -132,3 +139,4 @@ fileInput.addEventListener("change", (e) => {
 
 // -------------------- INIT --------------------
 loadPosts();
+
