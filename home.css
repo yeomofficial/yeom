@@ -120,8 +120,8 @@ body {
 }
 
 .post-menu img {
-  width: 18px !important;
-  height: 18px !important;
+  width: 18px;
+  height: 18px;
   max-width: 18px;
   max-height: 18px;
 
@@ -198,5 +198,6 @@ body {
   width: 26px;
   height: 26px;
 }
+
 
 
