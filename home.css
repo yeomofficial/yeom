@@ -98,7 +98,13 @@ body {
   font-weight: 600;
   color: var(--text-primary);
 }
-
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
 /* ---------- POST MENU (3 DOTS) ---------- */
 
 .post-menu {
@@ -199,6 +205,7 @@ body {
   width: 26px;
   height: 26px;
 }
+
 
 
 
