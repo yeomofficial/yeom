@@ -109,18 +109,24 @@ body {
 
 .post-menu {
   background: none;
-  margin-left: auto;
   border: none;
-  padding: 0;
-
-  width: 28px;
-  height: 28px;
-
+  padding: 4px;
+  margin-left: auto; /* pushes it to the right */
   display: flex;
   align-items: center;
   justify-content: center;
-
   cursor: pointer;
+}
+
+.post-menu-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  opacity: 0.7;
+}
+
+.post-menu:active .post-menu-icon {
+  opacity: 1;
 }
 
 .post-menu svg {
@@ -205,6 +211,7 @@ body {
   width: 26px;
   height: 26px;
 }
+
 
 
 
