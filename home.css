@@ -108,8 +108,8 @@ body {
 /* ---------- POST MENU (3 DOTS) ---------- */
 
 .post-menu {
-  background: none;
-  border: none;
+  background: white;
+  border: 0;
   padding: 4px;
   margin-left: auto; /* pushes it to the right */
   display: flex;
@@ -211,6 +211,7 @@ body {
   width: 26px;
   height: 26px;
 }
+
 
 
 
