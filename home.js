@@ -36,7 +36,7 @@ function createPost({ username, imageUrl }) {
     <span class="username">${username}</span>
 
     <button class="post-menu" aria-label="Post options">
-  <img src="three-dots-512px.png" alt="" class="post-menu-icon">
+  <img src="three-dots-128px.png" alt="" class="post-menu-icon">
 </button>
   </div>
 
@@ -139,6 +139,7 @@ fileInput.addEventListener("change", (e) => {
 
 // -------------------- INIT --------------------
 loadPosts();
+
 
 
 
