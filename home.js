@@ -70,17 +70,6 @@ async function loadPosts() {
 
     const snapshot = await getDocs(postsQuery);
 
-    if (snapshot.empty) {
-      // Fallback / placeholder post
-      feed.appendChild(
-        createPost({
-          username: "YEOM",
-          imageUrl: "women-pintrest.png"
-        })
-      );
-      return;
-    }
-
     snapshot.forEach((doc) => {
       const data = doc.data();
 
@@ -138,6 +127,7 @@ fileInput.addEventListener("change", (e) => {
 
 // -------------------- INIT --------------------
 loadPosts();
+
 
 
 
