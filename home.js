@@ -34,10 +34,9 @@ function createPost({ username, imageUrl }) {
   post.innerHTML = `
     <div class="post-header">
     <span class="username">${username}</span>
-
     <button class="post-menu" aria-label="Post options">
-  <img src="three-dots-128px.png" alt="" class="post-menu-icon">
-</button>
+      <img src="three-dots-128px.png" alt="" class="post-menu-icon">
+    </button>
   </div>
 
     <div class="post-img-container">
@@ -139,6 +138,7 @@ fileInput.addEventListener("change", (e) => {
 
 // -------------------- INIT --------------------
 loadPosts();
+
 
 
 
