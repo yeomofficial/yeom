@@ -15,6 +15,7 @@
 /* ---------- BASE ---------- */
 * {
   box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
 }
 
 body {
@@ -83,7 +84,7 @@ body {
 .username {
   font-family: 'Montserrat';
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 900;
   color: var(--text-primary);
   line-height: 1;       
 }
@@ -179,6 +180,7 @@ body {
   width: 26px;
   height: 26px;
 }
+
 
 
 
