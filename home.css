@@ -19,7 +19,7 @@
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Montserrat', sans-serif;
   background-color: var(--bg);
   padding-top: 60px;
   padding-bottom: 80px; 
@@ -177,6 +177,7 @@ body {
   width: 26px;
   height: 26px;
 }
+
 
 
 
