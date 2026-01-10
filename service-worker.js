@@ -1,19 +1,18 @@
-const CACHE_NAME = "yeom-v1";
+const CACHE_NAME = "yeom-v1.1";
 
+/**
+ *  IMPORTANT:
+ * Only cache files that are STABLE and READY.
+ * DO NOT cache CSS/JS during active development.
+ */
 const STATIC_ASSETS = [
   "./",
   "./index.html",
   "./login.html",
-  "./profile.html",
   "./home.html",
+  "./profile.html",
 
-  "./login.js",
-  "./profile.js",
-  "./fbase.js",
-
-  "./profile.css",
-  "./home.css",
-
+  // Images (safe to cache)
   "./yeom_img.png",
   "./profile.png",
   "./home.png",
@@ -23,17 +22,19 @@ const STATIC_ASSETS = [
   "./person.png"
 ];
 
-/* Install */
+/* -------------------- INSTALL -------------------- */
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(STATIC_ASSETS);
     })
   );
+
+  // Activate immediately
   self.skipWaiting();
 });
 
-/* Activate */
+/* -------------------- ACTIVATE -------------------- */
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
@@ -46,19 +47,31 @@ self.addEventListener("activate", (event) => {
       )
     )
   );
+
+  // Take control of all clients immediately
   self.clients.claim();
 });
 
-/* Fetch */
+/* -------------------- FETCH -------------------- */
 self.addEventListener("fetch", (event) => {
   const { request } = event;
 
-  // 🚫 Don't cache Firebase / auth requests
-  if (request.url.includes("firebase")) return;
+  // ❌ Never cache Firebase, auth, or dynamic requests
+  if (
+    request.url.includes("firebase") ||
+    request.url.includes("firestore") ||
+    request.method !== "GET"
+  ) {
+    return;
+  }
 
   event.respondWith(
     caches.match(request).then((cached) => {
-      return cached || fetch(request);
+      // Serve from cache if available
+      if (cached) return cached;
+
+      // Otherwise fetch from network (NO caching for CSS/JS)
+      return fetch(request);
     })
   );
 });
