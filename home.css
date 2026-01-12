@@ -83,8 +83,8 @@ body {
 
 .username {
   font-family: 'Montserrat';
-  font-size: 14px;
-  font-weight: 900;
+  font-size: 17px;
+  font-weight: 600;
   color: var(--text-primary);
   line-height: 1;       
 }
@@ -103,8 +103,8 @@ body {
 }
 
 .post-menu-icon {
-  width: 23px;
-  height: 23px;
+  width: 27px;
+  height: 27px;
   display: block;
   opacity: 0.6;
 }
@@ -180,6 +180,7 @@ body {
   width: 26px;
   height: 26px;
 }
+
 
 
 
