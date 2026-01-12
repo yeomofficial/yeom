@@ -139,7 +139,7 @@ body {
 .save-btn {
   background: none;
   border: none;
-  padding: 6px;
+  padding: 7px;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -153,8 +153,8 @@ body {
 
 .heart-img,
 .bookmark-img {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
 }
 
 /* ---------- BOTTOM NAV ---------- */
@@ -181,6 +181,7 @@ body {
   width: 26px;
   height: 26px;
 }
+
 
 
 
