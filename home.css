@@ -85,9 +85,10 @@ body {
 .username {
   font-family: 'Montserrat';
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 600;
+  transform: translateY(-1px);
   color: var(--text-primary);
-  line-height: 1;       
+  line-height: 2;       
 }
 
 /* ---------- POST MENU (3 DOTS) ---------- */
@@ -181,6 +182,7 @@ body {
   width: 26px;
   height: 26px;
 }
+
 
 
 
