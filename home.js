@@ -25,19 +25,33 @@ const feed = document.getElementById("feed");
 const uploadIcon = document.querySelector(".upload-img");
 const fileInput = document.getElementById("fileInput");
 
-// -------------------- POST COMPONENT --------------------
+// Bottom sheet
+const postSheet = document.getElementById("postSheet");
+const sheetBackdrop = document.getElementById("sheetBackdrop");
+const deleteBtn = postSheet.querySelector(".sheet-delete");
+const reportBtn = postSheet.querySelector(".sheet-report");
+const cancelBtn = postSheet.querySelector(".sheet-cancel");
 
+// -------------------- STATE --------------------
+let activePost = null;
+let activePostOwner = null;
+
+// TODO: replace with real auth later
+const CURRENT_USER = "YEOM";
+
+// -------------------- POST COMPONENT --------------------
 function createPost({ username, imageUrl }) {
   const post = document.createElement("article");
   post.className = "post";
+  post.dataset.username = username;
 
   post.innerHTML = `
     <div class="post-header">
-    <span class="username">${username}</span>
-    <button class="post-menu" aria-label="Post options">
-      <img src="three-dots-128px.png" alt="" class="post-menu-icon">
-    </button>
-  </div>
+      <span class="username">${username}</span>
+      <button class="post-menu" aria-label="Post options">
+        <img src="three-dots-128px.png" class="post-menu-icon" />
+      </button>
+    </div>
 
     <div class="post-img-container">
       <img class="post-img" src="${imageUrl}" alt="${username}'s post" />
@@ -72,7 +86,6 @@ async function loadPosts() {
 
     snapshot.forEach((doc) => {
       const data = doc.data();
-
       feed.appendChild(
         createPost({
           username: data.username || "Unknown",
@@ -85,17 +98,37 @@ async function loadPosts() {
   }
 }
 
+// -------------------- BOTTOM SHEET LOGIC --------------------
+function openSheet(post) {
+  activePost = post;
+  activePostOwner = post.dataset.username;
+
+  // Contextual actions
+  deleteBtn.style.display =
+    activePostOwner === CURRENT_USER ? "block" : "none";
+
+  sheetBackdrop.classList.add("show");
+  postSheet.classList.add("show");
+}
+
+function closeSheet() {
+  sheetBackdrop.classList.remove("show");
+  postSheet.classList.remove("show");
+
+  activePost = null;
+  activePostOwner = null;
+}
+
 // -------------------- INTERACTIONS (EVENT DELEGATION) --------------------
 feed.addEventListener("click", (e) => {
   const likeBtn = e.target.closest(".like-btn");
   const saveBtn = e.target.closest(".save-btn");
+  const menuBtn = e.target.closest(".post-menu");
 
   if (likeBtn) {
     likeBtn.classList.toggle("liked");
-
     const countSpan = likeBtn.querySelector("span");
     let count = Number(countSpan.textContent);
-
     countSpan.textContent = likeBtn.classList.contains("liked")
       ? count + 1
       : Math.max(count - 1, 0);
@@ -104,9 +137,29 @@ feed.addEventListener("click", (e) => {
   if (saveBtn) {
     saveBtn.classList.toggle("saved");
   }
+
+  if (menuBtn) {
+    const post = menuBtn.closest(".post");
+    openSheet(post);
+  }
 });
 
-// -------------------- UPLOAD ICON LOGIC --------------------
+// -------------------- SHEET BUTTONS --------------------
+sheetBackdrop.addEventListener("click", closeSheet);
+cancelBtn.addEventListener("click", closeSheet);
+
+deleteBtn.addEventListener("click", () => {
+  if (!activePost) return;
+  activePost.remove();
+  closeSheet();
+});
+
+reportBtn.addEventListener("click", () => {
+  alert("Post reported. Thank you.");
+  closeSheet();
+});
+
+// -------------------- UPLOAD LOGIC --------------------
 uploadIcon.addEventListener("click", () => {
   fileInput.click();
 });
@@ -116,25 +169,12 @@ fileInput.addEventListener("change", (e) => {
   if (!file) return;
 
   const reader = new FileReader();
-
   reader.onload = () => {
     localStorage.setItem("selectedImage", reader.result);
     window.location.href = "upload.html";
   };
-
   reader.readAsDataURL(file);
 });
 
 // -------------------- INIT --------------------
 loadPosts();
-
-
-
-
-
-
-
-
-
-
-
