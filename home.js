@@ -8,6 +8,11 @@ import {
   query
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyC1O-WVb95Z77o2JelptaZ8ljRPdNVDIeY",
   authDomain: "yeom-official.firebaseapp.com",
@@ -19,6 +24,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 // -------------------- DOM REFERENCES --------------------
 const feed = document.getElementById("feed");
@@ -33,17 +39,26 @@ const reportBtn = document.getElementById("sheetReport");
 const cancelBtn = document.getElementById("sheetCancel");
 
 // -------------------- STATE --------------------
+let CURRENT_UID = null;
 let activePost = null;
 let activePostOwner = null;
 
-// TODO: replace with real auth later
-const CURRENT_USER = "YEOM";
+// -------------------- AUTH --------------------
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.replace("index.html");
+    return;
+  }
+
+  CURRENT_UID = user.uid;
+  loadPosts();
+});
 
 // -------------------- POST COMPONENT --------------------
-function createPost({ username, imageUrl }) {
+function createPost({ username, imageUrl, ownerId }) {
   const post = document.createElement("article");
   post.className = "post";
-  post.dataset.username = username;
+  post.dataset.ownerId = ownerId;
 
   post.innerHTML = `
     <div class="post-header">
@@ -86,40 +101,42 @@ async function loadPosts() {
 
     snapshot.forEach((doc) => {
       const data = doc.data();
+
       feed.appendChild(
         createPost({
           username: data.username || "Unknown",
-          imageUrl: data.imageUrl
+          imageUrl: data.imageUrl,
+          ownerId: data.userId // IMPORTANT
         })
       );
     });
   } catch (err) {
-    console.error("Error loading posts:", err);
+    alert("Error loading feed");
   }
 }
 
-// -------------------- BOTTOM SHEET LOGIC --------------------
+// -------------------- BOTTOM SHEET --------------------
 function openSheet(post) {
   activePost = post;
-  activePostOwner = post.dataset.username;
+  activePostOwner = post.dataset.ownerId;
 
-  // Contextual actions
   deleteBtn.style.display =
-    activePostOwner === CURRENT_USER ? "block" : "none";
+    activePostOwner === CURRENT_UID ? "block" : "none";
 
-  sheetBackdrop.classList.add("show");
+  sheetBackdrop.classList.remove("hidden");
+  postSheet.classList.remove("hidden");
   postSheet.classList.add("show");
 }
 
 function closeSheet() {
-  sheetBackdrop.classList.remove("show");
+  sheetBackdrop.classList.add("hidden");
   postSheet.classList.remove("show");
 
   activePost = null;
   activePostOwner = null;
 }
 
-// -------------------- INTERACTIONS (EVENT DELEGATION) --------------------
+// -------------------- INTERACTIONS --------------------
 feed.addEventListener("click", (e) => {
   const likeBtn = e.target.closest(".like-btn");
   const saveBtn = e.target.closest(".save-btn");
@@ -127,9 +144,9 @@ feed.addEventListener("click", (e) => {
 
   if (likeBtn) {
     likeBtn.classList.toggle("liked");
-    const countSpan = likeBtn.querySelector("span");
-    let count = Number(countSpan.textContent);
-    countSpan.textContent = likeBtn.classList.contains("liked")
+    const span = likeBtn.querySelector("span");
+    const count = Number(span.textContent);
+    span.textContent = likeBtn.classList.contains("liked")
       ? count + 1
       : Math.max(count - 1, 0);
   }
@@ -139,8 +156,7 @@ feed.addEventListener("click", (e) => {
   }
 
   if (menuBtn) {
-    const post = menuBtn.closest(".post");
-    openSheet(post);
+    openSheet(menuBtn.closest(".post"));
   }
 });
 
@@ -159,10 +175,8 @@ reportBtn.addEventListener("click", () => {
   closeSheet();
 });
 
-// -------------------- UPLOAD LOGIC --------------------
-uploadIcon.addEventListener("click", () => {
-  fileInput.click();
-});
+// -------------------- UPLOAD --------------------
+uploadIcon.addEventListener("click", () => fileInput.click());
 
 fileInput.addEventListener("change", (e) => {
   const file = e.target.files[0];
@@ -175,9 +189,3 @@ fileInput.addEventListener("change", (e) => {
   };
   reader.readAsDataURL(file);
 });
-
-// -------------------- INIT --------------------
-loadPosts();
-
-
-
