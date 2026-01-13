@@ -28,9 +28,9 @@ const fileInput = document.getElementById("fileInput");
 // Bottom sheet
 const postSheet = document.getElementById("postSheet");
 const sheetBackdrop = document.getElementById("sheetBackdrop");
-const deleteBtn = postSheet.querySelector(".sheet-delete");
-const reportBtn = postSheet.querySelector(".sheet-report");
-const cancelBtn = postSheet.querySelector(".sheet-cancel");
+const deleteBtn = document.getElementById("sheetDelete");
+const reportBtn = document.getElementById("sheetReport");
+const cancelBtn = document.getElementById("sheetCancel");
 
 // -------------------- STATE --------------------
 let activePost = null;
@@ -178,3 +178,4 @@ fileInput.addEventListener("change", (e) => {
 
 // -------------------- INIT --------------------
 loadPosts();
+
