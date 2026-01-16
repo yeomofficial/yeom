@@ -41,7 +41,6 @@ const cancelBtn = document.getElementById("sheetCancel");
 // -------------------- STATE --------------------
 let CURRENT_UID = null;
 let activePost = null;
-let activePostOwner = null;
 
 // -------------------- AUTH --------------------
 onAuthStateChanged(auth, (user) => {
@@ -69,7 +68,7 @@ function createPost({ username, imageUrl, ownerId }) {
     </div>
 
     <div class="post-img-container">
-      <img class="post-img" src="${imageUrl}" alt="${username}'s post" />
+      <img class="post-img" src="${imageUrl}" />
     </div>
 
     <div class="actions">
@@ -91,41 +90,48 @@ function createPost({ username, imageUrl, ownerId }) {
 async function loadPosts() {
   feed.innerHTML = "";
 
-  try {
-    const postsQuery = query(
-      collection(db, "posts"),
-      orderBy("timestamp", "desc")
+  const postsQuery = query(
+    collection(db, "posts"),
+    orderBy("timestamp", "desc")
+  );
+
+  const snapshot = await getDocs(postsQuery);
+
+  snapshot.forEach((doc) => {
+    const data = doc.data();
+
+    feed.appendChild(
+      createPost({
+        username: data.username || "Unknown",
+        imageUrl: data.imageUrl,
+        ownerId: data.userId
+      })
     );
-
-    const snapshot = await getDocs(postsQuery);
-
-    snapshot.forEach((doc) => {
-      const data = doc.data();
-
-      feed.appendChild(
-        createPost({
-          username: data.username || "Unknown",
-          imageUrl: data.imageUrl,
-          ownerId: data.userId // IMPORTANT
-        })
-      );
-    });
-  } catch (err) {
-    alert("Error loading feed");
-  }
+  });
 }
 
 // -------------------- BOTTOM SHEET --------------------
 function openSheet(post) {
   activePost = post;
-  activePostOwner = post.dataset.ownerId;
+  const ownerId = post.dataset.ownerId;
 
-  deleteBtn.style.display =
-    activePostOwner === CURRENT_UID ? "block" : "none";
+  // RESET VISIBILITY FIRST
+  deleteBtn.style.display = "none";
+  reportBtn.style.display = "none";
+
+  // OWNER LOGIC
+  if (ownerId === CURRENT_UID) {
+    deleteBtn.style.display = "block";
+  } else {
+    reportBtn.style.display = "block";
+  }
 
   sheetBackdrop.classList.remove("hidden");
   postSheet.classList.remove("hidden");
-  postSheet.classList.add("show");
+
+  requestAnimationFrame(() => {
+    postSheet.classList.add("show");
+  });
 }
 
 function closeSheet() {
@@ -133,7 +139,6 @@ function closeSheet() {
   postSheet.classList.remove("show");
 
   activePost = null;
-  activePostOwner = null;
 }
 
 // -------------------- INTERACTIONS --------------------
