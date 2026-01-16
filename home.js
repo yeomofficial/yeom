@@ -38,9 +38,15 @@ const deleteBtn = document.getElementById("sheetDelete");
 const reportBtn = document.getElementById("sheetReport");
 const cancelBtn = document.getElementById("sheetCancel");
 
+// Sheet states
+const sheetActions = document.getElementById("sheetActions");
+const sheetReportReasons = document.getElementById("sheetReportReasons");
+const sheetBackBtn = document.getElementById("sheetBack");
+
 // -------------------- STATE --------------------
 let CURRENT_UID = null;
 let activePost = null;
+let activePostOwner = null;
 
 // -------------------- AUTH --------------------
 onAuthStateChanged(auth, (user) => {
@@ -113,18 +119,22 @@ async function loadPosts() {
 // -------------------- BOTTOM SHEET --------------------
 function openSheet(post) {
   activePost = post;
-  const ownerId = post.dataset.ownerId;
+  activePostOwner = post.dataset.ownerId;
 
-  // RESET VISIBILITY FIRST
-  deleteBtn.style.display = "none";
-  reportBtn.style.display = "none";
+  // Reset state
+  sheetActions.classList.remove("hidden");
+  sheetReportReasons.classList.add("hidden");
 
-  // OWNER LOGIC
-  if (ownerId === CURRENT_UID) {
-    deleteBtn.style.display = "block";
-  } else {
-    reportBtn.style.display = "block";
-  }
+  // Owner logic
+  deleteBtn.classList.toggle(
+    "hidden",
+    activePostOwner !== CURRENT_UID
+  );
+
+  reportBtn.classList.toggle(
+    "hidden",
+    activePostOwner === CURRENT_UID
+  );
 
   sheetBackdrop.classList.remove("hidden");
   postSheet.classList.remove("hidden");
@@ -138,7 +148,12 @@ function closeSheet() {
   sheetBackdrop.classList.add("hidden");
   postSheet.classList.remove("show");
 
+  // Reset content
+  sheetActions.classList.remove("hidden");
+  sheetReportReasons.classList.add("hidden");
+
   activePost = null;
+  activePostOwner = null;
 }
 
 // -------------------- INTERACTIONS --------------------
@@ -176,7 +191,27 @@ deleteBtn.addEventListener("click", () => {
 });
 
 reportBtn.addEventListener("click", () => {
-  alert("Post reported. Thank you.");
+  sheetActions.classList.add("hidden");
+  sheetReportReasons.classList.remove("hidden");
+});
+
+sheetBackBtn.addEventListener("click", () => {
+  sheetReportReasons.classList.add("hidden");
+  sheetActions.classList.remove("hidden");
+});
+
+sheetReportReasons.addEventListener("click", (e) => {
+  const btn = e.target.closest("button[data-reason]");
+  if (!btn || !activePost) return;
+
+  const reason = btn.dataset.reason;
+
+  console.log("Reported:", {
+    postOwner: activePostOwner,
+    reportedBy: CURRENT_UID,
+    reason
+  });
+
   closeSheet();
 });
 
