@@ -74,7 +74,7 @@ function createPost({ username, imageUrl, ownerId }) {
 
     <div class="actions">
       <button class="like-btn">
-        <img class="heart-img" src="like-btn.png" />
+        <img class="heart-img" src="heart.png" />
         <span>0</span>
       </button>
 
@@ -173,3 +173,4 @@ reportSheet.addEventListener("click", (e) => {
 });
 
 reportCancelBtn.addEventListener("click", closeAllSheets);
+
