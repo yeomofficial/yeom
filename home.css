@@ -251,3 +251,25 @@ body {
 #sheetReportReasons {
   margin-top: 6px;
 }
+
+/* ---------- Animation ---------- */
+
+#postActionsSheet,
+#reportSheet {
+  transform: translateY(100%);
+  transition: transform 0.28s ease;
+}
+
+#postActionsSheet.show,
+#reportSheet.show {
+  transform: translateY(0);
+}
+
+.sheet-backdrop {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.sheet-backdrop.show {
+  opacity: 1;
+}
