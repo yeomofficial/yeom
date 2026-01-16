@@ -65,12 +65,25 @@ function createPost({ username, imageUrl, ownerId }) {
   post.innerHTML = `
     <div class="post-header">
       <span class="username">${username}</span>
-      <button class="post-menu">
-        <img src="three-dots-128px.png" />
+      <button class="post-menu" aria-label="Post options">
+        <img src="three-dots-128px.png" class="post-menu-icon" />
       </button>
     </div>
 
-    <img class="post-img" src="${imageUrl}" />
+    <div class="post-img-container">
+      <img class="post-img" src="${imageUrl}" />
+    </div>
+
+    <div class="actions">
+      <button class="like-btn">
+        <img class="heart-img" src="like-btn.png" />
+        <span>0</span>
+      </button>
+
+      <button class="save-btn">
+        <img class="bookmark-img" src="save-btn.png" />
+      </button>
+    </div>
   `;
 
   return post;
@@ -160,3 +173,4 @@ reportSheet.addEventListener("click", (e) => {
 });
 
 reportCancelBtn.addEventListener("click", closeAllSheets);
+
