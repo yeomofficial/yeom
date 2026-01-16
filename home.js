@@ -26,26 +26,27 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// -------------------- DOM --------------------
+// -------------------- DOM REFERENCES --------------------
 const feed = document.getElementById("feed");
 const uploadIcon = document.querySelector(".upload-img");
 const fileInput = document.getElementById("fileInput");
 
+// Bottom sheet
 const postSheet = document.getElementById("postSheet");
 const sheetBackdrop = document.getElementById("sheetBackdrop");
-
-const sheetActions = document.getElementById("sheetActions");
-const sheetReportReasons = document.getElementById("sheetReportReasons");
-
 const deleteBtn = document.getElementById("sheetDelete");
 const reportBtn = document.getElementById("sheetReport");
 const cancelBtn = document.getElementById("sheetCancel");
-const backBtn = document.getElementById("sheetBack");
+
+// Sheet states
+const sheetActions = document.getElementById("sheetActions");
+const sheetReportReasons = document.getElementById("sheetReportReasons");
+const sheetBackBtn = document.getElementById("sheetBack");
 
 // -------------------- STATE --------------------
 let CURRENT_UID = null;
 let activePost = null;
-let SHEET_MODE = "actions"; // actions | report
+let activePostOwner = null;
 
 // -------------------- AUTH --------------------
 onAuthStateChanged(auth, (user) => {
@@ -53,11 +54,12 @@ onAuthStateChanged(auth, (user) => {
     window.location.replace("index.html");
     return;
   }
+
   CURRENT_UID = user.uid;
   loadPosts();
 });
 
-// -------------------- POSTS --------------------
+// -------------------- POST COMPONENT --------------------
 function createPost({ username, imageUrl, ownerId }) {
   const post = document.createElement("article");
   post.className = "post";
@@ -66,25 +68,44 @@ function createPost({ username, imageUrl, ownerId }) {
   post.innerHTML = `
     <div class="post-header">
       <span class="username">${username}</span>
-      <button class="post-menu">
-        <img src="three-dots-128px.png" />
+      <button class="post-menu" aria-label="Post options">
+        <img src="three-dots-128px.png" class="post-menu-icon" />
       </button>
     </div>
 
     <div class="post-img-container">
-      <img src="${imageUrl}" class="post-img" />
+      <img class="post-img" src="${imageUrl}" />
+    </div>
+
+    <div class="actions">
+      <button class="like-btn">
+        <img class="heart-img" src="like-btn.png" />
+        <span>0</span>
+      </button>
+
+      <button class="save-btn">
+        <img class="bookmark-img" src="save-btn.png" />
+      </button>
     </div>
   `;
+
   return post;
 }
 
+// -------------------- LOAD FEED --------------------
 async function loadPosts() {
   feed.innerHTML = "";
-  const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
-  const snapshot = await getDocs(q);
+
+  const postsQuery = query(
+    collection(db, "posts"),
+    orderBy("timestamp", "desc")
+  );
+
+  const snapshot = await getDocs(postsQuery);
 
   snapshot.forEach((doc) => {
     const data = doc.data();
+
     feed.appendChild(
       createPost({
         username: data.username || "Unknown",
@@ -95,29 +116,25 @@ async function loadPosts() {
   });
 }
 
-// -------------------- SHEET RENDER --------------------
-function renderSheet() {
-  if (SHEET_MODE === "actions") {
-    sheetActions.classList.remove("hidden");
-    sheetReportReasons.classList.add("hidden");
-  }
-
-  if (SHEET_MODE === "report") {
-    sheetActions.classList.add("hidden");
-    sheetReportReasons.classList.remove("hidden");
-  }
-}
-
-// -------------------- OPEN / CLOSE --------------------
+// -------------------- BOTTOM SHEET --------------------
 function openSheet(post) {
   activePost = post;
-  SHEET_MODE = "actions";
-  renderSheet();
+  activePostOwner = post.dataset.ownerId;
 
-  const ownerId = post.dataset.ownerId;
+  // Reset state
+  sheetActions.classList.remove("hidden");
+  sheetReportReasons.classList.add("hidden");
 
-  deleteBtn.classList.toggle("hidden", ownerId !== CURRENT_UID);
-  reportBtn.classList.toggle("hidden", ownerId === CURRENT_UID);
+  // Owner logic
+  deleteBtn.classList.toggle(
+    "hidden",
+    activePostOwner !== CURRENT_UID
+  );
+
+  reportBtn.classList.toggle(
+    "hidden",
+    activePostOwner === CURRENT_UID
+  );
 
   sheetBackdrop.classList.remove("hidden");
   postSheet.classList.remove("hidden");
@@ -131,20 +148,39 @@ function closeSheet() {
   sheetBackdrop.classList.add("hidden");
   postSheet.classList.remove("show");
 
-  SHEET_MODE = "actions";
-  renderSheet();
+  // Reset content
+  sheetActions.classList.remove("hidden");
+  sheetReportReasons.classList.add("hidden");
+
   activePost = null;
+  activePostOwner = null;
 }
 
-// -------------------- FEED INTERACTIONS --------------------
+// -------------------- INTERACTIONS --------------------
 feed.addEventListener("click", (e) => {
+  const likeBtn = e.target.closest(".like-btn");
+  const saveBtn = e.target.closest(".save-btn");
   const menuBtn = e.target.closest(".post-menu");
+
+  if (likeBtn) {
+    likeBtn.classList.toggle("liked");
+    const span = likeBtn.querySelector("span");
+    const count = Number(span.textContent);
+    span.textContent = likeBtn.classList.contains("liked")
+      ? count + 1
+      : Math.max(count - 1, 0);
+  }
+
+  if (saveBtn) {
+    saveBtn.classList.toggle("saved");
+  }
+
   if (menuBtn) {
     openSheet(menuBtn.closest(".post"));
   }
 });
 
-// -------------------- SHEET ACTIONS --------------------
+// -------------------- SHEET BUTTONS --------------------
 sheetBackdrop.addEventListener("click", closeSheet);
 cancelBtn.addEventListener("click", closeSheet);
 
@@ -155,22 +191,26 @@ deleteBtn.addEventListener("click", () => {
 });
 
 reportBtn.addEventListener("click", () => {
-  SHEET_MODE = "report";
-  renderSheet();
+  sheetActions.classList.add("hidden");
+  sheetReportReasons.classList.remove("hidden");
 });
 
-backBtn.addEventListener("click", () => {
-  SHEET_MODE = "actions";
-  renderSheet();
+sheetBackBtn.addEventListener("click", () => {
+  sheetReportReasons.classList.add("hidden");
+  sheetActions.classList.remove("hidden");
 });
 
-// -------------------- REPORT REASONS --------------------
 sheetReportReasons.addEventListener("click", (e) => {
   const btn = e.target.closest("button[data-reason]");
   if (!btn || !activePost) return;
 
   const reason = btn.dataset.reason;
-  console.log("Reported for:", reason);
+
+  console.log("Reported:", {
+    postOwner: activePostOwner,
+    reportedBy: CURRENT_UID,
+    reason
+  });
 
   closeSheet();
 });
