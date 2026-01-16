@@ -114,10 +114,11 @@ uploadBtn.addEventListener('click', async () => {
 
 
     await addDoc(collection(db, 'posts'), {
-      section: selectedSection,
-      imageUrl: downloadURL,
-      timestamp: serverTimestamp(),
-      username: username,
+     userId: user.uid,
+     username: username,
+     section: selectedSection,
+     imageUrl: downloadURL,
+     createdAt: serverTimestamp(),
     });
 
     localStorage.removeItem('selectedImage');
@@ -144,3 +145,4 @@ function dataURLtoFile(dataUrl, filename) {
   }
   return new File([u8arr], filename, { type: mime });
 }
+
