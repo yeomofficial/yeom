@@ -26,22 +26,19 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// -------------------- DOM REFERENCES --------------------
+// -------------------- DOM --------------------
 const feed = document.getElementById("feed");
-const uploadIcon = document.querySelector(".upload-img");
-const fileInput = document.getElementById("fileInput");
 
-// Bottom sheet
+// Post actions sheet
 const postSheet = document.getElementById("postSheet");
 const sheetBackdrop = document.getElementById("sheetBackdrop");
 const deleteBtn = document.getElementById("sheetDelete");
 const reportBtn = document.getElementById("sheetReport");
 const cancelBtn = document.getElementById("sheetCancel");
 
-// Sheet states
-const sheetActions = document.getElementById("sheetActions");
-const sheetReportReasons = document.getElementById("sheetReportReasons");
-const sheetBackBtn = document.getElementById("sheetBack");
+// Report reasons sheet
+const reportSheet = document.getElementById("reportSheet");
+const reportCancelBtn = document.getElementById("reportCancel");
 
 // -------------------- STATE --------------------
 let CURRENT_UID = null;
@@ -59,7 +56,7 @@ onAuthStateChanged(auth, (user) => {
   loadPosts();
 });
 
-// -------------------- POST COMPONENT --------------------
+// -------------------- POST UI --------------------
 function createPost({ username, imageUrl, ownerId }) {
   const post = document.createElement("article");
   post.className = "post";
@@ -68,44 +65,30 @@ function createPost({ username, imageUrl, ownerId }) {
   post.innerHTML = `
     <div class="post-header">
       <span class="username">${username}</span>
-      <button class="post-menu" aria-label="Post options">
-        <img src="three-dots-128px.png" class="post-menu-icon" />
+      <button class="post-menu">
+        <img src="three-dots-128px.png" />
       </button>
     </div>
 
-    <div class="post-img-container">
-      <img class="post-img" src="${imageUrl}" />
-    </div>
-
-    <div class="actions">
-      <button class="like-btn">
-        <img class="heart-img" src="like-btn.png" />
-        <span>0</span>
-      </button>
-
-      <button class="save-btn">
-        <img class="bookmark-img" src="save-btn.png" />
-      </button>
-    </div>
+    <img class="post-img" src="${imageUrl}" />
   `;
 
   return post;
 }
 
-// -------------------- LOAD FEED --------------------
+// -------------------- LOAD POSTS --------------------
 async function loadPosts() {
   feed.innerHTML = "";
 
-  const postsQuery = query(
+  const q = query(
     collection(db, "posts"),
     orderBy("timestamp", "desc")
   );
 
-  const snapshot = await getDocs(postsQuery);
+  const snap = await getDocs(q);
 
-  snapshot.forEach((doc) => {
+  snap.forEach(doc => {
     const data = doc.data();
-
     feed.appendChild(
       createPost({
         username: data.username || "Unknown",
@@ -116,116 +99,64 @@ async function loadPosts() {
   });
 }
 
-// -------------------- BOTTOM SHEET --------------------
-function openSheet(post) {
+// -------------------- SHEET CONTROLS --------------------
+function openPostSheet(post) {
   activePost = post;
   activePostOwner = post.dataset.ownerId;
 
-  // Reset state
-  sheetActions.classList.remove("hidden");
-  sheetReportReasons.classList.add("hidden");
-
-  // Owner logic
-  deleteBtn.classList.toggle(
-    "hidden",
-    activePostOwner !== CURRENT_UID
-  );
-
-  reportBtn.classList.toggle(
-    "hidden",
-    activePostOwner === CURRENT_UID
-  );
+  deleteBtn.classList.toggle("hidden", activePostOwner !== CURRENT_UID);
+  reportBtn.classList.toggle("hidden", activePostOwner === CURRENT_UID);
 
   sheetBackdrop.classList.remove("hidden");
-  postSheet.classList.remove("hidden");
-
-  requestAnimationFrame(() => {
-    postSheet.classList.add("show");
-  });
+  postSheet.classList.add("show");
 }
 
-function closeSheet() {
+function closeAllSheets() {
   sheetBackdrop.classList.add("hidden");
   postSheet.classList.remove("show");
-
-  // Reset content
-  sheetActions.classList.remove("hidden");
-  sheetReportReasons.classList.add("hidden");
+  reportSheet.classList.remove("show");
 
   activePost = null;
   activePostOwner = null;
 }
 
-// -------------------- INTERACTIONS --------------------
+// -------------------- FEED EVENTS --------------------
 feed.addEventListener("click", (e) => {
-  const likeBtn = e.target.closest(".like-btn");
-  const saveBtn = e.target.closest(".save-btn");
   const menuBtn = e.target.closest(".post-menu");
-
-  if (likeBtn) {
-    likeBtn.classList.toggle("liked");
-    const span = likeBtn.querySelector("span");
-    const count = Number(span.textContent);
-    span.textContent = likeBtn.classList.contains("liked")
-      ? count + 1
-      : Math.max(count - 1, 0);
-  }
-
-  if (saveBtn) {
-    saveBtn.classList.toggle("saved");
-  }
-
   if (menuBtn) {
-    openSheet(menuBtn.closest(".post"));
+    openPostSheet(menuBtn.closest(".post"));
   }
 });
 
-// -------------------- SHEET BUTTONS --------------------
-sheetBackdrop.addEventListener("click", closeSheet);
-cancelBtn.addEventListener("click", closeSheet);
+// -------------------- POST SHEET BUTTONS --------------------
+sheetBackdrop.addEventListener("click", closeAllSheets);
+cancelBtn.addEventListener("click", closeAllSheets);
 
 deleteBtn.addEventListener("click", () => {
   if (!activePost) return;
   activePost.remove();
-  closeSheet();
+  closeAllSheets();
 });
 
 reportBtn.addEventListener("click", () => {
-  sheetActions.classList.add("hidden");
-  sheetReportReasons.classList.remove("hidden");
+  postSheet.classList.remove("show");
+  reportSheet.classList.add("show");
 });
 
-sheetBackBtn.addEventListener("click", () => {
-  sheetReportReasons.classList.add("hidden");
-  sheetActions.classList.remove("hidden");
-});
-
-sheetReportReasons.addEventListener("click", (e) => {
+// -------------------- REPORT REASONS --------------------
+reportSheet.addEventListener("click", (e) => {
   const btn = e.target.closest("button[data-reason]");
-  if (!btn || !activePost) return;
+  if (!btn) return;
 
   const reason = btn.dataset.reason;
 
-  console.log("Reported:", {
+  console.log("REPORT:", {
     postOwner: activePostOwner,
     reportedBy: CURRENT_UID,
     reason
   });
 
-  closeSheet();
+  closeAllSheets();
 });
 
-// -------------------- UPLOAD --------------------
-uploadIcon.addEventListener("click", () => fileInput.click());
-
-fileInput.addEventListener("change", (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = () => {
-    localStorage.setItem("selectedImage", reader.result);
-    window.location.href = "upload.html";
-  };
-  reader.readAsDataURL(file);
-});
+reportCancelBtn.addEventListener("click", closeAllSheets);
