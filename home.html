@@ -4,15 +4,17 @@
   <meta charset="UTF-8" />
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
   <title>YEOM · Home</title>
+
   <link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32">
   <link rel="stylesheet" href="home.css" />
 </head>
 
 <body>
 
-  <!-- HEADER -->
+  <!-- ================= HEADER ================= -->
   <header class="app-header">
     <img class="header-img" src="yeom_img.png" alt="YEOM logo" />
 
@@ -22,14 +24,14 @@
     </a>
   </header>
 
-  <!-- MAIN FEED -->
+  <!-- ================= MAIN FEED ================= -->
   <main class="app-main">
     <section id="feed" class="feed">
       <!-- Posts injected via JS -->
     </section>
   </main>
 
-  <!-- BACKDROP -->
+  <!-- ================= BACKDROP ================= -->
   <div id="sheetBackdrop" class="sheet-backdrop hidden"></div>
 
   <!-- ================= POST ACTIONS SHEET ================= -->
@@ -74,21 +76,45 @@
     </button>
   </div>
 
-  <!-- BOTTOM NAV -->
+  <!-- ================= BOTTOM NAV ================= -->
   <nav class="bottom-nav">
     <ul>
-      <li><a href="home.html"><img src="home.png" alt="Home" /></a></li>
-      <li><a href="search.html"><img src="search.png" alt="Search" /></a></li>
-      <li><a href="lumi.html"><img src="lumi2.png" alt="Lumi AI" /></a></li>
-      <li><a href="#"><img class="upload-img" src="upload.png" alt="Upload" /></a></li>
-      <li><a href="profile.html"><img src="profile.png" alt="Profile" /></a></li>
+      <li>
+        <a href="home.html">
+          <img src="home.png" alt="Home" />
+        </a>
+      </li>
+
+      <li>
+        <a href="search.html">
+          <img src="search.png" alt="Search" />
+        </a>
+      </li>
+
+      <li>
+        <a href="lumi.html">
+          <img src="lumi2.png" alt="Lumi AI" />
+        </a>
+      </li>
+
+      <li>
+        <a href="#">
+          <img class="upload-img" src="upload.png" alt="Upload" />
+        </a>
+      </li>
+
+      <li>
+        <a href="profile.html">
+          <img src="profile.png" alt="Profile" />
+        </a>
+      </li>
     </ul>
   </nav>
 
-  <!-- Hidden File Input -->
+  <!-- ================= FILE INPUT ================= -->
   <input type="file" id="fileInput" accept="image/*" hidden />
 
-  <!-- JS -->
+  <!-- ================= JS ================= -->
   <script type="module" src="home.js"></script>
 
 </body>
