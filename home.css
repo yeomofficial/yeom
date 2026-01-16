@@ -265,13 +265,3 @@ body {
 #reportSheet.show {
   transform: translateY(0);
 }
-
-.sheet-backdrop {
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.sheet-backdrop.show {
-  opacity: 1;
-}
-
