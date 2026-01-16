@@ -252,16 +252,3 @@ body {
 #sheetReportReasons {
   margin-top: 6px;
 }
-
-/* ---------- Animation ---------- */
-
-#postActionsSheet,
-#reportSheet {
-  transform: translateY(100%);
-  transition: transform 0.28s ease;
-}
-
-#postActionsSheet.show,
-#reportSheet.show {
-  transform: translateY(0);
-}
