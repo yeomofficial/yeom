@@ -29,48 +29,49 @@
     </section>
   </main>
 
-  <!-- BOTTOM SHEET BACKDROP -->
+  <!-- BACKDROP -->
   <div id="sheetBackdrop" class="sheet-backdrop hidden"></div>
 
-  <!-- BOTTOM SHEET -->
-  <div id="postSheet" class="bottom-sheet hidden">
-
+  <!-- ================= POST ACTIONS SHEET ================= -->
+  <div id="postActionsSheet" class="bottom-sheet hidden">
     <div class="sheet-handle"></div>
 
-    <!-- ACTIONS STATE -->
-    <div id="sheetActions">
-      <button id="sheetDelete" class="sheet-action danger hidden">
-        Delete post
-      </button>
+    <button id="sheetDelete" class="sheet-action danger hidden">
+      Delete post
+    </button>
 
-      <button id="sheetReport" class="sheet-action danger">
-        Report post
-      </button>
+    <button id="sheetReport" class="sheet-action danger">
+      Report post
+    </button>
 
-      <button id="sheetCancel" class="sheet-action">
-        Cancel
-      </button>
-    </div>
+    <button id="sheetCancel" class="sheet-action">
+      Cancel
+    </button>
+  </div>
 
-    <!-- REPORT REASONS STATE -->
-    <div id="sheetReportReasons" class="hidden">
-      <button class="sheet-action danger" data-reason="nudity">
-        Nudity or sexual content
-      </button>
+  <!-- ================= REPORT REASONS SHEET ================= -->
+  <div id="reportSheet" class="bottom-sheet hidden">
+    <div class="sheet-handle"></div>
 
-      <button class="sheet-action danger" data-reason="spam">
-        Spam or scam
-      </button>
+    <button class="sheet-action danger report-reason" data-reason="nudity">
+      Nudity or sexual content
+    </button>
 
-      <button class="sheet-action danger" data-reason="harassment">
-        Harassment or hate
-      </button>
+    <button class="sheet-action danger report-reason" data-reason="spam">
+      Spam or scam
+    </button>
 
-      <button class="sheet-action" id="sheetBack">
-        Back
-      </button>
-    </div>
+    <button class="sheet-action danger report-reason" data-reason="harassment">
+      Harassment or hate
+    </button>
 
+    <button class="sheet-action danger report-reason" data-reason="ip">
+      Intellectual property violation
+    </button>
+
+    <button id="reportCancel" class="sheet-action">
+      Cancel
+    </button>
   </div>
 
   <!-- BOTTOM NAV -->
