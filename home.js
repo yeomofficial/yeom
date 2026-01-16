@@ -7,7 +7,6 @@ import {
   orderBy,
   query
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-
 import {
   getAuth,
   onAuthStateChanged
@@ -28,16 +27,16 @@ const auth = getAuth(app);
 
 // -------------------- DOM --------------------
 const feed = document.getElementById("feed");
-
-// Post actions sheet
-const postSheet = document.getElementById("postSheet");
 const sheetBackdrop = document.getElementById("sheetBackdrop");
+
+// Sheets
+const postActionsSheet = document.getElementById("postActionsSheet");
+const reportSheet = document.getElementById("reportSheet");
+
+// Buttons
 const deleteBtn = document.getElementById("sheetDelete");
 const reportBtn = document.getElementById("sheetReport");
 const cancelBtn = document.getElementById("sheetCancel");
-
-// Report reasons sheet
-const reportSheet = document.getElementById("reportSheet");
 const reportCancelBtn = document.getElementById("reportCancel");
 
 // -------------------- STATE --------------------
@@ -51,7 +50,6 @@ onAuthStateChanged(auth, (user) => {
     window.location.replace("index.html");
     return;
   }
-
   CURRENT_UID = user.uid;
   loadPosts();
 });
@@ -85,19 +83,13 @@ function createPost({ username, imageUrl, ownerId }) {
       </button>
     </div>
   `;
-
   return post;
 }
 
 // -------------------- LOAD POSTS --------------------
 async function loadPosts() {
   feed.innerHTML = "";
-
-  const q = query(
-    collection(db, "posts"),
-    orderBy("timestamp", "desc")
-  );
-
+  const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
   const snap = await getDocs(q);
 
   snap.forEach(doc => {
@@ -112,36 +104,46 @@ async function loadPosts() {
   });
 }
 
-// -------------------- SHEET CONTROLS --------------------
-function openPostSheet(post) {
+// -------------------- SHEET HELPERS --------------------
+function showSheet(sheet) {
+  sheetBackdrop.classList.remove("hidden");
+  sheet.classList.remove("hidden");
+  requestAnimationFrame(() => sheet.classList.add("show"));
+}
+
+function hideSheet(sheet) {
+  sheet.classList.remove("show");
+  setTimeout(() => sheet.classList.add("hidden"), 200);
+}
+
+function closeAllSheets() {
+  sheetBackdrop.classList.add("hidden");
+  hideSheet(postActionsSheet);
+  hideSheet(reportSheet);
+  activePost = null;
+  activePostOwner = null;
+}
+
+// -------------------- OPEN POST ACTIONS --------------------
+function openPostActions(post) {
   activePost = post;
   activePostOwner = post.dataset.ownerId;
 
   deleteBtn.classList.toggle("hidden", activePostOwner !== CURRENT_UID);
   reportBtn.classList.toggle("hidden", activePostOwner === CURRENT_UID);
 
-  sheetBackdrop.classList.remove("hidden");
-  postSheet.classList.add("show");
-}
-
-function closeAllSheets() {
-  sheetBackdrop.classList.add("hidden");
-  postSheet.classList.remove("show");
-  reportSheet.classList.remove("show");
-
-  activePost = null;
-  activePostOwner = null;
+  hideSheet(reportSheet);
+  showSheet(postActionsSheet);
 }
 
 // -------------------- FEED EVENTS --------------------
 feed.addEventListener("click", (e) => {
   const menuBtn = e.target.closest(".post-menu");
-  if (menuBtn) {
-    openPostSheet(menuBtn.closest(".post"));
-  }
+  if (!menuBtn) return;
+  openPostActions(menuBtn.closest(".post"));
 });
 
-// -------------------- POST SHEET BUTTONS --------------------
+// -------------------- POST ACTION BUTTONS --------------------
 sheetBackdrop.addEventListener("click", closeAllSheets);
 cancelBtn.addEventListener("click", closeAllSheets);
 
@@ -152,25 +154,22 @@ deleteBtn.addEventListener("click", () => {
 });
 
 reportBtn.addEventListener("click", () => {
-  postSheet.classList.remove("show");
-  reportSheet.classList.add("show");
+  hideSheet(postActionsSheet);
+  showSheet(reportSheet);
 });
 
 // -------------------- REPORT REASONS --------------------
 reportSheet.addEventListener("click", (e) => {
-  const btn = e.target.closest("button[data-reason]");
-  if (!btn) return;
-
-  const reason = btn.dataset.reason;
+  const btn = e.target.closest(".report-reason");
+  if (!btn || !activePost) return;
 
   console.log("REPORT:", {
     postOwner: activePostOwner,
     reportedBy: CURRENT_UID,
-    reason
+    reason: btn.dataset.reason
   });
 
   closeAllSheets();
 });
 
 reportCancelBtn.addEventListener("click", closeAllSheets);
-
