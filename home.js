@@ -79,7 +79,7 @@ function createPost({ username, imageUrl, ownerId }) {
       </button>
 
       <button class="save-btn">
-        <img class="bookmark-img" src="save-btn.png" />
+        <img class="bookmark-img" src="bookmark.png" />
       </button>
     </div>
   `;
@@ -173,4 +173,5 @@ reportSheet.addEventListener("click", (e) => {
 });
 
 reportCancelBtn.addEventListener("click", closeAllSheets);
+
 
