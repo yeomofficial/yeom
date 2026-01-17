@@ -47,21 +47,6 @@ let CURRENT_UID = null;
 let activePost = null;
 let activePostOwner = null;
 
-// -------------------- TOAST --------------------
-let toastTimeout = null;
-
-function showToast(message) {
-  toast.textContent = message;
-  toast.classList.remove("toast-hidden");
-  toast.classList.add("toast-show");
-
-  clearTimeout(toastTimeout);
-  toastTimeout = setTimeout(() => {
-    toast.classList.remove("toast-show");
-    toast.classList.add("toast-hidden");
-  }, 2200);
-}
-
 // -------------------- AUTH --------------------
 onAuthStateChanged(auth, (user) => {
   if (!user) {
@@ -226,4 +211,5 @@ reportSheet.addEventListener("click", async (e) => {
     showToastMessage("Failed to submit report");
   }
 });
+
 
