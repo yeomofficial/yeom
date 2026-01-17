@@ -5,7 +5,9 @@ import {
   collection,
   getDocs,
   orderBy,
-  query
+  query,
+  addDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import {
   getAuth,
@@ -173,5 +175,6 @@ reportSheet.addEventListener("click", (e) => {
 });
 
 reportCancelBtn.addEventListener("click", closeAllSheets);
+
 
 
