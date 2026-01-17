@@ -158,18 +158,6 @@ body {
   height: 32px;
 }
 
-.toast-hidden {
-  position: fixed;
-  bottom: 90px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #111;
-  color: #fff;
-  padding: 10px 16px;
-  border-radius: 20px;
-  font-size: 14px;
-  z-index: 3000;
-}
 
 /* ---------- BOTTOM NAV ---------- */
 .bottom-nav {
@@ -266,3 +254,31 @@ body {
   margin-top: 6px;
 }
 
+/* ---------- TOAST ---------- */
+#toast {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+
+  background: #111;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+
+  opacity: 0;
+  pointer-events: none;
+
+  z-index: 3000;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+#toast.toast-show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+#toast.toast-hidden {
+  opacity: 0;
+}
