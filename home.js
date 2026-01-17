@@ -185,24 +185,45 @@ reportBtn.addEventListener("click", () => {
 });
 
 // -------------------- REPORT REASONS --------------------
+function showToastMessage(text) {
+  const toast = document.getElementById("toast");
+  if (!toast) return;
+
+  toast.textContent = text;
+  toast.classList.remove("hidden");
+
+  setTimeout(() => {
+    toast.classList.add("hidden");
+  }, 2500);
+}
+
 reportSheet.addEventListener("click", async (e) => {
   const btn = e.target.closest(".report-reason");
   if (!btn || !activePost) return;
 
+  const reason = btn.dataset.reason;
+  const postId = activePost.dataset.postId;
+
+  if (!postId || !CURRENT_UID) {
+    showToastMessage("Something went wrong");
+    return;
+  }
+
   try {
     await addDoc(collection(db, "reports"), {
-      postId: activePost.dataset.postId,
+      postId: postId,
       postOwnerId: activePostOwner,
       reportedBy: CURRENT_UID,
-      reason: btn.dataset.reason,
+      reason: reason,
       createdAt: serverTimestamp()
     });
 
     closeAllSheets();
-    showToast("Thanks for reporting");
+    showToastMessage("Thanks for reporting");
 
   } catch (err) {
     console.error("Report error:", err);
-    showToast("Failed to submit report");
+    showToastMessage("Failed to submit report");
   }
 });
+
