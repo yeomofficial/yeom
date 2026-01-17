@@ -267,8 +267,9 @@ body {
   border-radius: 20px;
   font-size: 14px;
   pointer-events: none;
-
+  opacity: 0;
   z-index: 3000;
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
+
 
