@@ -255,7 +255,7 @@ body {
 }
 
 /* ---------- TOAST ---------- */
-#toast {
+.toast-hidden {
   position: fixed;
   bottom: 90px;
   left: 50%;
@@ -282,3 +282,4 @@ body {
 #toast.toast-hidden {
   opacity: 0;
 }
+
