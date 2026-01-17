@@ -266,20 +266,9 @@ body {
   padding: 10px 16px;
   border-radius: 20px;
   font-size: 14px;
-
-  opacity: 0;
   pointer-events: none;
 
   z-index: 3000;
   transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-#toast.toast-show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-#toast.toast-hidden {
-  opacity: 0;
 }
 
