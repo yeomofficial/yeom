@@ -175,10 +175,13 @@ function showToastMessage(text) {
   if (!toast) return;
 
   toast.textContent = text;
-  toast.classList.remove("hidden");
+  toast.style.opacity = "1";
+  toast.style.transform = "translateX(-50%) translateY(0)";
 
+  // Hide toast after delay
   setTimeout(() => {
-    toast.classList.add("hidden");
+    toast.style.opacity = "0";
+    toast.style.transform = "translateX(-50%) translateY(10px)";
   }, 2500);
 }
 
@@ -211,5 +214,6 @@ reportSheet.addEventListener("click", async (e) => {
     showToastMessage("Failed to submit report");
   }
 });
+
 
 
