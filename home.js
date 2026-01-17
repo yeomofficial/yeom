@@ -30,6 +30,7 @@ const auth = getAuth(app);
 // -------------------- DOM --------------------
 const feed = document.getElementById("feed");
 const sheetBackdrop = document.getElementById("sheetBackdrop");
+const toast = document.getElementById("toast");
 
 // Sheets
 const postActionsSheet = document.getElementById("postActionsSheet");
@@ -46,6 +47,21 @@ let CURRENT_UID = null;
 let activePost = null;
 let activePostOwner = null;
 
+// -------------------- TOAST --------------------
+let toastTimeout = null;
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.remove("toast-hidden");
+  toast.classList.add("toast-show");
+
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove("toast-show");
+    toast.classList.add("toast-hidden");
+  }, 2200);
+}
+
 // -------------------- AUTH --------------------
 onAuthStateChanged(auth, (user) => {
   if (!user) {
@@ -57,10 +73,11 @@ onAuthStateChanged(auth, (user) => {
 });
 
 // -------------------- POST UI --------------------
-function createPost({ username, imageUrl, ownerId }) {
+function createPost({ postId, username, imageUrl, ownerId }) {
   const post = document.createElement("article");
   post.className = "post";
   post.dataset.ownerId = ownerId;
+  post.dataset.postId = postId;
 
   post.innerHTML = `
     <div class="post-header">
@@ -91,13 +108,19 @@ function createPost({ username, imageUrl, ownerId }) {
 // -------------------- LOAD POSTS --------------------
 async function loadPosts() {
   feed.innerHTML = "";
-  const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
+
+  const q = query(
+    collection(db, "posts"),
+    orderBy("timestamp", "desc")
+  );
+
   const snap = await getDocs(q);
 
-  snap.forEach(doc => {
-    const data = doc.data();
+  snap.forEach(docSnap => {
+    const data = docSnap.data();
     feed.appendChild(
       createPost({
+        postId: docSnap.id,
         username: data.username || "Unknown",
         imageUrl: data.imageUrl,
         ownerId: data.userId
@@ -148,6 +171,7 @@ feed.addEventListener("click", (e) => {
 // -------------------- POST ACTION BUTTONS --------------------
 sheetBackdrop.addEventListener("click", closeAllSheets);
 cancelBtn.addEventListener("click", closeAllSheets);
+reportCancelBtn.addEventListener("click", closeAllSheets);
 
 deleteBtn.addEventListener("click", () => {
   if (!activePost) return;
@@ -161,20 +185,24 @@ reportBtn.addEventListener("click", () => {
 });
 
 // -------------------- REPORT REASONS --------------------
-reportSheet.addEventListener("click", (e) => {
+reportSheet.addEventListener("click", async (e) => {
   const btn = e.target.closest(".report-reason");
   if (!btn || !activePost) return;
 
-  console.log("REPORT:", {
-    postOwner: activePostOwner,
-    reportedBy: CURRENT_UID,
-    reason: btn.dataset.reason
-  });
+  try {
+    await addDoc(collection(db, "reports"), {
+      postId: activePost.dataset.postId,
+      postOwnerId: activePostOwner,
+      reportedBy: CURRENT_UID,
+      reason: btn.dataset.reason,
+      createdAt: serverTimestamp()
+    });
 
-  closeAllSheets();
+    closeAllSheets();
+    showToast("Thanks for reporting");
+
+  } catch (err) {
+    console.error("Report error:", err);
+    showToast("Failed to submit report");
+  }
 });
-
-reportCancelBtn.addEventListener("click", closeAllSheets);
-
-
-
