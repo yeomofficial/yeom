@@ -16,28 +16,6 @@ import {
 /* ---------- DOM READY SAFETY ---------- */
 window.addEventListener("DOMContentLoaded", () => {
 
-  /* ---------- UPLOAD TRIGGER ---------- */
-  const uploadIcon = document.querySelector(".upload-img");
-  const fileInput = document.getElementById("fileInput");
-
-  if (uploadIcon && fileInput) {
-    uploadIcon.addEventListener("click", () => {
-      fileInput.click();
-    });
-
-    fileInput.addEventListener("change", (event) => {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        localStorage.setItem("selectedImage", e.target.result);
-        window.location.href = "upload.html";
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-
   /* ---------- AUTH + PROFILE ---------- */
   onAuthStateChanged(auth, async (user) => {
     if (!user) {
@@ -135,5 +113,6 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
 
 
