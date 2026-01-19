@@ -155,7 +155,7 @@ input.error:focus {
 
 button {
     width: 100%;
-    background-color: black;
+    background-color: #111111;
     color: white;
     padding: 14px;
     border: none;
@@ -219,6 +219,7 @@ button:disabled {
     color: #0066ff;
     text-decoration: none;
 }
+
 
 
 
