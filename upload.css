@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -5,118 +7,141 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f7f7f7;
+  font-family: 'Montserrat';
+  background: #f7f7f7;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
 }
 
-#upload-container {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
+/* ================= BACK BUTTON ================= */
+.back-btn {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.back-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+/* ================= PAGE LAYOUT ================= */
+.upload-page {
   width: 100%;
-  max-width: 500px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  max-width: 480px;
+  padding: 80px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-/* Image Preview */
-.image-preview-container {
-width: 100%;
-margin-bottom: 20px;
-min-height: 200px;
-display: flex;
-justify-content: center;
-align-items: center;
+/* ================= IMAGE CARD ================= */
+.image-card {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
 }
 
-#image-preview {
-max-width: 100%;
-max-height: 300px;
-border-radius: 8px;
-object-fit: contain;
-margin-bottom: 20px;
+/* Placeholder */
+.image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: #777;
+  font-size: 15px;
 }
 
-/* Section Selection */
-.section-selection {
-  margin-bottom: 20px;
+.plus-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #ededed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plus-icon img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Image preview */
+.image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ================= CATEGORY ================= */
+.category-wrapper {
+  width: 100%;
 }
 
 #section {
   width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  background: #ffffff;
+  appearance: none;
+  outline: none;
 }
 
-/* Upload Button */
-#upload-btn {
+/* ================= UPLOAD BUTTON ================= */
+#uploadBtn {
   width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  background-color: black;
-  color: white;
+  padding: 16px;
+  border-radius: 16px;
   border: none;
-  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  background: #1c1c1c; /* YEOM cool black */
+  color: #ffffff;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: opacity 0.25s ease, transform 0.15s ease;
 }
 
-#upload-btn:disabled {
-  background-color: #ccc;
+#uploadBtn:disabled {
+  opacity: 0.35;
   cursor: not-allowed;
 }
 
-#upload-btn:not(:disabled):hover {
-  background-color: grey;
+#uploadBtn:not(:disabled):active {
+  transform: scale(0.98);
 }
 
-/* Text and Labels */
-label {
-  font-size: 18px;
-  margin-bottom: 10px;
-  display: block;
-  font-weight: bold;
+/* ================= MESSAGE ================= */
+.message-box {
+  text-align: center;
+  font-size: 14px;
+  padding: 12px;
+  border-radius: 12px;
+  display: none;
 }
 
-  .message-box {
-    margin-top: 20px;
-    padding: 12px;
-    border-radius: 5px;
-    font-size: 14px;
-    display: none;
-    text-align: center;
-  }
-
-  .message-box.success {
-    background-color: black;
-    color: white;
-  }
-
-  .message-box.error {
-    background-color: black;
-    color: white;
-  }
-
-  .back-icon {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      z-index: 999;
-      width: 24px;
-      height: 24px;
-      cursor: pointer;
-  }
-  
-  .back-icon svg {
-    width: 100%;
-    height: 100%;
-    stroke: black;
-  }
-  
+.message-box.success,
+.message-box.error {
+  background: #1c1c1c;
+  color: #ffffff;
+}
