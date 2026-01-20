@@ -2,38 +2,74 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>YEOM - Upload</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
+  <link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="manifest" href="manifest.json">
+  <title>YEOM · Upload</title>
+
   <link rel="stylesheet" href="upload.css" />
 </head>
+
 <body>
-  <div class="back-icon" onclick="history.back()">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-      viewBox="0 0 24 24" stroke="black" stroke-width="2">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6" />
-    </svg>
-  </div>
 
-  <main>
-    <div id="message-box" class="message-box"></div>
-    <div id="upload-container">
-      <div class="image-preview-container">
-        <img id="image-preview" src="" alt="Selected Image Preview" />
+  <!-- ================= BACK BUTTON ================= -->
+  <button class="back-btn" onclick="history.back()" aria-label="Go back">
+    <img src="back.png" alt="Back" />
+  </button>
+
+  <!-- ================= MAIN ================= -->
+  <main class="upload-page">
+
+    <!-- IMAGE PICKER -->
+    <div class="image-card" id="imagePicker">
+      <input
+        type="file"
+        id="imageInput"
+        accept="image/*"
+        hidden
+      />
+
+      <img
+        id="imagePreview"
+        alt="Selected image"
+        class="image-preview hidden"
+      />
+
+      <div class="image-placeholder" id="imagePlaceholder">
+        <div class="plus-icon">
+          <img src="plus.png" alt="Add image" />
+        </div>
+        <p>Tap to upload</p>
       </div>
-      <select id="section">
-        <option value="">Select Section</option>
-        <option value="streetwear">Street wear</option>
-        <option value="Formal">Formal</option>
-        <option value="Casual">Casual</option>
-        <option value="Oldmoney">Old Money</option>
-        <option value="Vintage">Vintage</option>
-      </select>
-
-      <!-- Upload Button -->
-      <button id="upload-btn">Upload Post</button>
     </div>
+
+    <!-- CATEGORY -->
+    <div class="category-wrapper">
+      <select id="section">
+        <option value="">Choose Category</option>
+        <option value="streetwear">Streetwear</option>
+        <option value="formal">Formal</option>
+        <option value="casual">Casual</option>
+        <option value="oldmoney">Old Money</option>
+        <option value="vintage">Vintage</option>
+      </select>
+    </div>
+
+    <!-- UPLOAD BUTTON -->
+    <button id="uploadBtn" disabled>
+      Upload
+    </button>
+
+    <!-- MESSAGE -->
+    <div id="messageBox" class="message-box"></div>
+
   </main>
 
+  <!-- ================= SCRIPT ================= -->
   <script type="module" src="upload.js"></script>
+
 </body>
 </html>
