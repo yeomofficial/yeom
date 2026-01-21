@@ -1,148 +1,129 @@
-const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/dwauleaof/image/upload';
-const uploadPreset = 'yeom_unsigned';
+// -------------------- CLOUDINARY --------------------
+const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dwauleaof/image/upload";
+const UPLOAD_PRESET = "yeom_unsigned";
 
-import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js';
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js';
-import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js';
-import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js';
+// -------------------- FIREBASE --------------------
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp,
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js";
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
 
-
-
-// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyC1O-WVb95Z77o2JelptaZ8ljRPdNVDIeY",
   authDomain: "yeom-official.firebaseapp.com",
   projectId: "yeom-official",
   storageBucket: "yeom-official.appspot.com",
   messagingSenderId: "285438640273",
-  appId: "1:285438640273:web:7d91f4ddc24536a3c5ff30",
-  measurementId: "G-EBXHHN5WFK",
+  appId: "1:285438640273:web:7d91f4ddc24536a3c5ff30"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// HTML elements
-const imagePreview = document.getElementById('image-preview');
-const sectionDropdown = document.getElementById('section');
-const uploadBtn = document.getElementById('upload-btn');
-const uploadContainer = document.getElementById('upload-container');
-const messageBox = document.getElementById('message-box');
+// -------------------- DOM --------------------
+const fileInput = document.getElementById("fileInput");
+const imagePreview = document.getElementById("image-preview");
+const sectionSelect = document.getElementById("section");
+const uploadBtn = document.getElementById("upload-btn");
+const messageBox = document.getElementById("message-box");
 
-// Message function
-function showMessage(text, type = "success") {
-  if (!messageBox) return;
-  messageBox.textContent = text;
-  messageBox.className = `message-box ${type}`;
-  messageBox.style.display = 'block';
-}
+// -------------------- STATE --------------------
+let selectedFile = null;
+let CURRENT_USER = null;
 
-// Progress bar
-const progressBar = document.createElement('progress');
-progressBar.value = 0;
-progressBar.max = 100;
-progressBar.style.width = '100%';
-progressBar.style.marginTop = '20px';
-progressBar.style.display = 'none';
-uploadContainer.appendChild(progressBar);
-
-const progressPercentage = document.createElement('p');
-progressPercentage.style.marginTop = '10px';
-progressPercentage.style.display = 'none';
-uploadContainer.appendChild(progressPercentage);
-
-// Load image from localStorage
-const selectedImageUrl = localStorage.getItem('selectedImage');
-if (selectedImageUrl && imagePreview) {
-  imagePreview.src = selectedImageUrl;
-  imagePreview.style.display = 'block';
-  imagePreview.style.width = 'auto';
-  imagePreview.style.height = 'auto';
-} else {
-  uploadContainer.innerHTML = '<p>No image selected. Please go back and select an image.</p>';
-}
-
-// Enable/disable upload button
-sectionDropdown.addEventListener('change', () => {
-  uploadBtn.disabled = !sectionDropdown.value;
+// -------------------- AUTH --------------------
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.replace("index.html");
+    return;
+  }
+  CURRENT_USER = user;
 });
 
-// Upload handler
-uploadBtn.addEventListener('click', async () => {
-  const selectedSection = sectionDropdown.value;
+// -------------------- IMAGE PICK --------------------
+fileInput.addEventListener("change", () => {
+  const file = fileInput.files[0];
+  if (!file) return;
 
-  if (!selectedSection) {
-    showMessage('Please select a section.', 'error');
+  selectedFile = file;
+  imagePreview.src = URL.createObjectURL(file);
+  imagePreview.style.display = "block";
+});
+
+// -------------------- MESSAGE --------------------
+function showMessage(text, type = "success") {
+  messageBox.textContent = text;
+  messageBox.className = `message-box ${type}`;
+  messageBox.style.display = "block";
+}
+
+// -------------------- UPLOAD --------------------
+uploadBtn.addEventListener("click", async () => {
+  const section = sectionSelect.value;
+
+  if (!selectedFile) {
+    showMessage("Select an image", "error");
     return;
   }
 
-  if (!selectedImageUrl) {
-    showMessage('No image to upload. Please go back and select an image.', 'error');
+  if (!section) {
+    showMessage("Choose a category", "error");
     return;
   }
+
+  uploadBtn.disabled = true;
+  uploadBtn.textContent = "Uploading...";
 
   try {
-    const file = dataURLtoFile(selectedImageUrl, 'upload.jpg');
-    const publicId = `${selectedSection}/image_${Date.now()}`;
-
+    //  Upload to Cloudinary
     const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', uploadPreset);
-    formData.append('public_id', publicId);
+    formData.append("file", selectedFile);
+    formData.append("upload_preset", UPLOAD_PRESET);
+    formData.append("folder", section);
 
-    progressBar.style.display = 'block';
-    progressPercentage.style.display = 'block';
-
-    const response = await fetch(cloudinaryUrl, {
-      method: 'POST',
+    const res = await fetch(CLOUDINARY_URL, {
+      method: "POST",
       body: formData
     });
 
-    const data = await response.json();
-    const downloadURL = data.secure_url;
+    const cloudData = await res.json();
+    const imageUrl = cloudData.secure_url;
 
-    let username = "anonymous";
-    const user = auth.currentUser;
-      if (user) {
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        if (userDoc.exists()) {
-          username = userDoc.data().username || "anonymous";
-         }
-       }
+    //  Get username
+    let username = "unknown";
+    const userSnap = await getDoc(doc(db, "users", CURRENT_USER.uid));
+    if (userSnap.exists()) {
+      username = userSnap.data().username || "unknown";
+    }
 
-
-    await addDoc(collection(db, 'posts'), {
-     userId: user.uid,
-     username: username,
-     section: selectedSection,
-     imageUrl: downloadURL,
-     createdAt: serverTimestamp(),
+    //  Save post
+    await addDoc(collection(db, "posts"), {
+      userId: CURRENT_USER.uid,
+      username,
+      section,
+      imageUrl,
+      createdAt: serverTimestamp()
     });
 
-    localStorage.removeItem('selectedImage');
-    showMessage('Upload successful! Redirecting...', 'success');
+    showMessage("Posted successfully");
     setTimeout(() => {
-      window.location.href = 'home.html';
-    }, 1500);
-  } catch (error) {
-    showMessage('Upload failed. Please try again.', 'error');
-    progressBar.style.display = 'none';
-    progressPercentage.style.display = 'none';
+      window.location.href = "home.html";
+    }, 1200);
+
+  } catch (err) {
+    console.error(err);
+    showMessage("Upload failed", "error");
+    uploadBtn.disabled = false;
+    uploadBtn.textContent = "Upload Post";
   }
 });
-
-// Helper: convert data URL to file
-function dataURLtoFile(dataUrl, filename) {
-  const arr = dataUrl.split(',');
-  const mime = arr[0].match(/:(.*?);/)[1];
-  const bstr = atob(arr[1]);
-  let n = bstr.length;
-  const u8arr = new Uint8Array(n);
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
-  }
-  return new File([u8arr], filename, { type: mime });
-}
-
