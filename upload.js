@@ -32,14 +32,17 @@ const auth = getAuth(app);
 
 // -------------------- DOM --------------------
 const fileInput = document.getElementById("fileInput");
-const imagePreview = document.getElementById("image-preview");
-const sectionSelect = document.getElementById("section");
-const uploadBtn = document.getElementById("upload-btn");
-const messageBox = document.getElementById("message-box");
+const imagePreview = document.getElementById("imagePreview");
+const imagePicker = document.getElementById("imagePicker");
+const imagePlaceholder = document.getElementById("imagePlaceholder");
+
+const sectionSelect = document.getElementById("sectionSelect");
+const uploadBtn = document.getElementById("uploadBtn");
+const messageBox = document.getElementById("messageBox");
 
 // -------------------- STATE --------------------
 let selectedFile = null;
-let CURRENT_USER = null;
+let currentUser = null;
 
 // -------------------- AUTH --------------------
 onAuthStateChanged(auth, (user) => {
@@ -47,18 +50,36 @@ onAuthStateChanged(auth, (user) => {
     window.location.replace("index.html");
     return;
   }
-  CURRENT_USER = user;
+  currentUser = user;
 });
 
-// -------------------- IMAGE PICK --------------------
+// -------------------- IMAGE PICKER --------------------
+
+// Open gallery when card is tapped
+imagePicker.addEventListener("click", () => {
+  fileInput.click();
+});
+
+// When image selected
 fileInput.addEventListener("change", () => {
   const file = fileInput.files[0];
   if (!file) return;
 
   selectedFile = file;
+
   imagePreview.src = URL.createObjectURL(file);
-  imagePreview.style.display = "block";
+  imagePreview.classList.remove("hidden");
+  imagePlaceholder.style.display = "none";
+
+  updateUploadButtonState();
 });
+
+// -------------------- CATEGORY CHANGE --------------------
+sectionSelect.addEventListener("change", updateUploadButtonState);
+
+function updateUploadButtonState() {
+  uploadBtn.disabled = !(selectedFile && sectionSelect.value);
+}
 
 // -------------------- MESSAGE --------------------
 function showMessage(text, type = "success") {
@@ -69,14 +90,12 @@ function showMessage(text, type = "success") {
 
 // -------------------- UPLOAD --------------------
 uploadBtn.addEventListener("click", async () => {
-  const section = sectionSelect.value;
-
   if (!selectedFile) {
     showMessage("Select an image", "error");
     return;
   }
 
-  if (!section) {
+  if (!sectionSelect.value) {
     showMessage("Choose a category", "error");
     return;
   }
@@ -85,11 +104,11 @@ uploadBtn.addEventListener("click", async () => {
   uploadBtn.textContent = "Uploading...";
 
   try {
-    //  Upload to Cloudinary
+    // Upload to Cloudinary
     const formData = new FormData();
     formData.append("file", selectedFile);
     formData.append("upload_preset", UPLOAD_PRESET);
-    formData.append("folder", section);
+    formData.append("folder", sectionSelect.value);
 
     const res = await fetch(CLOUDINARY_URL, {
       method: "POST",
@@ -99,18 +118,18 @@ uploadBtn.addEventListener("click", async () => {
     const cloudData = await res.json();
     const imageUrl = cloudData.secure_url;
 
-    //  Get username
+    // Get username
     let username = "unknown";
-    const userSnap = await getDoc(doc(db, "users", CURRENT_USER.uid));
+    const userSnap = await getDoc(doc(db, "users", currentUser.uid));
     if (userSnap.exists()) {
       username = userSnap.data().username || "unknown";
     }
 
-    //  Save post
+    // Save post
     await addDoc(collection(db, "posts"), {
-      userId: CURRENT_USER.uid,
+      userId: currentUser.uid,
       username,
-      section,
+      section: sectionSelect.value,
       imageUrl,
       createdAt: serverTimestamp()
     });
@@ -120,10 +139,10 @@ uploadBtn.addEventListener("click", async () => {
       window.location.href = "home.html";
     }, 1200);
 
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
     showMessage("Upload failed", "error");
     uploadBtn.disabled = false;
-    uploadBtn.textContent = "Upload Post";
+    uploadBtn.textContent = "Upload";
   }
 });
