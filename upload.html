@@ -6,10 +6,11 @@
     name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
   />
+
   <link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32">
   <link rel="manifest" href="manifest.json">
-  <title>YEOM · Upload</title>
 
+  <title>YEOM · Upload</title>
   <link rel="stylesheet" href="upload.css" />
 </head>
 
@@ -25,6 +26,7 @@
 
     <!-- IMAGE PICKER -->
     <div class="image-card" id="imagePicker">
+
       <input
         type="file"
         id="fileInput"
@@ -33,7 +35,7 @@
       />
 
       <img
-        id="image-preview"
+        id="imagePreview"
         alt="Selected image"
         class="image-preview hidden"
       />
@@ -44,11 +46,12 @@
         </div>
         <p>Tap to upload</p>
       </div>
+
     </div>
 
     <!-- CATEGORY -->
     <div class="category-wrapper">
-      <select id="section">
+      <select id="sectionSelect">
         <option value="">Choose Category</option>
         <option value="streetwear">Streetwear</option>
         <option value="formal">Formal</option>
@@ -59,12 +62,12 @@
     </div>
 
     <!-- UPLOAD BUTTON -->
-    <button id="upload-btn" disabled>
+    <button id="uploadBtn" disabled>
       Upload
     </button>
 
     <!-- MESSAGE -->
-    <div id="message-box" class="message-box"></div>
+    <div id="messageBox" class="message-box"></div>
 
   </main>
 
@@ -73,5 +76,3 @@
 
 </body>
 </html>
-
-
