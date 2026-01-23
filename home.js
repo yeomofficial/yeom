@@ -96,7 +96,7 @@ async function loadPosts() {
 
   const q = query(
     collection(db, "posts"),
-    orderBy("timestamp", "desc")
+    orderBy("createdAt", "desc")
   );
 
   const snap = await getDocs(q);
@@ -214,6 +214,7 @@ reportSheet.addEventListener("click", async (e) => {
     showToastMessage("Failed to submit report");
   }
 });
+
 
 
 
