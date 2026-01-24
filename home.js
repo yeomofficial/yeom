@@ -7,7 +7,9 @@ import {
   orderBy,
   query,
   addDoc,
-  serverTimestamp
+  serverTimestamp,
+  deleteDoc,        
+  doc               
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import {
   getAuth,
@@ -153,16 +155,30 @@ feed.addEventListener("click", (e) => {
   openPostActions(menuBtn.closest(".post"));
 });
 
-// -------------------- POST ACTION BUTTONS --------------------
+// -------------------- DELETE --------------------
+async function deletePostFromDB(postId) {
+  await deleteDoc(doc(db, "posts", postId));
+}
+
+deleteBtn.addEventListener("click", async () => {
+  if (!activePost) return;
+
+  const postId = activePost.dataset.postId;
+  if (!postId) return;
+
+  try {
+    await deletePostFromDB(postId); 
+    activePost.remove();           
+    closeAllSheets();
+  } catch (err) {
+    console.error("Delete failed:", err);
+  }
+});
+
+// -------------------- REPORT --------------------
 sheetBackdrop.addEventListener("click", closeAllSheets);
 cancelBtn.addEventListener("click", closeAllSheets);
 reportCancelBtn.addEventListener("click", closeAllSheets);
-
-deleteBtn.addEventListener("click", () => {
-  if (!activePost) return;
-  activePost.remove();
-  closeAllSheets();
-});
 
 reportBtn.addEventListener("click", () => {
   hideSheet(postActionsSheet);
@@ -171,14 +187,12 @@ reportBtn.addEventListener("click", () => {
 
 // -------------------- REPORT REASONS --------------------
 function showToastMessage(text) {
-  const toast = document.getElementById("toast");
   if (!toast) return;
 
   toast.textContent = text;
   toast.style.opacity = "1";
   toast.style.transform = "translateX(-50%) translateY(0)";
 
-  // Hide toast after delay
   setTimeout(() => {
     toast.style.opacity = "0";
     toast.style.transform = "translateX(-50%) translateY(10px)";
@@ -192,29 +206,19 @@ reportSheet.addEventListener("click", async (e) => {
   const reason = btn.dataset.reason;
   const postId = activePost.dataset.postId;
 
-  if (!postId || !CURRENT_UID) {
-    showToastMessage("Something went wrong");
-    return;
-  }
-
   try {
     await addDoc(collection(db, "reports"), {
-      postId: postId,
+      postId,
       postOwnerId: activePostOwner,
       reportedBy: CURRENT_UID,
-      reason: reason,
+      reason,
       createdAt: serverTimestamp()
     });
 
     closeAllSheets();
     showToastMessage("Thanks for reporting");
-
   } catch (err) {
     console.error("Report error:", err);
     showToastMessage("Failed to submit report");
   }
 });
-
-
-
-
