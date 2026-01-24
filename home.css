@@ -154,8 +154,8 @@ body {
 
 .heart-img,
 .bookmark-img {
-  width: 44px;
-  height: 44px;
+  width: 32px;
+  height: 32px;
 }
 
 
@@ -271,6 +271,7 @@ body {
   z-index: 3000;
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
+
 
 
 
