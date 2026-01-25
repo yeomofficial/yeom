@@ -175,6 +175,22 @@ feed.addEventListener("click", (e) => {
   openPostActions(menuBtn.closest(".post"));
 });
 
+// -------------------- LIKE & SAVE UI --------------------
+feed.addEventListener("click", (e) => {
+  const likeBtn = e.target.closest(".like-btn");
+  const saveBtn = e.target.closest(".save-btn");
+
+  if (likeBtn) {
+    likeBtn.classList.toggle("active");
+    return;
+  }
+
+  if (saveBtn) {
+    saveBtn.classList.toggle("active");
+    return;
+  }
+});
+
 // -------------------- DELETE --------------------
 async function deletePostFromDB(postId) {
   await deleteDoc(doc(db, "posts", postId));
@@ -242,5 +258,6 @@ reportSheet.addEventListener("click", async (e) => {
     showToastMessage("Failed to submit report");
   }
 });
+
 
 
