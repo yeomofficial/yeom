@@ -158,6 +158,44 @@ body {
   height: 32px;
 }
 
+.like-btn,
+.save-btn {
+  color: var(--text-secondary);
+  transition: color 0.2s ease, transform 0.15s ease;
+}
+
+/* Like active */
+.like-btn.active {
+  color: #e63946; /* red */
+}
+
+/* Save active */
+.save-btn.active {
+  color: var(--text-primary);
+}
+
+/* SVG behavior */
+.like-btn svg,
+.save-btn svg {
+  stroke: currentColor;
+  fill: none;
+  transition: fill 0.2s ease, stroke 0.2s ease;
+}
+
+/* Filled states */
+.like-btn.active svg {
+  fill: currentColor;
+}
+
+.save-btn.active svg {
+  fill: currentColor;
+}
+
+/* Micro interaction */
+.like-btn:active,
+.save-btn:active {
+  transform: scale(0.92);
+}
 
 /* ---------- BOTTOM NAV ---------- */
 .bottom-nav {
@@ -271,6 +309,7 @@ body {
   z-index: 3000;
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
+
 
 
 
