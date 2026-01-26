@@ -75,8 +75,13 @@ function createPost({ postId, username, imageUrl, ownerId }) {
     </div>
 
     <div class="post-img-container">
-      <img class="post-img" src="${imageUrl}" />
-    </div>
+  <img 
+    class="post-img" 
+    src="${imageUrl}" 
+    draggable="false"
+  />
+  <div class="img-shield"></div>
+</div>
 
     <div class="actions">
       <button class="like-btn">
@@ -258,6 +263,7 @@ reportSheet.addEventListener("click", async (e) => {
     showToastMessage("Failed to submit report");
   }
 });
+
 
 
 
