@@ -141,6 +141,7 @@ body {
   position: absolute;
   inset: 0;
   background: transparent;
+  pointer-events: auto;
 }
 
 /* ---------- ACTIONS ---------- */
@@ -324,6 +325,7 @@ body {
   z-index: 3000;
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
+
 
 
 
