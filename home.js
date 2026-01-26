@@ -121,6 +121,17 @@ function createPost({ postId, username, imageUrl, ownerId, likeCount = 0 }) {
       </button>
     </div>
   `;
+  // ---- SYNC UI WITH USER INTERACTIONS ----
+  const likeBtn = post.querySelector(".like-btn");
+  const saveBtn = post.querySelector(".save-btn");
+
+  if (USER_INTERACTIONS?.likedPosts?.[postId]) {
+    likeBtn.classList.add("active");
+  }
+
+  if (USER_INTERACTIONS?.savedPosts?.[postId]) {
+    saveBtn.classList.add("active");
+  }
   return post;
 }
 
@@ -199,3 +210,4 @@ document.addEventListener("contextmenu", (e) => {
     e.preventDefault();
   }
 });
+
