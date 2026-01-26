@@ -264,6 +264,10 @@ reportSheet.addEventListener("click", async (e) => {
   }
 });
 
-
-
+// -------------------- BLOCK IMAGE CONTEXT MENU --------------------
+document.addEventListener("contextmenu", (e) => {
+  if (e.target.closest(".post-img-container")) {
+    e.preventDefault();
+  }
+});
 
