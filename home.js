@@ -8,8 +8,12 @@ import {
   query,
   addDoc,
   serverTimestamp,
-  deleteDoc,        
-  doc               
+  deleteDoc,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  increment
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import {
   getAuth,
@@ -59,8 +63,23 @@ onAuthStateChanged(auth, (user) => {
   loadPosts();
 });
 
+// -------------------- USER INTERACTION DOC --------------------
+async function getUserInteractionRef() {
+  const ref = doc(db, "userInteractions", CURRENT_UID);
+  const snap = await getDoc(ref);
+
+  if (!snap.exists()) {
+    await setDoc(ref, {
+      likedPosts: {},
+      savedPosts: {}
+    });
+  }
+
+  return ref;
+}
+
 // -------------------- POST UI --------------------
-function createPost({ postId, username, imageUrl, ownerId }) {
+function createPost({ postId, username, imageUrl, ownerId, likeCount = 0 }) {
   const post = document.createElement("article");
   post.className = "post";
   post.dataset.ownerId = ownerId;
@@ -75,42 +94,30 @@ function createPost({ postId, username, imageUrl, ownerId }) {
     </div>
 
     <div class="post-img-container">
-  <img 
-    class="post-img" 
-    src="${imageUrl}" 
-    draggable="false"
-  />
-  <div class="img-shield"></div>
-</div>
+      <img class="post-img" src="${imageUrl}" draggable="false" />
+      <div class="img-shield"></div>
+    </div>
 
     <div class="actions">
       <button class="like-btn">
         <svg xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="0.75"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="heart-img">
-        <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
-        <span>0</span>
+          width="24" height="24" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="0.75"
+          stroke-linecap="round" stroke-linejoin="round"
+          class="heart-img">
+          <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/>
+        </svg>
+        <span>${likeCount}</span>
       </button>
 
       <button class="save-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" 
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="0.75"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="bookmark-img">
-        <path d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg"
+          width="24" height="24" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="0.75"
+          stroke-linecap="round" stroke-linejoin="round"
+          class="bookmark-img">
+          <path d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z"/>
+        </svg>
       </button>
     </div>
   `;
@@ -135,132 +142,54 @@ async function loadPosts() {
         postId: docSnap.id,
         username: data.username || "Unknown",
         imageUrl: data.imageUrl,
-        ownerId: data.userId
+        ownerId: data.userId,
+        likeCount: data.likeCount || 0
       })
     );
   });
 }
 
-// -------------------- SHEET HELPERS --------------------
-function showSheet(sheet) {
-  sheetBackdrop.classList.remove("hidden");
-  sheet.classList.remove("hidden");
-  requestAnimationFrame(() => sheet.classList.add("show"));
-}
-
-function hideSheet(sheet) {
-  sheet.classList.remove("show");
-  setTimeout(() => sheet.classList.add("hidden"), 200);
-}
-
-function closeAllSheets() {
-  sheetBackdrop.classList.add("hidden");
-  hideSheet(postActionsSheet);
-  hideSheet(reportSheet);
-  activePost = null;
-  activePostOwner = null;
-}
-
-// -------------------- OPEN POST ACTIONS --------------------
-function openPostActions(post) {
-  activePost = post;
-  activePostOwner = post.dataset.ownerId;
-
-  deleteBtn.classList.toggle("hidden", activePostOwner !== CURRENT_UID);
-  reportBtn.classList.toggle("hidden", activePostOwner === CURRENT_UID);
-
-  hideSheet(reportSheet);
-  showSheet(postActionsSheet);
-}
-
-// -------------------- FEED EVENTS --------------------
-feed.addEventListener("click", (e) => {
-  const menuBtn = e.target.closest(".post-menu");
-  if (!menuBtn) return;
-  openPostActions(menuBtn.closest(".post"));
-});
-
-// -------------------- LIKE & SAVE UI --------------------
-feed.addEventListener("click", (e) => {
+// -------------------- LIKE & SAVE --------------------
+feed.addEventListener("click", async (e) => {
   const likeBtn = e.target.closest(".like-btn");
   const saveBtn = e.target.closest(".save-btn");
 
+  if (!likeBtn && !saveBtn) return;
+
+  const post = e.target.closest(".post");
+  const postId = post.dataset.postId;
+  const userRef = await getUserInteractionRef();
+  const userSnap = await getDoc(userRef);
+  const data = userSnap.data();
+
   if (likeBtn) {
-    likeBtn.classList.toggle("active");
-    return;
+    const countSpan = likeBtn.querySelector("span");
+    const postRef = doc(db, "posts", postId);
+
+    if (data.likedPosts[postId]) {
+      delete data.likedPosts[postId];
+      await updateDoc(userRef, { likedPosts: data.likedPosts });
+      await updateDoc(postRef, { likeCount: increment(-1) });
+      likeBtn.classList.remove("active");
+      countSpan.textContent--;
+    } else {
+      data.likedPosts[postId] = true;
+      await updateDoc(userRef, { likedPosts: data.likedPosts });
+      await updateDoc(postRef, { likeCount: increment(1) });
+      likeBtn.classList.add("active");
+      countSpan.textContent++;
+    }
   }
 
   if (saveBtn) {
-    saveBtn.classList.toggle("active");
-    return;
-  }
-});
-
-// -------------------- DELETE --------------------
-async function deletePostFromDB(postId) {
-  await deleteDoc(doc(db, "posts", postId));
-}
-
-deleteBtn.addEventListener("click", async () => {
-  if (!activePost) return;
-
-  const postId = activePost.dataset.postId;
-  if (!postId) return;
-
-  try {
-    await deletePostFromDB(postId); 
-    activePost.remove();           
-    closeAllSheets();
-  } catch (err) {
-    console.error("Delete failed:", err);
-  }
-});
-
-// -------------------- REPORT --------------------
-sheetBackdrop.addEventListener("click", closeAllSheets);
-cancelBtn.addEventListener("click", closeAllSheets);
-reportCancelBtn.addEventListener("click", closeAllSheets);
-
-reportBtn.addEventListener("click", () => {
-  hideSheet(postActionsSheet);
-  showSheet(reportSheet);
-});
-
-// -------------------- REPORT REASONS --------------------
-function showToastMessage(text) {
-  if (!toast) return;
-
-  toast.textContent = text;
-  toast.style.opacity = "1";
-  toast.style.transform = "translateX(-50%) translateY(0)";
-
-  setTimeout(() => {
-    toast.style.opacity = "0";
-    toast.style.transform = "translateX(-50%) translateY(10px)";
-  }, 2500);
-}
-
-reportSheet.addEventListener("click", async (e) => {
-  const btn = e.target.closest(".report-reason");
-  if (!btn || !activePost) return;
-
-  const reason = btn.dataset.reason;
-  const postId = activePost.dataset.postId;
-
-  try {
-    await addDoc(collection(db, "reports"), {
-      postId,
-      postOwnerId: activePostOwner,
-      reportedBy: CURRENT_UID,
-      reason,
-      createdAt: serverTimestamp()
-    });
-
-    closeAllSheets();
-    showToastMessage("Thanks for reporting");
-  } catch (err) {
-    console.error("Report error:", err);
-    showToastMessage("Failed to submit report");
+    if (data.savedPosts[postId]) {
+      delete data.savedPosts[postId];
+      saveBtn.classList.remove("active");
+    } else {
+      data.savedPosts[postId] = true;
+      saveBtn.classList.add("active");
+    }
+    await updateDoc(userRef, { savedPosts: data.savedPosts });
   }
 });
 
@@ -270,4 +199,3 @@ document.addEventListener("contextmenu", (e) => {
     e.preventDefault();
   }
 });
-
