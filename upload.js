@@ -131,7 +131,8 @@ uploadBtn.addEventListener("click", async () => {
       username,
       section: sectionSelect.value,
       imageUrl,
-      createdAt: serverTimestamp()
+      createdAt: serverTimestamp(),
+      likeCount: 0
     });
 
     showMessage("Posted successfully");
@@ -146,3 +147,4 @@ uploadBtn.addEventListener("click", async () => {
     uploadBtn.textContent = "Upload";
   }
 });
+
