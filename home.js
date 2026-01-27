@@ -174,11 +174,14 @@ function openPostActions(post) {
 }
 
 // -------------------- FEED MENU EVENTS --------------------
-feed.addEventListener("click", (e) => {
+document.addEventListener("click", (e) => {
   const menuBtn = e.target.closest(".post-menu");
   if (!menuBtn) return;
 
-  openPostActions(menuBtn.closest(".post"));
+  const post = menuBtn.closest(".post");
+  if (!post) return;
+
+  openPostActions(post);
 });
 
 // -------------------- LOAD POSTS --------------------
@@ -207,7 +210,7 @@ async function loadPosts() {
 }
 
 // -------------------- LIKE & SAVE --------------------
-feed.addEventListener("click", async (e) => {
+document.addEventListener("click", async (e) => {
   const likeBtn = e.target.closest(".like-btn");
   const saveBtn = e.target.closest(".save-btn");
 
@@ -289,5 +292,6 @@ reportBtn.addEventListener("click", () => {
   hideSheet(postActionsSheet);
   showSheet(reportSheet);
 });
+
 
 
