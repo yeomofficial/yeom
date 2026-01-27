@@ -173,6 +173,14 @@ function openPostActions(post) {
   showSheet(postActionsSheet);
 }
 
+// -------------------- FEED MENU EVENTS --------------------
+feed.addEventListener("click", (e) => {
+  const menuBtn = e.target.closest(".post-menu");
+  if (!menuBtn) return;
+
+  openPostActions(menuBtn.closest(".post"));
+});
+
 // -------------------- LOAD POSTS --------------------
 async function loadPosts() {
   feed.innerHTML = "";
@@ -181,14 +189,6 @@ async function loadPosts() {
     collection(db, "posts"),
     orderBy("createdAt", "desc")
   );
-
-  // -------------------- FEED MENU EVENTS --------------------
-feed.addEventListener("click", (e) => {
-  const menuBtn = e.target.closest(".post-menu");
-  if (!menuBtn) return;
-
-  openPostActions(menuBtn.closest(".post"));
-});
 
   const snap = await getDocs(q);
 
@@ -273,3 +273,4 @@ reportBtn.addEventListener("click", () => {
   hideSheet(postActionsSheet);
   showSheet(reportSheet);
 });
+
