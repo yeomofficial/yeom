@@ -59,6 +59,26 @@ let USER_INTERACTIONS = {
   savedPosts: {}
 };
 
+// -------------------- SHEET HELPERS --------------------
+function showSheet(sheet) {
+  sheetBackdrop.classList.remove("hidden");
+  sheet.classList.remove("hidden");
+  requestAnimationFrame(() => sheet.classList.add("show"));
+}
+
+function hideSheet(sheet) {
+  sheet.classList.remove("show");
+  setTimeout(() => sheet.classList.add("hidden"), 200);
+}
+
+function closeAllSheets() {
+  sheetBackdrop.classList.add("hidden");
+  hideSheet(postActionsSheet);
+  hideSheet(reportSheet);
+  activePost = null;
+  activePostOwner = null;
+}
+
 // -------------------- AUTH --------------------
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
@@ -141,6 +161,18 @@ function createPost({ postId, username, imageUrl, ownerId, likeCount = 0 }) {
   return post;
 }
 
+// -------------------- OPEN POST ACTIONS --------------------
+function openPostActions(post) {
+  activePost = post;
+  activePostOwner = post.dataset.ownerId;
+
+  deleteBtn.classList.toggle("hidden", activePostOwner !== CURRENT_UID);
+  reportBtn.classList.toggle("hidden", activePostOwner === CURRENT_UID);
+
+  hideSheet(reportSheet);
+  showSheet(postActionsSheet);
+}
+
 // -------------------- LOAD POSTS --------------------
 async function loadPosts() {
   feed.innerHTML = "";
@@ -149,6 +181,14 @@ async function loadPosts() {
     collection(db, "posts"),
     orderBy("createdAt", "desc")
   );
+
+  // -------------------- FEED MENU EVENTS --------------------
+feed.addEventListener("click", (e) => {
+  const menuBtn = e.target.closest(".post-menu");
+  if (!menuBtn) return;
+
+  openPostActions(menuBtn.closest(".post"));
+});
 
   const snap = await getDocs(q);
 
@@ -222,4 +262,14 @@ document.addEventListener("contextmenu", (e) => {
   if (e.target.closest(".post-img-container")) {
     e.preventDefault();
   }
+});
+
+// -------------------- SHEET CONTROLS --------------------
+sheetBackdrop.addEventListener("click", closeAllSheets);
+cancelBtn.addEventListener("click", closeAllSheets);
+reportCancelBtn.addEventListener("click", closeAllSheets);
+
+reportBtn.addEventListener("click", () => {
+  hideSheet(postActionsSheet);
+  showSheet(reportSheet);
 });
