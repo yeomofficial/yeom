@@ -293,5 +293,40 @@ reportBtn.addEventListener("click", () => {
   showSheet(reportSheet);
 });
 
+// -------------------- REPORT POST --------------------
+document.addEventListener("click", async (e) => {
+  const reasonBtn = e.target.closest(".report-reason");
+  if (!reasonBtn) return;
+  if (!activePost) return;
 
+  const reason = reasonBtn.dataset.reason;
+  const postId = activePost.dataset.postId;
 
+  try {
+    await addDoc(collection(db, "reports"), {
+      postId,
+      reportedBy: CURRENT_UID,
+      postOwner: activePostOwner,
+      reason,
+      createdAt: serverTimestamp()
+    });
+
+    closeAllSheets();
+    showToast("Report submitted");
+
+  } catch (err) {
+    console.error("Report failed:", err);
+    showToast("Failed to report");
+  }
+});
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.remove("toast-hidden");
+  toast.classList.add("toast-show");
+
+  setTimeout(() => {
+    toast.classList.remove("toast-show");
+    toast.classList.add("toast-hidden");
+  }, 2500);
+}
