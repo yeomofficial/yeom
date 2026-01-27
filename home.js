@@ -53,30 +53,34 @@ let CURRENT_UID = null;
 let activePost = null;
 let activePostOwner = null;
 
+//  IN-MEMORY INTERACTIONS
+let USER_INTERACTIONS = {
+  likedPosts: {},
+  savedPosts: {}
+};
+
 // -------------------- AUTH --------------------
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
   if (!user) {
     window.location.replace("index.html");
     return;
   }
-  CURRENT_UID = user.uid;
-  loadPosts();
-});
 
-// -------------------- USER INTERACTION DOC --------------------
-async function getUserInteractionRef() {
+  CURRENT_UID = user.uid;
+
+  // Load interaction memory ONCE
   const ref = doc(db, "userInteractions", CURRENT_UID);
   const snap = await getDoc(ref);
 
   if (!snap.exists()) {
-    await setDoc(ref, {
-      likedPosts: {},
-      savedPosts: {}
-    });
+    await setDoc(ref, { likedPosts: {}, savedPosts: {} });
+    USER_INTERACTIONS = { likedPosts: {}, savedPosts: {} };
+  } else {
+    USER_INTERACTIONS = snap.data();
   }
 
-  return ref;
-}
+  loadPosts();
+});
 
 // -------------------- POST UI --------------------
 function createPost({ postId, username, imageUrl, ownerId, likeCount = 0 }) {
@@ -121,7 +125,19 @@ function createPost({ postId, username, imageUrl, ownerId, likeCount = 0 }) {
       </button>
     </div>
   `;
-  
+
+  // ---- SYNC UI WITH MEMORY ----
+  const likeBtn = post.querySelector(".like-btn");
+  const saveBtn = post.querySelector(".save-btn");
+
+  if (USER_INTERACTIONS.likedPosts[postId]) {
+    likeBtn.classList.add("active");
+  }
+
+  if (USER_INTERACTIONS.savedPosts[postId]) {
+    saveBtn.classList.add("active");
+  }
+
   return post;
 }
 
@@ -159,38 +175,45 @@ feed.addEventListener("click", async (e) => {
 
   const post = e.target.closest(".post");
   const postId = post.dataset.postId;
-  const userRef = await getUserInteractionRef();
-  const userSnap = await getDoc(userRef);
-  const data = userSnap.data();
+  const postRef = doc(db, "posts", postId);
+  const userRef = doc(db, "userInteractions", CURRENT_UID);
 
+  //  LIKE
   if (likeBtn) {
     const countSpan = likeBtn.querySelector("span");
-    const postRef = doc(db, "posts", postId);
 
-    if (data.likedPosts[postId]) {
-      delete data.likedPosts[postId];
-      await updateDoc(userRef, { likedPosts: data.likedPosts });
-      await updateDoc(postRef, { likeCount: increment(-1) });
+    if (USER_INTERACTIONS.likedPosts[postId]) {
+      delete USER_INTERACTIONS.likedPosts[postId];
       likeBtn.classList.remove("active");
       countSpan.textContent--;
+
+      await updateDoc(postRef, { likeCount: increment(-1) });
     } else {
-      data.likedPosts[postId] = true;
-      await updateDoc(userRef, { likedPosts: data.likedPosts });
-      await updateDoc(postRef, { likeCount: increment(1) });
+      USER_INTERACTIONS.likedPosts[postId] = true;
       likeBtn.classList.add("active");
       countSpan.textContent++;
+
+      await updateDoc(postRef, { likeCount: increment(1) });
     }
+
+    await updateDoc(userRef, {
+      likedPosts: USER_INTERACTIONS.likedPosts
+    });
   }
 
+  //  SAVE
   if (saveBtn) {
-    if (data.savedPosts[postId]) {
-      delete data.savedPosts[postId];
+    if (USER_INTERACTIONS.savedPosts[postId]) {
+      delete USER_INTERACTIONS.savedPosts[postId];
       saveBtn.classList.remove("active");
     } else {
-      data.savedPosts[postId] = true;
+      USER_INTERACTIONS.savedPosts[postId] = true;
       saveBtn.classList.add("active");
     }
-    await updateDoc(userRef, { savedPosts: data.savedPosts });
+
+    await updateDoc(userRef, {
+      savedPosts: USER_INTERACTIONS.savedPosts
+    });
   }
 });
 
@@ -200,5 +223,3 @@ document.addEventListener("contextmenu", (e) => {
     e.preventDefault();
   }
 });
-
-
