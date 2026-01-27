@@ -314,7 +314,6 @@ body {
   bottom: 90px;
   left: 50%;
   transform: translateX(-50%) translateY(10px);
-
   background: #111;
   color: #fff;
   padding: 10px 16px;
@@ -322,9 +321,10 @@ body {
   font-size: 14px;
   pointer-events: none;
   opacity: 0;
-  z-index: 3000;
+  z-index: 9990;
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
+
 
 
 
