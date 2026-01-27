@@ -264,6 +264,22 @@ document.addEventListener("contextmenu", (e) => {
   }
 });
 
+// -------------------- DELETE POST --------------------
+deleteBtn.addEventListener("click", async () => {
+  if (!activePost) return;
+
+  const postId = activePost.dataset.postId;
+  if (!postId) return;
+
+  try {
+    await deleteDoc(doc(db, "posts", postId));
+    activePost.remove();
+    closeAllSheets();
+  } catch (err) {
+    console.error("Delete failed:", err);
+  }
+});
+
 // -------------------- SHEET CONTROLS --------------------
 sheetBackdrop.addEventListener("click", closeAllSheets);
 cancelBtn.addEventListener("click", closeAllSheets);
@@ -273,4 +289,5 @@ reportBtn.addEventListener("click", () => {
   hideSheet(postActionsSheet);
   showSheet(reportSheet);
 });
+
 
