@@ -2,10 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Profile</title>
+  <title>YEOM · Profile</title>
   <link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32">
   <link rel="stylesheet" href="profile.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="manifest" href="manifest.json">
+  <script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker
+        .register("./service-worker.js")
+        .then(() => {
+          console.log("Service Worker registered");
+        })
+        .catch((err) => {
+          console.log("SW failed", err);
+        });
+    });
+  }
+  </script>
 </head>
 <body>
 
@@ -46,13 +61,9 @@
       </div>
     </div>
 
-    <div class="post-save-tabs">
-      <button id="postsTab" class="active">Posts</button>
-      <button id="savedTab">Saved</button>
-    </div>
-
     <div class="user-posts" id="userPosts">
-      <p style="margin-top: 50px;">User posts will appear here!</p>
+  <h2 class="empty-title">No fits yet</h2>
+  <p class="empty-sub">Drop your first look</p>
     </div>
   </section>
 
@@ -94,6 +105,7 @@
 
 </body>
 </html>
+
 
 
 
