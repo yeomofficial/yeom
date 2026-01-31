@@ -103,9 +103,8 @@ body {
 
 .profile-divider {
   width: 85%;
-  height: 1px;
-  background-color: #e5e5e5;
   margin: 25px auto 10px;
+  border-top: 1px solid #dcdcdc;
 }
   
   .user-posts {
@@ -156,3 +155,4 @@ nav {
   .spot-button:hover {
     background-color: #333;
   }
+
