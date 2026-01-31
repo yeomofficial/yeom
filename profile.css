@@ -88,6 +88,10 @@ body {
   .counts div {
     text-align: center;
   }
+
+.count-number {
+  font-weight: 600;
+}
   
   .empty-title {
   margin-top: 40px;
@@ -155,5 +159,6 @@ nav {
   .spot-button:hover {
     background-color: #333;
   }
+
 
 
