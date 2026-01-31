@@ -11,6 +11,19 @@
   <link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32">
   <link rel="stylesheet" href="home.css" />
   <link rel="manifest" href="manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => {
+        console.log('Service Worker registered:', reg.scope);
+      })
+      .catch(err => {
+        console.error('Service Worker registration failed:', err);
+      });
+  });
+    }
+  </script>
 </head>
 
 <body>
@@ -119,6 +132,7 @@
 
 </body>
 </html>
+
 
 
 
