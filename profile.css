@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -87,28 +89,17 @@ body {
     text-align: center;
   }
   
-  .post-save-tabs {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-    border-top: 1px solid #ccc;
-  }
-  
-  .post-save-tabs button {
-    flex: 1;
-    padding: 12px 0;
-    background: none;
-    border: none;
-    font-weight: bold;
-    font-size: 16px;
-    color: #555;
-    cursor: pointer;
-  }
-  
-  .post-save-tabs button.active {
-    border-bottom: 2px solid black;
-    color: black;
-  }
+  .empty-title {
+  margin-top: 40px;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.empty-sub {
+  margin-top: 8px;
+  font-size: 16px;
+  color: #666;
+}
   
   .user-posts {
     padding: 20px;
@@ -159,6 +150,7 @@ nav {
     background-color: #333;
   }
   
+
 
 
 
