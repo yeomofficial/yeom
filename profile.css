@@ -121,6 +121,20 @@ button {
     text-align: center;
   }
 
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.post-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
   .home-img,
   .search-img,
   .lumi-img,
@@ -163,6 +177,7 @@ nav {
   .spot-button:hover {
     background-color: #333;
   }
+
 
 
 
