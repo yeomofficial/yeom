@@ -108,12 +108,18 @@ window.addEventListener("DOMContentLoaded", () => {
       document.querySelector(".profile-header").appendChild(spotBtn);
     }
 
-    /* ---------- USER POSTS ---------- */
+  /* ---------- USER POSTS ---------- */
 const postsGrid = document.getElementById("postsGrid");
 const emptyTitle = document.querySelector(".empty-title");
 const emptySub = document.querySelector(".empty-sub");
 
-// safety reset
+// HARD SAFETY — prevents profile crash
+if (!postsGrid || !emptyTitle || !emptySub) {
+  console.warn("Post UI elements missing");
+  return;
+}
+
+// reset UI safely
 postsGrid.innerHTML = "";
 emptyTitle.style.display = "block";
 emptySub.style.display = "block";
@@ -126,14 +132,17 @@ const postsQuery = query(
 
 const postsSnap = await getDocs(postsQuery);
 
-// post count (REAL)
+// post count
 const postCount = postsSnap.size;
 
-// update UI count if needed
-const postCountEl = document.querySelector(".count-number");
+//  FIX: target ONLY the Posts number
+const postCountEl = document.querySelector(".counts div:first-child .count-number");
 if (postCountEl) postCountEl.innerText = postCount;
 
-if (postCount === 0) return;
+// if no posts → keep empty state (DO NOT return globally)
+if (postCount === 0) {
+  return;
+}
 
 // hide empty state
 emptyTitle.style.display = "none";
@@ -146,10 +155,7 @@ postsSnap.forEach((docSnap) => {
 
   const postDiv = document.createElement("div");
   postDiv.className = "post-card";
-
-  postDiv.innerHTML = `
-    <img src="${post.imageUrl}" alt="Post">
-  `;
+  postDiv.innerHTML = `<img src="${post.imageUrl}" alt="Post">`;
 
   postsGrid.appendChild(postDiv);
 });
