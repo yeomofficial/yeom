@@ -122,34 +122,45 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ---------- USER POSTS ---------- */
-const postsGrid = document.getElementById("postsGrid");
-const emptyTitle = document.getElementById("emptyTitle");
-const emptySub = document.getElementById("emptySub");
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.replace("index.html");
+    return;
+  }
 
-const postsQuery = query(
-  collection(db, "posts"),
-  where("userId", "==", profileUserId),
-  orderBy("createdAt", "desc")
-);
+  const params = new URLSearchParams(window.location.search);
+  const profileUserId = params.get("uid") || user.uid;
 
-const postsSnap = await getDocs(postsQuery);
+  //  POSTS QUERY MUST LIVE HERE
+  const postsGrid = document.getElementById("userPosts");
+  const emptyTitle = document.querySelector(".empty-title");
+  const emptySub = document.querySelector(".empty-sub");
 
-if (!postsSnap.empty) {
-  emptyTitle.style.display = "none";
-  emptySub.style.display = "none";
+  const postsQuery = query(
+    collection(db, "posts"),
+    where("userId", "==", profileUserId),
+    orderBy("createdAt", "desc")
+  );
 
-  postsSnap.forEach((doc) => {
-    const post = doc.data();
+  const postsSnap = await getDocs(postsQuery);
 
-    const postDiv = document.createElement("div");
-    postDiv.className = "post-card";
+  if (!postsSnap.empty) {
+    emptyTitle.style.display = "none";
+    emptySub.style.display = "none";
 
-    postDiv.innerHTML = `
-      <img src="${post.imageUrl}" alt="Post">
-    `;
+    postsSnap.forEach((doc) => {
+      const post = doc.data();
 
-    postsGrid.appendChild(postDiv);
-  });
-}
+      if (!post.imageUrl) return;
 
+      const postDiv = document.createElement("div");
+      postDiv.className = "post-card";
 
+      postDiv.innerHTML = `
+        <img src="${post.imageUrl}" alt="Post">
+      `;
+
+      postsGrid.appendChild(postDiv);
+    });
+  }
+});
