@@ -13,6 +13,13 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
+import {
+  query,
+  where,
+  orderBy,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
 /* ---------- DOM READY SAFETY ---------- */
 window.addEventListener("DOMContentLoaded", () => {
 
@@ -114,5 +121,35 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+/* ---------- USER POSTS ---------- */
+const postsGrid = document.getElementById("postsGrid");
+const emptyTitle = document.getElementById("emptyTitle");
+const emptySub = document.getElementById("emptySub");
+
+const postsQuery = query(
+  collection(db, "posts"),
+  where("userId", "==", profileUserId),
+  orderBy("createdAt", "desc")
+);
+
+const postsSnap = await getDocs(postsQuery);
+
+if (!postsSnap.empty) {
+  emptyTitle.style.display = "none";
+  emptySub.style.display = "none";
+
+  postsSnap.forEach((doc) => {
+    const post = doc.data();
+
+    const postDiv = document.createElement("div");
+    postDiv.className = "post-card";
+
+    postDiv.innerHTML = `
+      <img src="${post.imageUrl}" alt="Post">
+    `;
+
+    postsGrid.appendChild(postDiv);
+  });
+}
 
 
