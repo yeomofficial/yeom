@@ -109,43 +109,47 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ---------- USER POSTS ---------- */
-    const postsContainer = document.getElementById("userPosts");
+const postsGrid = document.getElementById("postsGrid");
+const emptyTitle = document.querySelector(".empty-title");
+const emptySub = document.querySelector(".empty-sub");
 
-    // default empty state
-    postsContainer.innerHTML = `<p class="no-posts">No fits yet</p>`;
+// safety reset
+postsGrid.innerHTML = "";
+emptyTitle.style.display = "block";
+emptySub.style.display = "block";
 
-    const postsQuery = query(
-      collection(db, "posts"),
-      where("userId", "==", profileUserId),
-      orderBy("createdAt", "desc")
-    );
+const postsQuery = query(
+  collection(db, "posts"),
+  where("userId", "==", profileUserId),
+  orderBy("createdAt", "desc")
+);
 
-    const postsSnap = await getDocs(postsQuery);
+const postsSnap = await getDocs(postsQuery);
 
-    // THIS is the only correct post count
-    const postCount = postsSnap.size;
+// post count (REAL)
+const postCount = postsSnap.size;
 
-    // optional: show post count in UI if you have an element
-    const postCountEl = document.getElementById("postCount");
-    if (postCountEl) postCountEl.innerText = postCount;
+// update UI count if needed
+const postCountEl = document.querySelector(".count-number");
+if (postCountEl) postCountEl.innerText = postCount;
 
-    if (postCount === 0) return;
+if (postCount === 0) return;
 
-    // remove empty state
-    postsContainer.innerHTML = "";
+// hide empty state
+emptyTitle.style.display = "none";
+emptySub.style.display = "none";
 
-    postsSnap.forEach((docSnap) => {
-      const post = docSnap.data();
-      if (!post.imageUrl) return;
+// render posts
+postsSnap.forEach((docSnap) => {
+  const post = docSnap.data();
+  if (!post.imageUrl) return;
 
-      const postDiv = document.createElement("div");
-      postDiv.className = "post-card";
+  const postDiv = document.createElement("div");
+  postDiv.className = "post-card";
 
-      postDiv.innerHTML = `
-        <img src="${post.imageUrl}" alt="Post">
-      `;
+  postDiv.innerHTML = `
+    <img src="${post.imageUrl}" alt="Post">
+  `;
 
-      postsContainer.appendChild(postDiv);
-    });
-  });
+  postsGrid.appendChild(postDiv);
 });
