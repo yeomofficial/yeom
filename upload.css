@@ -97,6 +97,10 @@ body {
   width: 100%;
 }
 
+.choosecat {
+  font-family: 'Montserrat', sans-serif;
+}
+
 #sectionSelect {
   width: 100%;
   padding: 14px 16px;
@@ -145,4 +149,5 @@ body {
   background: #1c1c1c;
   color: #ffffff;
 }
+
 
