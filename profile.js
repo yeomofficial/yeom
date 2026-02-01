@@ -16,7 +16,6 @@ import {
 
 /* ---------- DOM READY ---------- */
 window.addEventListener("DOMContentLoaded", () => {
-
   onAuthStateChanged(auth, async (user) => {
     if (!user) {
       window.location.replace("index.html");
@@ -112,6 +111,9 @@ window.addEventListener("DOMContentLoaded", () => {
     /* ---------- USER POSTS ---------- */
     const postsContainer = document.getElementById("userPosts");
 
+    // default empty state
+    postsContainer.innerHTML = `<p class="no-posts">No fits yet</p>`;
+
     const postsQuery = query(
       collection(db, "posts"),
       where("userId", "==", profileUserId),
@@ -120,23 +122,30 @@ window.addEventListener("DOMContentLoaded", () => {
 
     const postsSnap = await getDocs(postsQuery);
 
-    if (!postsSnap.empty) {
-      //  remove "No fits yet"
-      postsContainer.innerHTML = "";
+    // THIS is the only correct post count
+    const postCount = postsSnap.size;
 
-      postsSnap.forEach((doc) => {
-        const post = doc.data();
-        if (!post.imageUrl) return;
+    // optional: show post count in UI if you have an element
+    const postCountEl = document.getElementById("postCount");
+    if (postCountEl) postCountEl.innerText = postCount;
 
-        const postDiv = document.createElement("div");
-        postDiv.className = "post-card";
+    if (postCount === 0) return;
 
-        postDiv.innerHTML = `
-          <img src="${post.imageUrl}" alt="Post">
-        `;
+    // remove empty state
+    postsContainer.innerHTML = "";
 
-        postsContainer.appendChild(postDiv);
-      });
-    }
+    postsSnap.forEach((docSnap) => {
+      const post = docSnap.data();
+      if (!post.imageUrl) return;
+
+      const postDiv = document.createElement("div");
+      postDiv.className = "post-card";
+
+      postDiv.innerHTML = `
+        <img src="${post.imageUrl}" alt="Post">
+      `;
+
+      postsContainer.appendChild(postDiv);
+    });
   });
 });
