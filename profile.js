@@ -1,8 +1,5 @@
 import { auth, db } from "./fbase.js";
-import {
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 import {
   doc,
   getDoc,
@@ -10,28 +7,26 @@ import {
   increment,
   collection,
   addDoc,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-
-import {
+  serverTimestamp,
   query,
   where,
   orderBy,
   getDocs
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-/* ---------- DOM READY SAFETY ---------- */
+/* ---------- DOM READY ---------- */
 window.addEventListener("DOMContentLoaded", () => {
 
-  /* ---------- AUTH + PROFILE ---------- */
   onAuthStateChanged(auth, async (user) => {
     if (!user) {
       window.location.replace("index.html");
       return;
     }
 
+    /* ---------- PAGE CONTEXT ---------- */
     const params = new URLSearchParams(window.location.search);
     const profileUserId = params.get("uid") || user.uid;
+    const isMyProfile = profileUserId === user.uid;
 
     const currentUserRef = doc(db, "users", user.uid);
     const profileUserRef = doc(db, "users", profileUserId);
@@ -44,27 +39,22 @@ window.addEventListener("DOMContentLoaded", () => {
     if (!profileSnap.exists()) return;
 
     const profileData = profileSnap.data();
-    const currentUserData = currentSnap.exists()
-      ? currentSnap.data()
-      : {};
+    const currentUserData = currentSnap.exists() ? currentSnap.data() : {};
 
-    /* USERNAME */
+    /* ---------- PROFILE UI ---------- */
     document.getElementById("loggedInUsername").innerText =
       "@" + profileData.username;
 
-    /* PROFILE IMAGE */
     document.getElementById("profileImage").src =
       profileData.profile || "person.png";
 
-    /* COUNTS */
     document.getElementById("spottersCount").innerText =
       profileData.spotters || 0;
 
     document.getElementById("spottingCount").innerText =
       profileData.spotting || 0;
 
-    const isMyProfile = profileUserId === user.uid;
-
+    /* ---------- SPOT BUTTON ---------- */
     if (!isMyProfile) {
       document.getElementById("editProfileBtn").style.display = "none";
 
@@ -118,49 +108,35 @@ window.addEventListener("DOMContentLoaded", () => {
 
       document.querySelector(".profile-header").appendChild(spotBtn);
     }
+
+    /* ---------- USER POSTS ---------- */
+    const postsContainer = document.getElementById("userPosts");
+
+    const postsQuery = query(
+      collection(db, "posts"),
+      where("userId", "==", profileUserId),
+      orderBy("createdAt", "desc")
+    );
+
+    const postsSnap = await getDocs(postsQuery);
+
+    if (!postsSnap.empty) {
+      //  remove "No fits yet"
+      postsContainer.innerHTML = "";
+
+      postsSnap.forEach((doc) => {
+        const post = doc.data();
+        if (!post.imageUrl) return;
+
+        const postDiv = document.createElement("div");
+        postDiv.className = "post-card";
+
+        postDiv.innerHTML = `
+          <img src="${post.imageUrl}" alt="Post">
+        `;
+
+        postsContainer.appendChild(postDiv);
+      });
+    }
   });
-});
-
-/* ---------- USER POSTS ---------- */
-onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    window.location.replace("index.html");
-    return;
-  }
-
-  const params = new URLSearchParams(window.location.search);
-  const profileUserId = params.get("uid") || user.uid;
-
-  //  POSTS QUERY MUST LIVE HERE
-  const postsGrid = document.getElementById("userPosts");
-  const emptyTitle = document.querySelector(".empty-title");
-  const emptySub = document.querySelector(".empty-sub");
-
-  const postsQuery = query(
-    collection(db, "posts"),
-    where("userId", "==", profileUserId),
-    orderBy("createdAt", "desc")
-  );
-
-  const postsSnap = await getDocs(postsQuery);
-
-  if (!postsSnap.empty) {
-    emptyTitle.style.display = "none";
-    emptySub.style.display = "none";
-
-    postsSnap.forEach((doc) => {
-      const post = doc.data();
-
-      if (!post.imageUrl) return;
-
-      const postDiv = document.createElement("div");
-      postDiv.className = "post-card";
-
-      postDiv.innerHTML = `
-        <img src="${post.imageUrl}" alt="Post">
-      `;
-
-      postsGrid.appendChild(postDiv);
-    });
-  }
 });
