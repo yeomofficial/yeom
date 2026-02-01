@@ -10,7 +10,6 @@ const STATIC_ASSETS = [
   "./index.html",
   "./login.html",
   "./home.html",
-  "./profile.html",
 
   // Images (safe to cache)
   "./yeom_img.png",
