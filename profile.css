@@ -34,7 +34,6 @@ body {
   }
   
   .profile-section {
-    padding: 20px;
     margin-top: 90px;
   }
   
@@ -116,12 +115,12 @@ button {
 }
   
   .user-posts {
-    padding: 12px 10px 28px;
     min-height: 300px;
     text-align: center;
   }
 
 .posts-grid {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0;     
@@ -142,7 +141,7 @@ button {
   margin: 0;
   background: #ffffff;          
   padding: 6px 6px 18px;    
-  border: 0.5px solid #000;  
+  border: 1px solid #000;
   box-sizing: border-box;
 }
 
@@ -193,5 +192,6 @@ nav {
 .empty-sub {
   margin: 0;
 }
+
 
 
