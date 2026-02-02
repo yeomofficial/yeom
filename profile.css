@@ -4,7 +4,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: white;
+    background-color: #f7f7f7;
   }
   
   header {
@@ -124,8 +124,9 @@ button {
 .posts-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
-  margin-top: 10px;
+  gap: 8px;          
+  margin-top: 12px;
+  padding: 6px;     
 }
 
 .post-card img {
@@ -133,6 +134,16 @@ button {
   aspect-ratio: 1 / 1;
   object-fit: cover;
   display: block;
+  border-radius: 4px;
+}
+
+.post-card {
+  background: #ffffff;          
+  padding: 6px;                 
+  padding-bottom: 14px;        
+  border: 1px solid #ededed;   
+  border-radius: 6px;
+  box-sizing: border-box;
 }
 
   .home-img,
@@ -177,6 +188,7 @@ nav {
   .spot-button:hover {
     background-color: #333;
   }
+
 
 
 
