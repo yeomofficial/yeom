@@ -112,35 +112,28 @@ window.addEventListener("DOMContentLoaded", () => {
     const emptyTitle = document.querySelector(".empty-title");
     const emptySub = document.querySelector(".empty-sub");
 
-    // if post UI missing, DO NOT crash profile
-    if (!postsGrid || !emptyTitle || !emptySub) {
-      console.warn("Post UI elements missing");
-      return;
-    }
+    if (!postsGrid || !emptyTitle || !emptySub) return;
 
-    // reset UI
     postsGrid.innerHTML = "";
-    emptyTitle.style.display = "block";
-    emptySub.style.display = "block";
+    emptyTitle.style.visibility = "visible";
+    emptySub.style.visibility = "visible";
 
     const postsQuery = query(
       collection(db, "posts"),
-      where("userId", "==", profileUserId) // NO orderBy → NO INDEX REQUIRED
+      where("userId", "==", profileUserId)
     );
 
     const postsSnap = await getDocs(postsQuery);
 
-    // update ONLY Posts count
     const postCountEl = document.querySelector(
       ".counts div:first-child .count-number"
     );
     if (postCountEl) postCountEl.innerText = postsSnap.size;
 
-    // if no posts, keep empty UI
     if (postsSnap.size === 0) return;
 
-    emptyTitle.style.display = "none";
-    emptySub.style.display = "none";
+    emptyTitle.style.visibility = "hidden";
+    emptySub.style.visibility = "hidden";
 
     postsSnap.forEach((docSnap) => {
       const post = docSnap.data();
