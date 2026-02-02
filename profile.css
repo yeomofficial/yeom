@@ -140,9 +140,8 @@ button {
   width: 100%;
   margin: 0;
   background: #ffffff;          
-  padding: 6px 6px 18px;    
-  border-left: 1px solid #413839; 
-  border-right: 1px solid #413839;
+  padding: 6px 6px 18px;   
+  border-right: 0.5px solid #413839;
   box-sizing: border-box;
 }
 
@@ -193,3 +192,4 @@ nav {
 .empty-sub {
   margin: 0;
 }
+
