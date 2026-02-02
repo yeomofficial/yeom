@@ -115,7 +115,7 @@ button {
 }
   
   .user-posts {
-    min-height: 450px;
+    min-height: 600px;
     text-align: center;
   }
 
@@ -141,8 +141,8 @@ button {
   margin: 0;
   background: #ffffff;          
   padding: 6px 6px 18px;    
-  border-left: 5px solid ##413839; 
-  border-right: 5px solid ##413839;
+  border-left: 1px solid #413839; 
+  border-right: 1px solid #413839;
   box-sizing: border-box;
 }
 
@@ -193,7 +193,3 @@ nav {
 .empty-sub {
   margin: 0;
 }
-
-
-
-
