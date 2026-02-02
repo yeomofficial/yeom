@@ -123,9 +123,10 @@ button {
 
 .posts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-  margin-top: 6px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;     
   padding: 0;
+  margin-top: 6px;
 }
 
 .post-card img {
@@ -142,9 +143,8 @@ button {
   margin: 0 auto;
   background: #ffffff;          
   padding: 6px;                 
-  padding-bottom: 16px;        
-  border: 1px solid #ededed;   
-  border-radius: 6px;
+  padding-bottom: 20px;        
+  border: 0.5px solid #000;  
   box-sizing: border-box;
 }
 
@@ -184,7 +184,7 @@ nav {
     cursor: pointer;
     font-weight: 500;
     transition: background-color 0.2s ease;
-    margin-top: 12px;
+    margin-top: 14px;
   }
   
   .spot-button:hover {
@@ -195,3 +195,4 @@ nav {
 .empty-sub {
   margin: 0;
 }
+
