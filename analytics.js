@@ -1,11 +1,13 @@
 // analytics.js
-import { db } from "./firebase.js";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { auth } from "./firebase.js";
+import {
+  addDoc,
+  collection,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-export async function logEvent(eventName, meta = {}) {
+export async function logEvent(db, auth, eventName, meta = {}) {
   try {
-    const user = auth.currentUser;
+    const user = auth.currentUser || null;
 
     await addDoc(collection(db, "events"), {
       event: eventName,
@@ -14,7 +16,6 @@ export async function logEvent(eventName, meta = {}) {
       createdAt: serverTimestamp()
     });
   } catch (err) {
-    // analytics must NEVER break the app
-    // fail silently
+    // analytics must NEVER break UX
   }
 }
