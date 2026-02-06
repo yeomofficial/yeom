@@ -8,7 +8,7 @@ import {
   setDoc,
   doc
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-import { logEvent } from "./analytics.js";
+//import { logEvent } from "./analytics.js";
 
 /* ---------------- Firebase ---------------- */
 
@@ -142,8 +142,8 @@ form.addEventListener("submit", async (e) => {
       createdAt: Date.now()
     });
 
-    logEvent("user_signed_up");
-    logEvent("terms_accepted");
+    //logEvent("user_signed_up");
+   // logEvent("terms_accepted");
     // Prevent back navigation
     location.replace("info.html");
 
@@ -162,5 +162,6 @@ form.addEventListener("submit", async (e) => {
     }
   }
 });
+
 
 
