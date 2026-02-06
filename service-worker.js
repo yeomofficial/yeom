@@ -7,7 +7,6 @@ const CACHE_NAME = "yeom-v1.1";
  */
 const STATIC_ASSETS = [
   "./",
-  "./index.html",
   "./login.html",
   "./home.html",
 
