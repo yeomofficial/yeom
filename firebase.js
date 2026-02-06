@@ -142,8 +142,8 @@ form.addEventListener("submit", async (e) => {
       createdAt: Date.now()
     });
 
-    logEvent("user_signed_up");
-    logEvent("terms_accepted");
+    logEvent(db, auth, "user_signed_up");
+    logEvent(db, auth, "terms_accepted");
     // Prevent back navigation
     location.replace("info.html");
 
@@ -162,7 +162,4 @@ form.addEventListener("submit", async (e) => {
     }
   }
 });
-
-
-
 
