@@ -142,8 +142,8 @@ form.addEventListener("submit", async (e) => {
       createdAt: Date.now()
     });
 
-    logEvent(db, auth, "user_signed_up");
-    logEvent(db, auth, "terms_accepted");
+    await logEvent("user_signed_up", uid);
+    await logEvent("terms_accepted", uid);
     // Prevent back navigation
     location.replace("info.html");
 
@@ -162,4 +162,5 @@ form.addEventListener("submit", async (e) => {
     }
   }
 });
+
 
