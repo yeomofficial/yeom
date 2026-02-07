@@ -99,6 +99,7 @@ form.addEventListener("submit", async (e) => {
       password
     );
 
+    logEvent("user_logged_in");
     const uid = userCredential.user.uid;
     window.location.replace(`profile.html?uid=${uid}`);
 
