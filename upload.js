@@ -136,9 +136,11 @@ uploadBtn.addEventListener("click", async () => {
       likeCount: 0
     });
 
-    logEvent("post_created", {
-      section: sectionSelect.value
-    });
+    logEvent(
+    "post_created",
+    currentUser.uid,
+    { section: sectionSelect.value }
+    );
 
     showMessage("Posted successfully");
     setTimeout(() => {
@@ -152,5 +154,6 @@ uploadBtn.addEventListener("click", async () => {
     uploadBtn.textContent = "Upload";
   }
 });
+
 
 
