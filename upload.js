@@ -16,6 +16,7 @@ import {
   getAuth,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
+import { logEvent } from "./analytics.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC1O-WVb95Z77o2JelptaZ8ljRPdNVDIeY",
@@ -135,6 +136,10 @@ uploadBtn.addEventListener("click", async () => {
       likeCount: 0
     });
 
+    logEvent("post_created", {
+      section: sectionSelect.value
+    });
+
     showMessage("Posted successfully");
     setTimeout(() => {
       window.location.href = "home.html";
@@ -147,4 +152,5 @@ uploadBtn.addEventListener("click", async () => {
     uploadBtn.textContent = "Upload";
   }
 });
+
 
