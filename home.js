@@ -277,12 +277,13 @@ deleteBtn.addEventListener("click", async () => {
 
   try {
     await deleteDoc(doc(db, "posts", postId));
+    activePost.remove();
+    closeAllSheets();
+    
     logEvent("post_deleted", {
       postId,
       ownerId: CURRENT_UID
     });
-    activePost.remove();
-    closeAllSheets();
   } catch (err) {
     console.error("Delete failed:", err);
   }
@@ -335,4 +336,5 @@ function showToast(message) {
     toast.classList.add("toast-hidden");
   }, 2500);
 }
+
 
