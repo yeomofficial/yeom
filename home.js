@@ -19,6 +19,7 @@ import {
   getAuth,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { logEvent } from "./analytics.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC1O-WVb95Z77o2JelptaZ8ljRPdNVDIeY",
@@ -276,6 +277,10 @@ deleteBtn.addEventListener("click", async () => {
 
   try {
     await deleteDoc(doc(db, "posts", postId));
+    logEvent("post_deleted", {
+      postId,
+      ownerId: CURRENT_UID
+    });
     activePost.remove();
     closeAllSheets();
   } catch (err) {
@@ -330,3 +335,4 @@ function showToast(message) {
     toast.classList.add("toast-hidden");
   }, 2500);
 }
+
