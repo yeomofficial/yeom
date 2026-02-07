@@ -99,8 +99,8 @@ form.addEventListener("submit", async (e) => {
       password
     );
 
-    await logEvent("user_logged_in");
     const uid = userCredential.user.uid;
+    await logEvent("user_logged_in", uid);
     window.location.replace(`profile.html?uid=${uid}`);
 
   } catch (error) {
