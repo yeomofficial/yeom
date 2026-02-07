@@ -134,6 +134,7 @@ form.addEventListener("submit", async (e) => {
     );
 
     const user = userCredential.user;
+    const uid = user.uid;
 
     await setDoc(doc(db, "users", user.uid), {
       email,
@@ -162,5 +163,6 @@ form.addEventListener("submit", async (e) => {
     }
   }
 });
+
 
 
