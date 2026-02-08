@@ -22,7 +22,7 @@ logoutBtn.addEventListener("click", async () => {
 
     // KPI (fire & forget)
     if (uid) {
-      logEvent("user_logged_out", uid);
+      await logEvent("user_logged_out", uid);
     }
 
     await signOut(auth);
@@ -38,3 +38,4 @@ logoutBtn.addEventListener("click", async () => {
     showMessage("Error logging out. Try again.", true);
   }
 });
+
