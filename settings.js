@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import { logEvent } from "./analytics.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC1O-WVb95Z77o2JelptaZ8ljRPdNVDIeY",
@@ -43,4 +44,5 @@ window.logout = async function () {
     showMessage("Error logging out. Try again.", true);
   }
 };
+
 
