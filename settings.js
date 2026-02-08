@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-import { logEvent } from "./analytics.js";
+import { logEvent } from "./analytics.js"; 
 
 const firebaseConfig = {
   apiKey: "AIzaSyC1O-WVb95Z77o2JelptaZ8ljRPdNVDIeY",
@@ -19,9 +19,10 @@ const auth = getAuth(app);
 // Optional: show messages to user
 function showMessage(text, isError = false) {
   const box = document.getElementById("message-box");
-  if (!box) return; // ignore if no message box
+  if (!box) return;
   box.textContent = text;
-  box.className = "message-box " + (isError ? "message-error" : "message-success");
+  box.className =
+    "message-box " + (isError ? "message-error" : "message-success");
   box.style.display = "block";
 }
 
@@ -31,18 +32,15 @@ window.logout = async function () {
     const uid = auth.currentUser?.uid;
 
     if (uid) {
-      logEvent("user_logged_out", uid); //  KPI tracked
+      logEvent("user_logged_out", uid); // KPI tracked
     }
-    
+
     await signOut(auth);
-    // Optional message (briefly show)
+
     showMessage("Logged out successfully.");
-    // Immediately replace the page to login, preventing back button issues
     window.location.replace("index.html");
   } catch (error) {
     console.error("Logout failed:", error);
     showMessage("Error logging out. Try again.", true);
   }
 };
-
-
