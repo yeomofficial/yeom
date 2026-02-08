@@ -27,6 +27,12 @@ function showMessage(text, isError = false) {
 // Logout function
 window.logout = async function () {
   try {
+    const uid = auth.currentUser?.uid;
+
+    if (uid) {
+      logEvent("user_logged_out", uid); //  KPI tracked
+    }
+    
     await signOut(auth);
     // Optional message (briefly show)
     showMessage("Logged out successfully.");
@@ -37,3 +43,4 @@ window.logout = async function () {
     showMessage("Error logging out. Try again.", true);
   }
 };
+
