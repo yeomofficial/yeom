@@ -267,6 +267,12 @@ document.addEventListener("contextmenu", (e) => {
   e.preventDefault();
 });
 
+document.addEventListener("dragstart", (e) => {
+  if (e.target.tagName === "IMG") {
+    e.preventDefault();
+  }
+});
+
 // -------------------- DELETE POST --------------------
 deleteBtn.addEventListener("click", async () => {
   if (!activePost) return;
@@ -335,6 +341,7 @@ function showToast(message) {
     toast.classList.add("toast-hidden");
   }, 2500);
 }
+
 
 
 
