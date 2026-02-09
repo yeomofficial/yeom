@@ -263,9 +263,8 @@ document.addEventListener("click", async (e) => {
 
 // -------------------- BLOCK IMAGE CONTEXT MENU --------------------
 document.addEventListener("contextmenu", (e) => {
-  if (e.target.closest(".post-img-container")) {
-    e.preventDefault();
-  }
+  if (e.target.closest("input, textarea")) return;
+  e.preventDefault();
 });
 
 // -------------------- DELETE POST --------------------
@@ -336,5 +335,6 @@ function showToast(message) {
     toast.classList.add("toast-hidden");
   }, 2500);
 }
+
 
 
