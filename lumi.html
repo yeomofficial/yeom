@@ -1,34 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lumi - Your Fashion AI</title>
-  <link rel="stylesheet" href="lumi.css" />
+    <meta charset="UTF-8">
+    <title>YEOM AI</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <div class="header">
-    <div class="back-icon" onclick="history.back()">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-        viewBox="0 0 24 24" stroke="black" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6" />
-      </svg>
-    </div>
 
-  </div class="bodyofpage">
-    <div>
     <div class="container">
-        <img class="lumilogo" src="lumi2.png">
-      </div>
+
+        <!-- Logo Section -->
+        <div class="logo-section">
+            <img src="yeom_ai.jpg" alt="YEOM Logo" class="logo-img">
+            <h1 class="brand-name">YEOM AI</h1>
+            <p class="tagline">Confidence, refined.</p>
+            <h2 class="question">What are you wearing today?</h2>
+        </div>
+
+        <!-- Suggestion Bubbles -->
+        <div class="bubbles">
+
+            <div class="bubble left">
+                <img src="camera.svg" class="bubble-icon" alt="Camera">
+                <div>
+                    <h3>Help me pose</h3>
+                    <p>Find the perfect shot.</p>
+                </div>
+            </div>
+
+            <div class="bubble right">
+                <img src="clothes.svg" class="bubble-icon" alt="Hanger">
+                <div>
+                    <h3>Style me</h3>
+                    <p>Get outfit ideas.</p>
+                </div>
+            </div>
+
+            <div class="bubble left">
+                <img src="lightbulb.svg" class="bubble-icon" alt="Bulb">
+                <div>
+                    <h3>Why does this work?</h3>
+                    <p>Learn about your look.</p>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 
-    <div>
-      <h1>Your AI,</h1>
-      <h1>Your Style.</h1>
-      <p>Coming Soon.</p>
-      <p class="footer">&copy;YEOM 2025</p>
+    <!-- Input Bar -->
+    <div class="input-bar">
+        <input type="text" placeholder="Ask YEOM AI...">
+        <button>
+            <img src="send.svg" alt="Send">
+        </button>
     </div>
-  </div>
 </body>
 </html>
