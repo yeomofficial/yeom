@@ -1,59 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  background: #fff;
-  color: #333;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #ffffff;
+    color: #111;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-  background: #f4f4f4;
+.container {
+    flex: 1;
+    text-align: center;
+    padding: 40px 20px;
 }
 
-.back-icon {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 999;
-    width: 24px;
-    height: 24px;
+.logo-section {
+    margin-bottom: 50px;
+}
+
+.logo-img {
+    width: 80px;
+    margin-bottom: 20px;
+}
+
+.brand-name {
+    font-weight: 500;
+    letter-spacing: 6px;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.tagline {
+    font-weight: 400;
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.question {
+    font-weight: 500;
+    font-size: 20px;
+}
+
+/* Bubbles */
+
+.bubbles {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+
+.bubble {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 24px;
+    border-radius: 40px;
+    border: 1px solid #e5e5e5;
+    background: #fff;
+    width: 280px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+    text-align: left;
+}
+
+.bubble h3 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.bubble p {
+    font-size: 13px;
+    color: #666;
+}
+
+.bubble-icon {
+    width: 22px;
+    height: 22px;
+}
+
+/* Alignment */
+
+.left {
+    align-self: flex-start;
+}
+
+.right {
+    align-self: flex-end;
+}
+
+/* Input Bar */
+
+.input-bar {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid #eee;
+}
+
+.input-bar input {
+    flex: 1;
+    padding: 14px 18px;
+    border-radius: 30px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.input-bar button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
 }
 
-.back-icon svg {
-  width: 100%;
-  height: 100%;
-  stroke: black;
+.input-bar button img {
+    width: 18px;
 }
-
-
-.lumilogo {
-  display: block;
-  margin: 0 auto;
-  max-width: 100%;
-}
-
-h1 {
-  text-align: center;
-  font-size: 2rem;
-}
-
-p {
-  text-align: center;
-  margin-top: 2%;
-  font-size: 1.3rem;
-  font-family: 'Lato';
-}
-
-.footer {
-  margin-top: 4%;
-}
-
-.bodyofpage {
-  position: relative;
-  display: inline-block;
-  
-}
-
