@@ -15,7 +15,6 @@ body {
 }
 
 .container {
-    flex: 1;
     text-align: center;
     padding: 40px 20px;
 }
@@ -149,5 +148,6 @@ body {
 .input-bar button img {
     width: 18px;
 }
+
 
 
