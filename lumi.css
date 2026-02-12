@@ -105,13 +105,15 @@ body {
 /* Input Bar */
 
 .input-bar {
-    position: sticky;
+    position: fixed;
     bottom: 0;
-    padding: 15px;
+    left: 0;
+    right: 0;
+    padding: 15px 20px;
     display: flex;
     gap: 10px;
-    border-top: 1px solid #eee;
     background: #fff;
+    border-top: 1px solid #eee;
 }
 
 .input-bar input {
@@ -137,3 +139,4 @@ body {
 .input-bar button img {
     width: 18px;
 }
+
