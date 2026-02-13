@@ -12,13 +12,33 @@ function addMessage(text, sender) {
     chat.scrollTop = chat.scrollHeight;
 }
 
-function handleSend() {
+async function handleSend() {
     const text = input.value.trim();
     if (!text) return;
 
     addMessage(text, "user");
     input.value = "";
+
+    // show thinking message
+    addMessage("Lumi is thinking...", "ai");
+
+    const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: text })
+    });
+
+    const data = await res.json();
+
+    // remove thinking message
+    chat.lastChild.remove();
+
+    addMessage(data.reply, "ai");
 }
+
+
 
 sendBtn.addEventListener("click", handleSend);
 
@@ -40,6 +60,13 @@ document.getElementById("eventBtn").onclick = () => {
 document.getElementById("dateBtn").onclick = () => {
     input.value = "How should I dress for a date?";
 };
+
+async function testAI() {
+    const res = await fetch("/api/chat.js");
+    const data = await res.json();
+
+    document.getElementById("response").innerText = data.reply;
+}
 
 // -------------------- BLOCK IMAGE CONTEXT MENU --------------------
 document.addEventListener("contextmenu", (e) => {
