@@ -12,6 +12,22 @@ body {
     height: 100dvh;
     overflow: hidden;
 }
+/* ================= BACK BUTTON ================= */
+.back-btn {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.back-btn img {
+  width: 24px;
+  height: 24px;
+}
 
 /* Layout */
 
@@ -143,5 +159,6 @@ body {
 .input-bar button img {
     width: 18px;
 }
+
 
 
