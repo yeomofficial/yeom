@@ -40,7 +40,6 @@ async function handleSend() {
     // show thinking message
     addMessage("Lumi is thinking...", "ai");
   
-    
     const res = await fetch("https://yeomserver.onrender.com/api/chat", {
         method: "POST",
         headers: {
@@ -137,6 +136,7 @@ function canSendMessage() {
 
   return true;
 }
+
 
 
 
