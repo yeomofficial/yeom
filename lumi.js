@@ -1,3 +1,8 @@
+import { logEvent } from "./analytics.js";
+
+document.addEventListener("DOMContentLoaded", () => {
+  logEvent(analytics, "ai_page_opened");
+});
 // -------------------- Handles user input & message rendering --------------------
 const input = document.getElementById("userInput");
 const sendBtn = document.getElementById("sendBtn");
@@ -27,6 +32,8 @@ function showToast(message) {
 }
 
 async function handleSend() {
+    logEvent(analytics, "ai_message_sent");
+    
     const text = input.value.trim();
     if (!text) return;
 
@@ -135,5 +142,6 @@ function canSendMessage() {
 
   return true;
 }
+
 
 
