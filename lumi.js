@@ -22,7 +22,7 @@ async function handleSend() {
     // show thinking message
     addMessage("Lumi is thinking...", "ai");
 
-    const res = await fetch("https://ai-six-taupe.vercel.app/api/chat", {
+    const res = await fetch("https://yeomserver.onrender.com/api/chat", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -70,5 +70,6 @@ document.addEventListener("dragstart", (e) => {
     e.preventDefault();
   }
 });
+
 
 
