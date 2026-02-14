@@ -16,6 +16,9 @@ async function handleSend() {
     const text = input.value.trim();
     if (!text) return;
 
+    const bubbles = document.getElementById("bubbles");
+    if (bubbles) bubbles.style.display = "none";
+    
     addMessage(text, "user");
     input.value = "";
 
@@ -70,6 +73,7 @@ document.addEventListener("dragstart", (e) => {
     e.preventDefault();
   }
 });
+
 
 
 
