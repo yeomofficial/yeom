@@ -12,6 +12,20 @@ function addMessage(text, sender) {
     chat.scrollTop = chat.scrollHeight;
 }
 
+// TOAST FUNC
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+  toast.classList.remove("hidden");
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2500);
+}
+
 async function handleSend() {
     const text = input.value.trim();
     if (!text) return;
@@ -103,13 +117,13 @@ function canSendMessage() {
 
   // Cooldown check
   if (now - usage.lastMessageTime < COOLDOWN) {
-    alert("Wait 5 seconds — YEOM is styling 👀");
+    showToast("Wait 5 seconds — YEOM is styling");
     return false;
   }
 
   // Daily limit check
   if (usage.count >= LIMIT) {
-    alert("You've used all 10 style requests today ✨");
+    showToast("You've used all 10 style requests today, Come back later");
     return false;
   }
 
@@ -121,3 +135,5 @@ function canSendMessage() {
 
   return true;
 }
+
+
