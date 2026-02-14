@@ -22,7 +22,7 @@ async function handleSend() {
     // show thinking message
     addMessage("Lumi is thinking...", "ai");
 
-    const res = await fetch("/api/chat", {
+    const res = await fetch("https://ai-six-taupe.vercel.app/", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -37,8 +37,6 @@ async function handleSend() {
 
     addMessage(data.reply, "ai");
 }
-
-
 
 sendBtn.addEventListener("click", handleSend);
 
@@ -60,13 +58,6 @@ document.getElementById("eventBtn").onclick = () => {
 document.getElementById("dateBtn").onclick = () => {
     input.value = "How should I dress for a date?";
 };
-
-async function testAI() {
-    const res = await fetch("/api/chat.js");
-    const data = await res.json();
-
-    document.getElementById("response").innerText = data.reply;
-}
 
 // -------------------- BLOCK IMAGE CONTEXT MENU --------------------
 document.addEventListener("contextmenu", (e) => {
