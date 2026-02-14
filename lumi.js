@@ -27,6 +27,7 @@ function showToast(message) {
 }
 
 async function handleSend() {
+    if (!canSendMessage()) return;
     
     const text = input.value.trim();
     if (!text) return;
@@ -136,6 +137,7 @@ function canSendMessage() {
 
   return true;
 }
+
 
 
 
