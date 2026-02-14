@@ -74,6 +74,50 @@ document.addEventListener("dragstart", (e) => {
   }
 });
 
+// -------------------- TIMER AND RATE LIMIT FOR AI-----------------
 
+function canSendMessage() {
+  const LIMIT = 10;
+  const COOLDOWN = 5000;
 
+  const today = new Date().toDateString();
 
+  let usage = JSON.parse(localStorage.getItem("yeom_usage"));
+
+  // First time user
+  if (!usage) {
+    usage = {
+      count: 0,
+      lastReset: today,
+      lastMessageTime: 0
+    };
+  }
+
+  // Daily reset check
+  if (usage.lastReset !== today) {
+    usage.count = 0;
+    usage.lastReset = today;
+  }
+
+  const now = Date.now();
+
+  // Cooldown check
+  if (now - usage.lastMessageTime < COOLDOWN) {
+    alert("Wait 5 seconds — YEOM is styling 👀");
+    return false;
+  }
+
+  // Daily limit check
+  if (usage.count >= LIMIT) {
+    alert("You've used all 10 style requests today ✨");
+    return false;
+  }
+
+  // Update usage
+  usage.count++;
+  usage.lastMessageTime = now;
+
+  localStorage.setItem("yeom_usage", JSON.stringify(usage));
+
+  return true;
+}
