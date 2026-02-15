@@ -119,6 +119,7 @@ body {
     border-radius: 20px;
     font-size: 14px;
     line-height: 1.6; 
+    white-space: pre-wrap;
 }
 
 .user {
@@ -239,3 +240,4 @@ body {
     opacity: 1;
     transform: translate(-50%, -10px);
 }
+
