@@ -12,9 +12,11 @@
 <body>
 
 <div class="container">
-
-  <button id="backBtn" class="back-btn">← Back</button>
-
+  <!-- ================= BACK BUTTON ================= -->
+  <button class="back-btn" onclick="history.back()" aria-label="Go back">
+    <img src="move-left.png" alt="Back" />
+  </button>
+  
   <h2 id="questionText"></h2>
 
   <div id="options" class="options"></div>
@@ -29,3 +31,4 @@
 
 </body>
 </html>
+
