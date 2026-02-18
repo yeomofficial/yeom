@@ -3,6 +3,32 @@ const input = document.getElementById("userInput");
 const sendBtn = document.getElementById("sendBtn");
 const chat = document.getElementById("chat");
 
+// -------------------- AUTO PROMPT FROM QUESTIONS --------------------
+
+window.addEventListener("load", () => {
+
+  const autoPrompt = localStorage.getItem("lumiPrompt");
+
+  if (autoPrompt) {
+
+    // put generated text into input
+    input.value = autoPrompt;
+
+    // hide bubbles since message already exists
+    const bubbles = document.getElementById("bubbles");
+    if (bubbles) bubbles.style.display = "none";
+
+    // remove so it never repeats
+    localStorage.removeItem("lumiPrompt");
+
+    setTimeout(() => {
+      handleSend();
+    }, 200);
+
+  }
+});
+
+
 function addMessage(text, sender) {
     const message = document.createElement("div");
     message.classList.add("message", sender);
@@ -137,14 +163,3 @@ function canSendMessage() {
 
   return true;
 }
-
-
-
-
-
-
-
-
-
-
-
