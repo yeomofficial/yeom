@@ -9,9 +9,9 @@ const questions = [
   {
     question: "Where are you going today?",
     options: [
-      "College",
-      "Casual hangout",
       "Date",
+      "Casual hangout",
+      "College",
       "Party",
       "Just going out"
     ]
