@@ -28,11 +28,20 @@ const questions = [
     ]
   },
   {
+    question: "What time of day is this for?",
+    options: [
+      "Morning plans",
+      "Afternoon outing",
+      "Evening plans",
+      "Night out",
+      "All day wear"
+    ]
+  },
+  {
     question: "What’s the weather like?",
     options: [
       "Hot",
       "Warm",
-      "Cool",
       "Cold",
       "Rainy"
     ]
@@ -121,8 +130,9 @@ finalBtn.onclick = () => {
 
   Plan : ${answers[0]}
   Place : ${answers[1]}
-  Weather: ${answers[2]}
-  Impression: ${answers[3]}
+  Time : ${answers[2]}
+  Weather: ${answers[3]}
+  Impression: ${answers[4]}
 
   Suggest outfit, colors, and styling tips for me.`;
 
@@ -130,3 +140,4 @@ finalBtn.onclick = () => {
 
   window.location.href = "lumi.html";
 };
+
