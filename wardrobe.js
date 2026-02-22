@@ -2,7 +2,6 @@
 // ELEMENTS
 // ===============================
 const container = document.getElementById("clothesContainer");
-const wardrobeDiv = document.getElementById("myWardrobe");
 
 
 // ===============================
@@ -126,7 +125,6 @@ function toggleWardrobe(item, button) {
   }
 
   saveWardrobe(wardrobe);
-  renderWardrobe();
 }
 
 
@@ -146,33 +144,6 @@ function updateButtonState(button, id) {
 
 
 // ===============================
-// RENDER MY WARDROBE PAGE
-// ===============================
-function renderWardrobe() {
-
-  if (!wardrobeDiv) return; // prevents error on add page
-
-  const wardrobe = getWardrobe();
-
-  wardrobeDiv.innerHTML = "";
-
-  wardrobe.forEach(item => {
-
-    const card = document.createElement("div");
-    card.className = "cloth-card added";
-
-    card.innerHTML = `
-      <img src="${item.image}">
-      <p>${item.name}</p>
-    `;
-
-    wardrobeDiv.appendChild(card);
-  });
-}
-
-
-// ===============================
 // INIT
 // ===============================
 loadClothes();
-renderWardrobe();
