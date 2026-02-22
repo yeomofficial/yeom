@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Montserrat', sans-serif;
   margin: 0;
   background: #ffffff;
   color: #111;
@@ -112,4 +113,5 @@ h3 {
 .add-btn.added .check {
   opacity: 1;
   transform: scale(1);
+
 }
