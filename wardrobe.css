@@ -1,0 +1,115 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #ffffff;
+  color: #111;
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+h3 {
+  padding-left: 15px;
+  margin-top: 25px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 15px;
+}
+
+.cloth-card {
+  background: #f7f7f7;
+  border-radius: 14px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cloth-card:hover {
+  transform: scale(1.03);
+}
+
+.cloth-card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.cloth-card p {
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+
+.added {
+  border: 2px solid #000;
+}
+
+.cloth-card {
+  width: 150px;
+}
+
+.img-wrapper {
+  position: relative;
+}
+
+.img-wrapper img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+/* ADD BUTTON */
+.add-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  width: 36px;
+  height: 36px;
+
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(6px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.25s ease;
+}
+
+/* ICON STACK */
+.icon {
+  position: absolute;
+  transition: all 0.25s ease;
+}
+
+/* hidden check initially */
+.icon.check {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+/* WHEN ADDED */
+.add-btn.added {
+  background: #111;
+  color: white;
+}
+
+.add-btn.added .plus {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.add-btn.added .check {
+  opacity: 1;
+  transform: scale(1);
+}
