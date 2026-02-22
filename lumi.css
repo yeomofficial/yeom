@@ -12,28 +12,42 @@ body {
     height: 100dvh;
     overflow: hidden;
 }
-/* WARDROBE */
-.wardrobe-btn {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  width: 42px;
-  height: 42px;
+/* ================= HEADER ================= */
 
-  background: white;
-  border-radius: 12px;
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    height: 64px;
+    padding: 0 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #fcfcfc; 
+    z-index: 1000;
 }
 
-.wardrobe-btn img {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
+.header-logo {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+}
+
+.header-title {
+    font-size: 16px;
+    letter-spacing: 3px;
+    font-weight: 500;
+}
 /* Layout */
 
 .container {
@@ -261,5 +275,6 @@ body {
     opacity: 1;
     transform: translate(-50%, -10px);
 }
+
 
 
