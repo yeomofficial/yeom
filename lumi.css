@@ -48,6 +48,26 @@ body {
     letter-spacing: 3px;
     font-weight: 500;
 }
+  
+.wardrobe-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: 42px;
+  height: 42px;
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wardrobe-btn img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+  
 /* Layout */
 
 .container {
@@ -275,6 +295,7 @@ body {
     opacity: 1;
     transform: translate(-50%, -10px);
 }
+
 
 
 
