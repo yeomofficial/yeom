@@ -12,6 +12,27 @@ body {
     height: 100dvh;
     overflow: hidden;
 }
+/* WARDROBE */
+.wardrobe-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: 42px;
+  height: 42px;
+
+  background: white;
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wardrobe-btn img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
 
 /* Layout */
 
@@ -240,4 +261,5 @@ body {
     opacity: 1;
     transform: translate(-50%, -10px);
 }
+
 
