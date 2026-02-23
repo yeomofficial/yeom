@@ -1,6 +1,38 @@
-// ===============================
-// ELEMENTS
-// ===============================
+//  ================= FIREBASE ==============
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  deleteDoc,
+  collection,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js";
+
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
+
+const db = getFirestore();
+const auth = getAuth();
+
+let currentUser = null;
+let userWardrobe = [];
+
+async function loadUserWardrobeFromDB() {
+
+  const snapshot = await getDocs(
+    collection(db, "users", currentUser.uid, "wardrobe")
+  );
+
+  userWardrobe = [];
+
+  snapshot.forEach(doc => {
+    userWardrobe.push(doc.data());
+  });
+}
+
+//  ================= ELEMENTS ==============
 const container = document.getElementById("clothesContainer");
 
 
@@ -42,13 +74,8 @@ const clothes = [
 // LOCAL STORAGE HELPERS
 // ===============================
 function getWardrobe() {
-  return JSON.parse(localStorage.getItem("wardrobe")) || [];
+  return userWardrobe;
 }
-
-function saveWardrobe(data) {
-  localStorage.setItem("wardrobe", JSON.stringify(data));
-}
-
 
 // ===============================
 // LOAD CLOTHES GRID
@@ -107,24 +134,42 @@ function loadClothes() {
 }
 
 
-// ===============================
-// ADD / REMOVE ITEM
-// ===============================
-function toggleWardrobe(item, button) {
+//  ================= ADD / REMOVE ITEM ==============
 
-  let wardrobe = getWardrobe();
+async function toggleWardrobe(item, button) {
 
-  const index = wardrobe.findIndex(c => c.id === item.id);
+  if (!currentUser) return;
 
+  const itemRef = doc(
+    db,
+    "users",
+    currentUser.uid,
+    "wardrobe",
+    item.id
+  );
+
+  const index = userWardrobe.findIndex(c => c.id === item.id);
+
+  // ADD ITEM
   if (index === -1) {
-    wardrobe.push(item);
+
+    await setDoc(itemRef, {
+      ...item,
+      createdAt: Date.now()
+    });
+
+    userWardrobe.push(item);
     button.classList.add("added");
-  } else {
-    wardrobe.splice(index, 1);
+
+  } 
+  // REMOVE ITEM
+  else {
+
+    await deleteDoc(itemRef);
+
+    userWardrobe.splice(index, 1);
     button.classList.remove("added");
   }
-
-  saveWardrobe(wardrobe);
 }
 
 
@@ -146,4 +191,12 @@ function updateButtonState(button, id) {
 // ===============================
 // INIT
 // ===============================
-loadClothes();
+onAuthStateChanged(auth, async (user) => {
+  if (!user) return;
+
+  currentUser = user;
+
+  await loadUserWardrobeFromDB();
+
+  loadClothes();
+});
