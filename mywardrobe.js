@@ -26,7 +26,7 @@ collection(db, "users", currentUser.uid, "wardrobe")
 container.innerHTML = "";
 
 if (snapshot.empty) {
-container.innerHTML = "<p>Your wardrobe is empty.</p>";
+container.innerHTML = `<p>Your wardrobe is empty.</p>`;
 return;
 }
 
@@ -42,7 +42,10 @@ function renderItem(item) {
 const card = document.createElement("div");
 card.className = "cloth-card";
 
-card.innerHTML = "<img src="${item.image}" /> <p>${item.name}</p>";
+card.innerHTML = `
+  <img src="${item.image}" />
+  <p>${item.name}</p>
+`;
 
 container.appendChild(card);
 }
