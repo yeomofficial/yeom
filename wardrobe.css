@@ -12,6 +12,25 @@ header {
   border-bottom: 1px solid #eee;
 }
 
+.mywardrobe-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: 42px;
+  height: 42px;
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mywardrobe-btn img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
 h3 {
   padding-left: 15px;
   margin-top: 25px;
@@ -115,3 +134,4 @@ h3 {
   transform: scale(1);
 
 }
+
