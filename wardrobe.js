@@ -92,6 +92,27 @@ function getWardrobe() {
   return userWardrobe;
 }
 
+//  ================= SORT THE LIST ==============
+function sortClothesForDisplay() {
+
+  return [...clothes].sort((a, b) => {
+
+    const aInWardrobe = userWardrobe.find(i => i.id === a.id);
+    const bInWardrobe = userWardrobe.find(i => i.id === b.id);
+
+    // both not added → keep order
+    if (!aInWardrobe && !bInWardrobe) return 0;
+
+    // added items go LAST
+    if (aInWardrobe && !bInWardrobe) return 1;
+    if (!aInWardrobe && bInWardrobe) return -1;
+
+    // both added → sort by time added
+    return aInWardrobe.createdAt - bInWardrobe.createdAt;
+  });
+
+}
+
 // ===============================
 // LOAD CLOTHES GRID
 // ===============================
@@ -99,7 +120,8 @@ function loadClothes() {
 
   container.innerHTML = "";
 
-  clothes.forEach(item => {
+  const sortedClothes = sortClothesForDisplay();
+  sortedClothes.forEach(item => {
 
     const card = document.createElement("div");
     card.className = "cloth-card";
@@ -168,14 +190,17 @@ async function toggleWardrobe(item, button) {
   // ADD ITEM
   if (index === -1) {
 
-    await setDoc(itemRef, {
+    const newItem = {
       ...item,
       createdAt: Date.now()
-    });
+    };
+
+    await setDoc(itemRef, newItem);
 
     userWardrobe.push(item);
     button.classList.add("added");
 
+    loadClothes();
   } 
   // REMOVE ITEM
   else {
@@ -215,4 +240,5 @@ onAuthStateChanged(auth, async (user) => {
 
   loadClothes();
 });
+
 
