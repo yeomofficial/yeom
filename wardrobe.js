@@ -248,7 +248,7 @@ async function toggleWardrobe(item, button) {
 
     await setDoc(itemRef, newItem);
 
-    userWardrobe.push(item);
+    userWardrobe.push(newItem);
     button.classList.add("added");
 
     loadClothes();
@@ -291,6 +291,7 @@ onAuthStateChanged(auth, async (user) => {
 
   loadClothes();
 });
+
 
 
 
