@@ -36,6 +36,39 @@ h3 {
   margin-top: 25px;
 }
 
+.controls {
+  padding: 12px 16px;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+}
+
+.filter-btn {
+  border: 1px solid #ddd;
+  background: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.filter-btn.active {
+  background: black;
+  color: white;
+  border-color: black;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -134,4 +167,5 @@ h3 {
   transform: scale(1);
 
 }
+
 
