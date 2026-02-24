@@ -34,6 +34,9 @@ const auth = getAuth(app);
 let currentUser = null;
 let userWardrobe = [];
 
+let currentSearch = "";
+let currentGenderFilter = "all";
+
 async function loadUserWardrobeFromDB() {
 
   const snapshot = await getDocs(
@@ -50,6 +53,31 @@ async function loadUserWardrobeFromDB() {
 //  ================= ELEMENTS ==============
 const container = document.getElementById("clothesContainer");
 
+//  ================= SEARCH & FILTERS ==============
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("input", (e) => {
+  currentSearch = e.target.value.toLowerCase();
+  loadClothes();
+});
+
+document.querySelectorAll(".filter-btn").forEach(btn => {
+
+  btn.addEventListener("click", () => {
+
+    document
+      .querySelectorAll(".filter-btn")
+      .forEach(b => b.classList.remove("active"));
+
+    btn.classList.add("active");
+
+    currentGenderFilter = btn.dataset.gender;
+
+    loadClothes();
+  });
+
+});
 
 // ===============================
 // DATA (MASTER CLOTHING INDEX)
@@ -120,8 +148,33 @@ function loadClothes() {
 
   container.innerHTML = "";
 
+  // already exists — keep this
   const sortedClothes = sortClothesForDisplay();
-  sortedClothes.forEach(item => {
+
+
+  // ADD THIS BLOCK HERE (FILTER STEP)
+  const filteredClothes = sortedClothes.filter(item => {
+
+    // SEARCH FILTER
+    const matchesSearch =
+      item.name.toLowerCase().includes(currentSearch);
+
+    // GENDER FILTER
+    let matchesGender = true;
+
+    if (currentGenderFilter !== "all") {
+      matchesGender =
+        item.gender === currentGenderFilter ||
+        item.gender === "unisex";
+    }
+
+    return matchesSearch && matchesGender;
+  });
+
+
+  // CHANGE THIS LINE
+  // sortedClothes.forEach(item => {
+  filteredClothes.forEach(item => {
 
     const card = document.createElement("div");
     card.className = "cloth-card";
@@ -157,10 +210,8 @@ function loadClothes() {
 
     const button = card.querySelector(".add-btn");
 
-    // restore UI state
     updateButtonState(button, item.id);
 
-    // toggle add/remove
     button.onclick = (e) => {
       e.stopPropagation();
       toggleWardrobe(item, button);
@@ -240,5 +291,6 @@ onAuthStateChanged(auth, async (user) => {
 
   loadClothes();
 });
+
 
 
