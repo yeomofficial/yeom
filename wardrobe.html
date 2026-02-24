@@ -10,7 +10,6 @@
 </head>
 
 <body>
-
   <header>
     <h2>My Wardrobe</h2>
     <a href="mywardrobe.html" class="mywardrobe-btn">
@@ -18,7 +17,20 @@
     </a>
     <p>Add clothes you own</p>
   </header>
-
+  
+  <section class="controls">
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="Search clothes..."
+  />
+  <div class="filters">
+    <button class="filter-btn active" data-gender="all">All</button>
+    <button class="filter-btn" data-gender="men">Men</button>
+    <button class="filter-btn" data-gender="women">Women</button>
+  </div>
+  </section>
+  
   <section>
     <h3>Choose Your Clothes</h3>
     <div id="clothesContainer" class="grid"></div>
@@ -27,5 +39,6 @@
   <script type="module" src="wardrobe.js"></script>
 </body>
 </html>
+
 
 
