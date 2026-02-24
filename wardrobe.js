@@ -135,7 +135,7 @@ const clothes = [
     gender: "women",
     style: "formal",
     color: "black",
-    image: "wardrobe/w-wide-legpants-black.png"
+    image: "wardrobe/w-wide-legpants-black.jpg"
   }
 ];
 
@@ -318,6 +318,7 @@ onAuthStateChanged(auth, async (user) => {
 
   loadClothes();
 });
+
 
 
 
