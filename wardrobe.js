@@ -127,6 +127,15 @@ const clothes = [
     style: "formal",
     color: "black",
     image: "wardrobe/men-chelseaboots-black.jpg"
+  },
+  {
+    id: "w-wideleg-pants-black",
+    name: "Wide Leg Pants Black",
+    category: "bottoms",
+    gender: "women",
+    style: "formal",
+    color: "black",
+    image: "wardrobe/w-wide-legpants-black.png"
   }
 ];
 
@@ -309,6 +318,7 @@ onAuthStateChanged(auth, async (user) => {
 
   loadClothes();
 });
+
 
 
 
