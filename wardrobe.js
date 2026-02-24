@@ -114,10 +114,19 @@ const clothes = [
     id: "w-btn-dwn-shirt-white",
     name: "Button Down Shirt White",
     category: "tops",
-    gender: "men",
+    gender: "women",
     style: "formal",
     color: "white",
     image: "wardrobe/women-btndown-white.jpg"
+  },
+  {
+    id: "black-boots",
+    name: "Black Chelsea",
+    category: "shoes",
+    gender: "men",
+    style: "formal",
+    color: "black",
+    image: "wardrobe/men-chelseaboots-black.jpg"
   }
 ];
 
@@ -300,6 +309,7 @@ onAuthStateChanged(auth, async (user) => {
 
   loadClothes();
 });
+
 
 
 
