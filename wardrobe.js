@@ -105,7 +105,7 @@ const clothes = [
     id: "white_sneakers",
     name: "White Converse",
     category: "shoes",
-    gender: "unisex",
+    gender: "men",
     style: "casual",
     color: "white",
     image: "wardrobe/white_converse.jpg"
@@ -291,6 +291,7 @@ onAuthStateChanged(auth, async (user) => {
 
   loadClothes();
 });
+
 
 
 
