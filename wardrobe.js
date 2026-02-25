@@ -86,7 +86,7 @@ const clothes = [
   {
     id: "white_tshirt",
     name: "White T-Shirt",
-    category: "tops",
+    category: "top",
     gender: "unisex",
     style: "casual",
     color: "white",
@@ -95,7 +95,7 @@ const clothes = [
   {
     id: "blue_jeans",
     name: "Blue Denim Jeans",
-    category: "bottoms",
+    category: "bottom",
     gender: "unisex",
     style: "casual",
     color: "blue",
@@ -113,7 +113,7 @@ const clothes = [
   {
     id: "w-btn-dwn-shirt-white",
     name: "Button Down Shirt White",
-    category: "tops",
+    category: "top",
     gender: "women",
     style: "formal",
     color: "white",
@@ -126,12 +126,13 @@ const clothes = [
     gender: "men",
     style: "formal",
     color: "black",
+    occasion: "formal",
     image: "wardrobe/men-chelseaboots-black.jpg"
   },
   {
     id: "w-wideleg-pants-black",
     name: "Wide Leg Pants Black",
-    category: "bottoms",
+    category: "bottom",
     gender: "women",
     style: "formal",
     color: "black",
@@ -318,6 +319,7 @@ onAuthStateChanged(auth, async (user) => {
 
   loadClothes();
 });
+
 
 
 
