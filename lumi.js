@@ -1,7 +1,27 @@
+// ===============================
+// YEOM — LUMI CLIENT BRAIN (lumi.js)
+// ===============================
+
 import { db, auth } from "./firebase.js";
 import { collection, getDocs } from "firebase/firestore";
 
+// -------------------- STATE --------------------
+let cachedWardrobe = null;
+let conversationHistory = [];
+let isThinking = false;
+
+// -------------------- DOM --------------------
+const input = document.getElementById("userInput");
+const sendBtn = document.getElementById("sendBtn");
+const chat = document.getElementById("chat");
+
+// ===============================
+// GET USER WARDROBE (CACHED)
+// ===============================
 async function getUserWardrobe() {
+
+  // return cache if already loaded
+  if (cachedWardrobe) return cachedWardrobe;
 
   const user = auth.currentUser;
   if (!user) return [];
@@ -10,57 +30,44 @@ async function getUserWardrobe() {
     collection(db, "users", user.uid, "wardrobe")
   );
 
-  const wardrobe = [];
+  cachedWardrobe = [];
 
   snapshot.forEach(doc => {
-    wardrobe.push(doc.data());
+    cachedWardrobe.push(doc.data());
   });
 
-  return wardrobe;
+  return cachedWardrobe;
 }
 
-// -------------------- Handles user input & message rendering --------------------
-const input = document.getElementById("userInput");
-const sendBtn = document.getElementById("sendBtn");
-const chat = document.getElementById("chat");
-
-// -------------------- AUTO PROMPT FROM QUESTIONS --------------------
-
-window.addEventListener("load", () => {
-
-  const autoPrompt = localStorage.getItem("lumiPrompt");
-
-  if (autoPrompt) {
-
-    // put generated text into input
-    input.value = autoPrompt;
-
-    // hide bubbles since message already exists
-    const bubbles = document.getElementById("bubbles");
-    if (bubbles) bubbles.style.display = "none";
-
-    // remove so it never repeats
-    localStorage.removeItem("lumiPrompt");
-
-    setTimeout(() => {
-      handleSend();
-    }, 200);
-
-  }
-});
-
-
+// ===============================
+// MESSAGE UI
+// ===============================
 function addMessage(text, sender) {
-    const message = document.createElement("div");
-    message.classList.add("message", sender);
-    message.textContent = text;
-    chat.appendChild(message);
+  const message = document.createElement("div");
+  message.classList.add("message", sender);
+  message.textContent = text;
 
-    chat.scrollTop = chat.scrollHeight;
+  chat.appendChild(message);
+  chat.scrollTop = chat.scrollHeight;
 }
 
-// TOAST FUNC
+// -------------------- Typing Indicator --------------------
+function showTyping() {
+  const typing = document.createElement("div");
+  typing.className = "message ai";
+  typing.id = "typing";
+  typing.textContent = "Lumi is styling...";
+  chat.appendChild(typing);
+  chat.scrollTop = chat.scrollHeight;
+}
 
+function removeTyping() {
+  document.getElementById("typing")?.remove();
+}
+
+// ===============================
+// TOAST
+// ===============================
 function showToast(message) {
   const toast = document.getElementById("toast");
 
@@ -73,26 +80,33 @@ function showToast(message) {
   }, 2500);
 }
 
+// ===============================
+// INTENT DETECTION (LIGHT AI SIGNAL)
+// ===============================
+function detectIntent(msg) {
+  msg = msg.toLowerCase();
+
+  if (msg.includes("wear") || msg.includes("outfit"))
+    return "outfit";
+
+  if (msg.includes("photo") || msg.includes("pose"))
+    return "photo";
+
+  return "chat";
+}
+
+// ===============================
+// SEND MESSAGE
+// ===============================
 async function handleSend() {
-    if (!canSendMessage()) return;
-    
-    const text = input.value.trim();
-    if (!text) return;
 
-    const bubbles = document.getElementById("bubbles");
-    if (bubbles) bubbles.style.display = "none";
-    
-    addMessage(text, "user");
-    input.value = "";
-
-    // show thinking message
-    addMessage("Lumi is thinking...", "ai");
-
-    async function handleSend() {
   if (!canSendMessage()) return;
+  if (isThinking) return;
 
   const text = input.value.trim();
   if (!text) return;
+
+  isThinking = true;
 
   const bubbles = document.getElementById("bubbles");
   if (bubbles) bubbles.style.display = "none";
@@ -100,51 +114,105 @@ async function handleSend() {
   addMessage(text, "user");
   input.value = "";
 
-  addMessage("Lumi is thinking...", "ai");
+  showTyping();
 
-  // ⭐ NEW — get wardrobe
-  const wardrobe = await getUserWardrobe();
-      
-    const res = await fetch("https://yeomserver.onrender.com/api/chat", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      message: text,
-      wardrobe: wardrobe   
-    })
-  });
+  try {
+
+    // ⭐ Load wardrobe once
+    const wardrobe = await getUserWardrobe();
+
+    // ⭐ Save conversation memory
+    conversationHistory.push({
+      role: "user",
+      content: text
+    });
+
+    const res = await fetch(
+      "https://yeomserver.onrender.com/api/chat",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          message: text,
+          wardrobe: wardrobe,
+          history: conversationHistory.slice(-6),
+          intent: detectIntent(text)
+        })
+      }
+    );
+
     const data = await res.json();
 
-    // remove thinking message
-    chat.lastChild.remove();
+    removeTyping();
 
     addMessage(data.reply, "ai");
+
+    // save AI reply to memory
+    conversationHistory.push({
+      role: "assistant",
+      content: data.reply
+    });
+
+  } catch (err) {
+
+    removeTyping();
+    addMessage("Something went wrong 😭 Try again.", "ai");
+    console.error(err);
+
+  }
+
+  isThinking = false;
 }
 
+// ===============================
+// AUTO PROMPT SYSTEM
+// ===============================
+window.addEventListener("load", () => {
+
+  const autoPrompt = localStorage.getItem("lumiPrompt");
+
+  if (autoPrompt) {
+
+    input.value = autoPrompt;
+
+    const bubbles = document.getElementById("bubbles");
+    if (bubbles) bubbles.style.display = "none";
+
+    localStorage.removeItem("lumiPrompt");
+
+    setTimeout(handleSend, 200);
+  }
+});
+
+// ===============================
+// BUTTON EVENTS
+// ===============================
 sendBtn.addEventListener("click", handleSend);
 
 input.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-        handleSend();
-    }
+  if (e.key === "Enter") handleSend();
 });
 
-// -------------------- BUBBLE TO INPUT TEXT --------------------
+// ===============================
+// QUICK PROMPT BUTTONS
+// ===============================
 document.getElementById("photoBtn").onclick = () => {
-    input.value = "How can I look confident in photos?";
+  input.value = "How can I look confident in photos?";
 };
 
 document.getElementById("eventBtn").onclick = () => {
-    input.value = "How should I dress for this event?";
+  input.value = "How should I dress for this event?";
 };
 
 document.getElementById("dateBtn").onclick = () => {
-    input.value = "How should I dress for a date?";
+  input.value = "How should I dress for a date?";
 };
 
-// -------------------- BLOCK IMAGE CONTEXT MENU --------------------
+// ===============================
+// BLOCK IMAGE SAVE
+// ===============================
 document.addEventListener("contextmenu", (e) => {
   if (e.target.closest("input, textarea")) return;
   e.preventDefault();
@@ -156,17 +224,17 @@ document.addEventListener("dragstart", (e) => {
   }
 });
 
-// -------------------- TIMER AND RATE LIMIT FOR AI-----------------
-
+// ===============================
+// RATE LIMIT SYSTEM
+// ===============================
 function canSendMessage() {
+
   const LIMIT = 10;
   const COOLDOWN = 5000;
 
   const today = new Date().toDateString();
-
   let usage = JSON.parse(localStorage.getItem("yeom_usage"));
 
-  // First time user
   if (!usage) {
     usage = {
       count: 0,
@@ -175,7 +243,6 @@ function canSendMessage() {
     };
   }
 
-  // Daily reset check
   if (usage.lastReset !== today) {
     usage.count = 0;
     usage.lastReset = today;
@@ -183,19 +250,16 @@ function canSendMessage() {
 
   const now = Date.now();
 
-  // Cooldown check
   if (now - usage.lastMessageTime < COOLDOWN) {
     showToast("Wait 5 seconds — YEOM is styling");
     return false;
   }
 
-  // Daily limit check
   if (usage.count >= LIMIT) {
-    showToast("You've used all 10 style requests today, Come back later");
+    showToast("You've used all 10 style requests today.");
     return false;
   }
 
-  // Update usage
   usage.count++;
   usage.lastMessageTime = now;
 
@@ -203,8 +267,3 @@ function canSendMessage() {
 
   return true;
 }
-
-
-
-
-
