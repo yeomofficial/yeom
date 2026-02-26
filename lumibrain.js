@@ -1,19 +1,18 @@
 // ===============================
-// LUMI BRAIN — YEOM AI CORE
+// LUMI BRAIN — YEOM AI CORE v2
 // ===============================
 
-// Main entry (called by lumi.js)
+// Main entry
 export async function think(userMessage, wardrobe) {
 
   const message = userMessage.toLowerCase();
 
-  // detect intent
   if (isOutfitRequest(message)) {
     return generateOutfit(wardrobe, message);
   }
 
   if (message.includes("hello") || message.includes("hi")) {
-    return "Hey 👋 I'm Lumi. Want an outfit suggestion today?";
+    return "Hey 👋 I'm Lumi. Want an outfit idea today?";
   }
 
   return "Tell me where you're going or what vibe you want ✨";
@@ -24,13 +23,12 @@ export async function think(userMessage, wardrobe) {
 // INTENT DETECTION
 // ===============================
 function isOutfitRequest(msg) {
-
   const keywords = [
     "outfit",
     "wear",
     "dress",
-    "what should i wear",
-    "suggest"
+    "suggest",
+    "what should i wear"
   ];
 
   return keywords.some(word => msg.includes(word));
@@ -38,7 +36,7 @@ function isOutfitRequest(msg) {
 
 
 // ===============================
-// OUTFIT GENERATION (RULE BASED AI)
+// OUTFIT GENERATION (SMART RULES)
 // ===============================
 function generateOutfit(wardrobe, message) {
 
@@ -46,30 +44,30 @@ function generateOutfit(wardrobe, message) {
     return "Your wardrobe is empty 😭 Add some clothes first!";
   }
 
-  // detect occasion
   const occasion = detectOccasion(message);
 
-  // filter items
-  const tops = wardrobe.filter(i => i.category === "tops");
-  const bottoms = wardrobe.filter(i => i.category === "bottoms");
-  const shoes = wardrobe.filter(i => i.category === "shoes");
+  // ⭐ FILTER BY OCCASION FIRST
+  const filtered = wardrobe.filter(item =>
+    matchOccasion(item, occasion)
+  );
+
+  const usableWardrobe =
+    filtered.length >= 3 ? filtered : wardrobe;
+
+  const tops = usableWardrobe.filter(i => i.category === "tops");
+  const bottoms = usableWardrobe.filter(i => i.category === "bottoms");
+  const shoes = usableWardrobe.filter(i => i.category === "shoes");
 
   if (!tops.length || !bottoms.length || !shoes.length) {
     return "I need at least a top, bottom, and shoes in your wardrobe 👀";
   }
 
-  // simple random selection (MVP intelligence)
+  // ⭐ SMART MATCHING
   const top = pickRandom(tops);
-  const bottom = pickRandom(bottoms);
-  const shoe = pickRandom(shoes);
+  const bottom = matchBottom(top, bottoms);
+  const shoe = matchShoes(top, shoes);
 
-  return `✨ ${occasion} Outfit Idea:
-
-👕 ${top.name}
-👖 ${bottom.name}
-👟 ${shoe.name}
-
-You already own these — smart choice 😉`;
+  return formatResponse(occasion, top, bottom, shoe);
 }
 
 
@@ -78,12 +76,75 @@ You already own these — smart choice 😉`;
 // ===============================
 function detectOccasion(msg) {
 
-  if (msg.includes("party")) return "Party";
-  if (msg.includes("date")) return "Date";
-  if (msg.includes("office") || msg.includes("formal")) return "Formal";
-  if (msg.includes("gym")) return "Sport";
-  
-  return "Casual";
+  if (msg.includes("party")) return "party";
+  if (msg.includes("date")) return "date";
+  if (msg.includes("office") || msg.includes("formal")) return "formal";
+  if (msg.includes("gym")) return "sport";
+
+  return "casual";
+}
+
+
+// ===============================
+// OCCASION MATCH LOGIC
+// ===============================
+function matchOccasion(item, occasion) {
+
+  if (!item.style) return true;
+
+  if (occasion === "formal")
+    return item.style === "formal";
+
+  if (occasion === "party")
+    return item.style === "casual" || item.style === "formal";
+
+  if (occasion === "sport")
+    return item.style === "sport";
+
+  return true;
+}
+
+
+// ===============================
+// SMART MATCHERS
+// ===============================
+function matchBottom(top, bottoms) {
+
+  // simple color harmony rule
+  const neutral = ["black", "blue", "white"];
+
+  const match = bottoms.find(
+    b => neutral.includes(b.color)
+  );
+
+  return match || pickRandom(bottoms);
+}
+
+function matchShoes(top, shoes) {
+
+  const match = shoes.find(
+    s => s.style === top.style
+  );
+
+  return match || pickRandom(shoes);
+}
+
+
+// ===============================
+// RESPONSE FORMAT (YEOM STYLE)
+// ===============================
+function formatResponse(occasion, top, bottom, shoe) {
+
+  const title =
+    occasion.charAt(0).toUpperCase() + occasion.slice(1);
+
+  return `✨ ${title} Outfit Idea:
+
+👕 ${top.name}
+👖 ${bottom.name}
+👟 ${shoe.name}
+
+You already own these — smart choice 😉`;
 }
 
 
