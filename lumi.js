@@ -87,15 +87,34 @@ async function handleSend() {
 
     // show thinking message
     addMessage("Lumi is thinking...", "ai");
-  
-    const res = await fetch("https://yeomserver.onrender.com/api/chat", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ message: text })
-    });
 
+    async function handleSend() {
+  if (!canSendMessage()) return;
+
+  const text = input.value.trim();
+  if (!text) return;
+
+  const bubbles = document.getElementById("bubbles");
+  if (bubbles) bubbles.style.display = "none";
+
+  addMessage(text, "user");
+  input.value = "";
+
+  addMessage("Lumi is thinking...", "ai");
+
+  // ⭐ NEW — get wardrobe
+  const wardrobe = await getUserWardrobe();
+      
+    const res = await fetch("https://yeomserver.onrender.com/api/chat", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      message: text,
+      wardrobe: wardrobe   
+    })
+  });
     const data = await res.json();
 
     // remove thinking message
@@ -184,6 +203,7 @@ function canSendMessage() {
 
   return true;
 }
+
 
 
 
