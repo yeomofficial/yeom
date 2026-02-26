@@ -1,3 +1,24 @@
+import { db, auth } from "./firebase.js";
+import { collection, getDocs } from "firebase/firestore";
+
+async function getUserWardrobe() {
+
+  const user = auth.currentUser;
+  if (!user) return [];
+
+  const snapshot = await getDocs(
+    collection(db, "users", user.uid, "wardrobe")
+  );
+
+  const wardrobe = [];
+
+  snapshot.forEach(doc => {
+    wardrobe.push(doc.data());
+  });
+
+  return wardrobe;
+}
+
 // -------------------- Handles user input & message rendering --------------------
 const input = document.getElementById("userInput");
 const sendBtn = document.getElementById("sendBtn");
@@ -163,6 +184,7 @@ function canSendMessage() {
 
   return true;
 }
+
 
 
 
