@@ -1,8 +1,18 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
 
-import { collection, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs
+}
+from "https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js";
+
+import { getAuth }
+from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
+
+import { onAuthStateChanged }
+from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC1O-WVb95Z77o2JelptaZ8ljRPdNVDIeY",
@@ -35,7 +45,7 @@ async function getUserWardrobe() {
   // return cache if already loaded
   if (cachedWardrobe) return cachedWardrobe;
 
-  const user = auth.currentUser;
+  const user = auth.currentUser || await waitForUser();
   if (!user) return [];
 
   const snapshot = await getDocs(
@@ -279,6 +289,7 @@ function canSendMessage() {
 
   return true;
 }
+
 
 
 
