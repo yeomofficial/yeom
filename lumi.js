@@ -2,6 +2,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebas
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
 
+import { auth } from "./firebase.js";
+import { collection, getDocs } from "firebase/firestore";
+
 const firebaseConfig = {
   apiKey: "AIzaSyC1O-WVb95Z77o2JelptaZ8ljRPdNVDIeY",
   authDomain: "yeom-official.firebaseapp.com",
@@ -14,13 +17,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-
-// ===============================
-// YEOM — LUMI CLIENT BRAIN (lumi.js)
-// ===============================
-
-import { auth } from "./firebase.js";
-import { collection, getDocs } from "firebase/firestore";
 
 // -------------------- STATE --------------------
 let cachedWardrobe = null;
@@ -284,6 +280,7 @@ function canSendMessage() {
 
   return true;
 }
+
 
 
 
