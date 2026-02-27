@@ -2,7 +2,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebas
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
 
-import { auth } from "./firebase.js";
 import { collection, getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -280,6 +279,7 @@ function canSendMessage() {
 
   return true;
 }
+
 
 
 
