@@ -19,7 +19,7 @@ const db = getFirestore(app);
 // YEOM — LUMI CLIENT BRAIN (lumi.js)
 // ===============================
 
-import { db, auth } from "./firebase.js";
+import { auth } from "./firebase.js";
 import { collection, getDocs } from "firebase/firestore";
 
 // -------------------- STATE --------------------
@@ -284,5 +284,6 @@ function canSendMessage() {
 
   return true;
 }
+
 
 
