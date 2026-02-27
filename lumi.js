@@ -40,13 +40,27 @@ const chat = document.getElementById("chat");
 // ===============================
 // GET USER WARDROBE (CACHED)
 // ===============================
+function waitForUser() {
+  return new Promise(resolve => {
+    const unsub = onAuthStateChanged(auth, user => {
+      unsub();
+      resolve(user);
+    });
+  });
+}
+
 async function getUserWardrobe() {
 
   // return cache if already loaded
   if (cachedWardrobe) return cachedWardrobe;
 
+  // wait for auth
   const user = auth.currentUser || await waitForUser();
-  if (!user) return [];
+
+  if (!user) {
+    console.log("No user found");
+    return [];
+  }
 
   const snapshot = await getDocs(
     collection(db, "users", user.uid, "wardrobe")
@@ -57,6 +71,8 @@ async function getUserWardrobe() {
   snapshot.forEach(doc => {
     cachedWardrobe.push(doc.data());
   });
+
+  console.log("Loaded wardrobe:", cachedWardrobe);
 
   return cachedWardrobe;
 }
@@ -289,6 +305,7 @@ function canSendMessage() {
 
   return true;
 }
+
 
 
 
