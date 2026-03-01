@@ -89,17 +89,50 @@ function addMessage(text, sender) {
   chat.scrollTop = chat.scrollHeight;
 }
 
-// -------------------- Typing Indicator --------------------
+// -------------------- SMART TYPING SYSTEM --------------------
+
+let thinkingInterval = null;
+
+const thinkingMessages = [
+  "Getting you the best fit",
+  "Checking your wardrobe",
+  "Thinking about what suits you",
+  "Matching colors and vibe",
+  "Almost ready..."
+];
+
 function showTyping() {
-  const typing = document.createElement("div");
-  typing.className = "message ai";
-  typing.id = "typing";
-  typing.textContent = "Lumi is styling...";
-  chat.appendChild(typing);
+
+  const bubble = document.createElement("div");
+  bubble.className = "message ai";
+  bubble.id = "typing";
+
+  bubble.innerHTML = `
+    <span id="thinkingText">Lumi is styling</span>
+    <span class="dots">
+      <span>.</span>
+      <span>.</span>
+      <span>.</span>
+    </span>
+  `;
+
+  chat.appendChild(bubble);
   chat.scrollTop = chat.scrollHeight;
+
+  let index = 0;
+
+  thinkingInterval = setInterval(() => {
+    const textEl = document.getElementById("thinkingText");
+    if (!textEl) return;
+
+    textEl.textContent = thinkingMessages[index];
+    index = (index + 1) % thinkingMessages.length;
+  }, 2200);
 }
 
 function removeTyping() {
+  clearInterval(thinkingInterval);
+  thinkingInterval = null;
   document.getElementById("typing")?.remove();
 }
 
@@ -305,6 +338,7 @@ function canSendMessage() {
 
   return true;
 }
+
 
 
 
