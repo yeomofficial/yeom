@@ -190,7 +190,6 @@ body {
     color: #111;
     margin-right: auto;
     max-width: 92%;
-    display: inline-block;
 }
 
 /* Input Bar */
@@ -299,5 +298,6 @@ body {
   40% { opacity: 1; }
   100% { opacity: 0; }
 }
+
 
 
