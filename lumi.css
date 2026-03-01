@@ -192,6 +192,13 @@ body {
     max-width: 92%;
 }
 
+.message.ai {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0.85;
+}
+
 /* Input Bar */
 
 .input-bar {
@@ -236,7 +243,6 @@ body {
 
 .dots {
   display: inline-flex;
-  margin-left: 6px;
 }
 
 .dots span {
@@ -298,6 +304,7 @@ body {
   40% { opacity: 1; }
   100% { opacity: 0; }
 }
+
 
 
 
