@@ -1,21 +1,18 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { auth, db } from "./fbase.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyC1O-WVb95Z77o2JelptaZ8ljRPdNVDIeY",
-  authDomain: "yeom-official.firebaseapp.com",
-  projectId: "yeom-official",
-  storageBucket: "yeom-official.firebasestorage.app",
-  messagingSenderId: "285438640273",
-  appId: "1:285438640273:web:7d91f4ddc24536a3c5ff30",
-  measurementId: "G-EBXHHN5WFK"
-};
+import {
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+import {
+  doc,
+  setDoc,
+  collection,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
 
 function showMessage(text, type) {
   const msg = document.getElementById("message");
@@ -83,6 +80,7 @@ document.getElementById("submit").addEventListener("click", async () => {
     showMessage("There was an error saving your profile. Please try again.", "error");
   }
 });
+
 
 
 
