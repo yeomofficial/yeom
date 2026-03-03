@@ -43,7 +43,24 @@ function loadClothes() {
         <img src="${item.image}" />
 
         <button class="add-btn" data-id="${item.id}">
-          +
+          <span class="icon plus">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.25" stroke-linecap="round"
+            stroke-linejoin="round">
+              <path d="M5 12h14"/>
+              <path d="M12 5v14"/>
+            </svg>
+          </span>
+
+          <span class="icon check">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.25" stroke-linecap="round"
+            stroke-linejoin="round">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+          </span>
         </button>
       </div>
 
