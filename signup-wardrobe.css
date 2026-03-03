@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 body {
   font-family: 'Montserrat', sans-serif;
   margin: 0;
@@ -17,6 +18,39 @@ body {
 .onboarding-header p {
   color: #666;
   font-size: 14px;
+}
+
+.controls {
+  padding: 12px 16px;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+}
+
+.filter-btn {
+  border: 1px solid #ddd;
+  background: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.filter-btn.active {
+  background: black;
+  color: white;
+  border-color: black;
 }
 
 .grid {
