@@ -1,3 +1,4 @@
+import { clothes } from "./clothesdata.js";
 //  ================= FIREBASE ==============
 import {
   getFirestore,
@@ -262,6 +263,7 @@ onAuthStateChanged(auth, async (user) => {
 
   loadClothes();
 });
+
 
 
 
