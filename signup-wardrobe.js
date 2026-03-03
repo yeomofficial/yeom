@@ -125,7 +125,7 @@ function updateContinueButton() {
 }
 
 continueBtn.onclick = () => {
-  window.location.href = "index.html"; // AI page
+  window.location.href = "home.html"; 
 };
 
 onAuthStateChanged(auth, async (user) => {
