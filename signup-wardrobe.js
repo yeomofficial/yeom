@@ -136,3 +136,29 @@ onAuthStateChanged(auth, async (user) => {
   loadClothes();
   updateContinueButton();
 });
+
+//  ================= SEARCH & FILTERS ==============
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("input", (e) => {
+  currentSearch = e.target.value.toLowerCase();
+  loadClothes();
+});
+
+document.querySelectorAll(".filter-btn").forEach(btn => {
+
+  btn.addEventListener("click", () => {
+
+    document
+      .querySelectorAll(".filter-btn")
+      .forEach(b => b.classList.remove("active"));
+
+    btn.classList.add("active");
+
+    currentGenderFilter = btn.dataset.gender;
+
+    loadClothes();
+  });
+
+});
