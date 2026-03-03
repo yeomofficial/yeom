@@ -1,4 +1,4 @@
-const clothes = [
+export const clothes = [
   {
     id: "white_tshirt",
     name: "White T-Shirt",
