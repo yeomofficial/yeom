@@ -20,9 +20,6 @@ let userWardrobe = [];
 const container = document.getElementById("clothesContainer");
 const continueBtn = document.getElementById("continueBtn");
 
-// USE SAME clothes ARRAY FROM YOUR ORIGINAL FILE
-const clothes = [ /* paste your clothes array here */ ];
-
 async function loadUserWardrobeFromDB() {
   const snapshot = await getDocs(
     collection(db, "users", currentUser.uid, "wardrobe")
