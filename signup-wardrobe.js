@@ -1,5 +1,6 @@
 // FIREBASE
 import { auth, db } from "./fbase.js";
+import { clothes } from "./clothesdata.js";
 
 import {
   doc,
