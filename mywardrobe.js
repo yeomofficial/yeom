@@ -1,3 +1,4 @@
+import { clothes } from "./clothesdata.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
 
 import {
