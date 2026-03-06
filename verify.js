@@ -1,23 +1,8 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+import { auth, db } from "./fbase.js";
 
 import {
-  getAuth,
   sendEmailVerification
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-
-/* Firebase Config */
-
-const firebaseConfig = {
-  apiKey: "AIzaSyC1O-WVb95Z77o2JelptaZ8ljRPdNVDIeY",
-  authDomain: "yeom-official.firebaseapp.com",
-  projectId: "yeom-official",
-  storageBucket: "yeom-official.firebasestorage.app",
-  messagingSenderId: "285438640273",
-  appId: "1:285438640273:web:7d91f4ddc24536a3c5ff30",
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 
 /* Elements */
 
