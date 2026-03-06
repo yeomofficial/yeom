@@ -1,7 +1,8 @@
-import { auth, db } from "./fbase.js";
+import { auth } from "./fbase.js";
 
 import {
-  sendEmailVerification
+  sendEmailVerification,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
 /* Elements */
@@ -10,6 +11,15 @@ const continueBtn = document.getElementById("continue-btn");
 const resendBtn = document.getElementById("resend-btn");
 const message = document.getElementById("message");
 
+/* Check user state */
+
+onAuthStateChanged(auth, (user) => {
+
+  if (!user) {
+    location.replace("login.html");
+  }
+
+});
 /* Continue Button */
 
 continueBtn.addEventListener("click", async () => {
