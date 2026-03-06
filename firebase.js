@@ -1,7 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import {
   getAuth,
-  createUserWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  sendEmailVerification
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 import {
   getFirestore,
@@ -136,6 +137,8 @@ form.addEventListener("submit", async (e) => {
     const user = userCredential.user;
     const uid = user.uid;
 
+    await sendEmailVerification(user);
+
     await setDoc(doc(db, "users", user.uid), {
       email,
       spotters: 0,
@@ -146,7 +149,7 @@ form.addEventListener("submit", async (e) => {
     await logEvent("user_signed_up", uid);
     await logEvent("terms_accepted", uid);
     // Prevent back navigation
-    location.replace("info.html");
+    location.replace("verify.html");
 
   } catch (error) {
     toggleFormDisabled(false);
@@ -176,4 +179,5 @@ document.addEventListener("dragstart", (e) => {
     e.preventDefault();
   }
 });
+
 
