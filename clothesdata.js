@@ -20,6 +20,16 @@ export const clothes = [
   image: "wardrobe/black-tshirt.jpg"
   },
   {
+  id: "denim_jacket",
+  name: "Denim Jacket",
+  category: "outerwear",
+  gender: "unisex",
+  style: "casual",
+  color: "blue",
+  occasion: ["daily", "casual", "travel"],
+  image: "wardrobe/blue-denim-jacket.webp"
+  },
+  {
     id: "blue_jeans",
     name: "Blue Denim Jeans",
     category: "bottom",
