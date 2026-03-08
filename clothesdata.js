@@ -10,6 +10,16 @@ export const clothes = [
     image: "wardrobe/white_tshirt.jpg"
   },
   {
+  id: "black_tshirt",
+  name: "Black T-Shirt",
+  category: "top",
+  gender: "unisex",
+  style: "casual",
+  color: "black",
+  occasion: ["daily", "casual", "travel"],
+  image: "wardrobe/black-tshirt.jpg"
+  },
+  {
     id: "blue_jeans",
     name: "Blue Denim Jeans",
     category: "bottom",
