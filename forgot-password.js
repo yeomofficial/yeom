@@ -1,5 +1,6 @@
 import { auth } from "./fbase.js";
 import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+
 // Message display function
 function showMessage(text, isError = false) {
   const box = document.getElementById("message-box");
@@ -12,7 +13,6 @@ document.getElementById("reset-btn").addEventListener("click", () => {
   const emailInput = document.getElementById("email").value.trim();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  // Validate email format
   if (!emailRegex.test(emailInput)) {
     showMessage("Please enter a valid email address.", true);
     return;
@@ -38,4 +38,3 @@ document.getElementById("reset-btn").addEventListener("click", () => {
       }
     });
 });
-
