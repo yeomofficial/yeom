@@ -35,7 +35,7 @@ continueBtn.addEventListener("click", async () => {
 
   if (user.emailVerified) {
 
-    location.replace("info.html");
+    window.location.replace("info-gathering/info.html");
 
   } else {
 
