@@ -164,7 +164,7 @@ form.addEventListener("submit", async function (e) {
     showMessage("Profile created! Redirecting...", "success");
 
     setTimeout(() => {
-      window.location.replace("signup-wardrobe.html");
+      window.location.replace("../signup-wardrobe.html");
     }, 1500);
 
   } catch (error) {
