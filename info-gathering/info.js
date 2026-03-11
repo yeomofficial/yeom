@@ -1,4 +1,4 @@
-import { auth, db } from "./fbase.js";
+import { auth, db } from "../fbase.js";
 
 import {
   onAuthStateChanged
