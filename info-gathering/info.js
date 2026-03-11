@@ -22,7 +22,7 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     currentUser = user;
   } else {
-    window.location.href = "login.html";
+    window.location.href = "../login.html";
   }
 });
 
