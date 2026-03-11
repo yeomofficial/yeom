@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YEOM  Profile Info</title>
+
+  <link rel="stylesheet" href="./info.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- Success / Error Message -->
+  <div id="message" class="hidden"></div>
+
+  <h2>Complete Profile</h2>
+  <p class="subtitle">Tell us about yourself</p>
+
+  <!-- PROFILE IMAGE -->
+  <div class="profile-section">
+
+    <div class="avatar-wrapper">
+
+      <div class="avatar-placeholder"></div>
+
+      <img id="profileImage" alt="Profile Preview">
+
+      <div class="overlay">Change</div>
+
+    </div>
+
+    <input type="file" id="fileInput" accept="image/*">
+
+    <p class="upload-text">Upload profile picture</p>
+
+  </div>
+
+  <!-- FORM -->
+  <form id="infoForm">
+
+    <label>Username</label>
+    <input 
+      type="text"
+      id="username"
+      placeholder="Enter your username"
+      required
+    />
+
+    <label>Select Gender</label>
+    <select id="gender" required>
+      <option value="">Select your gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label>Date of Birth</label>
+    <input type="text" id="dob" required />
+
+    <label>Fashion Preference</label>
+    <select id="fashion" required>
+      <option value="">Select your style</option>
+      <option value="Streetwear">Streetwear</option>
+      <option value="Casual">Casual</option>
+      <option value="Formal">Formal</option>
+      <option value="Vintage">Vintage</option>
+      <option value="Minimal">Minimal</option>
+    </select>
+
+    <button id="submit" type="button">
+      Continue
+    </button>
+
+  </form>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+  flatpickr("#dob", {
+    dateFormat: "Y-m-d",
+    maxDate: "today",
+    defaultDate: "2000-01-01"
+  });
+</script>
+
+<script type="module" src="./info.js"></script>
+
+</body>
+</html>
