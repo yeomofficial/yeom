@@ -242,6 +242,11 @@ border-color:black;
 box-shadow:0 0 0 2px rgba(0,0,0,0.05);
 }
 
+input,
+select,
+button {
+  font-family: 'Montserrat', sans-serif;
+}
 
 /* BUTTON */
 
