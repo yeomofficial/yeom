@@ -136,7 +136,7 @@ function showFinalButton() {
   optionsDiv.innerHTML = "";
   questionText.innerText = "Ready for your perfect outfit?";
 
-  logEvent("lumi_questions_completed", uid);
+  logEvent("lumi_questions_completed", currentUser.uid);
   
   finalBtn.style.display = "block";
 }
