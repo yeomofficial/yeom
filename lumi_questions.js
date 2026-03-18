@@ -3,7 +3,7 @@ import { logEvent } from "./analytics.js";
 // ---------------- RESET SESSION ----------------
 window.onload = function () {
   localStorage.removeItem("lumiPrompt");
-  logEvent("lumi_questions_opened");
+  logEvent("lumi_questions_opened", uid);
   loadQuestion();
 };
 
@@ -123,7 +123,7 @@ function showFinalButton() {
   optionsDiv.innerHTML = "";
   questionText.innerText = "Ready for your perfect outfit?";
 
-  logEvent("lumi_questions_completed");
+  logEvent("lumi_questions_completed", uid);
   
   finalBtn.style.display = "block";
 }
