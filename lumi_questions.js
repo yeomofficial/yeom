@@ -1,3 +1,4 @@
+import { auth } from "./fbase.js";
 import { logEvent } from "./analytics.js";
 
 // ---------------- RESET SESSION ----------------
