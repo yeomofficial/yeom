@@ -1,10 +1,21 @@
 import { auth } from "./fbase.js";
 import { logEvent } from "./analytics.js";
 
+// ---------------- EVENT TRACK ----------------
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.replace("index.html");
+    return;
+  }
+
+  currentUser = user;
+
+  logEvent("lumi_questions_opened", currentUser.uid);
+});
+
 // ---------------- RESET SESSION ----------------
 window.onload = function () {
   localStorage.removeItem("lumiPrompt");
-  logEvent("lumi_questions_opened", uid);
   loadQuestion();
 };
 
