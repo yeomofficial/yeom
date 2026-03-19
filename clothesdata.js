@@ -88,6 +88,16 @@ export const clothes = [
     color: "black",
     occasion: ["formal", "smart-casual", "date", "evening"],
     image: "wardrobe/w-balletflats-black.jpg"
+  },
+  {
+  id: "w_black_top",
+  name: "Black Top",
+  category: "top",
+  gender: "women",
+  style: "casual",
+  color: "black",
+  occasion: ["daily", "casual", "date"],
+  image: "wardrobe/blacktopwoman.jpg"
   }
 ];
 
