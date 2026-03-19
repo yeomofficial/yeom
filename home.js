@@ -198,6 +198,7 @@ async function loadPosts() {
 
   snap.forEach(docSnap => {
     const data = docSnap.data();
+    if (data.isPublic === false) return;
     feed.appendChild(
       createPost({
         postId: docSnap.id,
