@@ -21,6 +21,8 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { logEvent } from "./analytics.js";
 
+import { updateDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyC1O-WVb95Z77o2JelptaZ8ljRPdNVDIeY",
   authDomain: "yeom-official.firebaseapp.com",
@@ -345,7 +347,6 @@ function showToast(message) {
 
 
 // -------------------- TEMPORARY CODE -----------------
-import { updateDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 async function fixOldPosts() {
   const q = query(collection(db, "posts"));
