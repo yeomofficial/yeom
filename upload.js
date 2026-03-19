@@ -133,7 +133,9 @@ uploadBtn.addEventListener("click", async () => {
       section: sectionSelect.value,
       imageUrl,
       createdAt: serverTimestamp(),
-      likeCount: 0
+      likeCount: 0,
+      isPublic: true,
+      visibility: "approved"
     });
 
     logEvent(
