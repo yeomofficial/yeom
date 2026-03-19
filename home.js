@@ -344,5 +344,27 @@ function showToast(message) {
 }
 
 
+// -------------------- TEMPORARY CODE -----------------
+import { updateDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
+async function fixOldPosts() {
+  const q = query(collection(db, "posts"));
+  const snap = await getDocs(q);
 
+  for (const docSnap of snap.docs) {
+    const data = docSnap.data();
+
+    // If isPublic doesn't exist → set it
+    if (data.isPublic === undefined) {
+      await updateDoc(doc(db, "posts", docSnap.id), {
+        isPublic: true
+      });
+      console.log("Fixed:", docSnap.id);
+    }
+  }
+
+  console.log("All old posts updated ✅");
+}
+
+// Run it once
+fixOldPosts();
