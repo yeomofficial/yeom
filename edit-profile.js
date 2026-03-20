@@ -9,6 +9,12 @@ import {
   getAuth,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+import {
+  collection,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC1O-WVb95Z77o2JelptaZ8ljRPdNVDIeY",
@@ -121,22 +127,62 @@ saveBtn.addEventListener("click", async () => {
   const user = auth.currentUser;
   if (!user) return;
 
+  let newUsername = usernameInput.value.trim().toLowerCase();
+
+  const usernameRegex = /^[a-z0-9_]+$/;
+
+  // ❌ Validate username
+  if (!usernameRegex.test(newUsername)) {
+    showMessage("Only lowercase letters, numbers, and underscores allowed.", false);
+    return;
+  }
+
   try {
+    // 🧠 Only check if username changed
+    if (newUsername !== originalData.username) {
+
+      const q = query(
+        collection(db, "users"),
+        where("username", "==", newUsername)
+      );
+
+      const querySnapshot = await getDocs(q);
+
+      let usernameTaken = false;
+
+      querySnapshot.forEach((docSnap) => {
+        if (docSnap.id !== user.uid) {
+          usernameTaken = true;
+        }
+      });
+
+      if (usernameTaken) {
+        showMessage("Username already taken.", false);
+        return;
+      }
+    }
+
+    // ✅ Update profile
     const docRef = doc(db, "users", user.uid);
+
     await updateDoc(docRef, {
-      username: usernameInput.value,
+      username: newUsername,
       gender: genderSelect.value,
       fashion: fashionSelect.value,
       profile: imageUrl
     });
+
+    // 🧠 Update local state
     originalData = {
-      username: usernameInput.value,
+      username: newUsername,
       gender: genderSelect.value,
       fashion: fashionSelect.value,
       profile: imageUrl
     };
+
     updateSaveButtonState();
     showMessage("Profile updated successfully.");
+
   } catch (err) {
     showMessage("Failed to update profile.", false);
   }
