@@ -147,7 +147,7 @@ form.addEventListener("submit", async (e) => {
     await logEvent("user_signed_up", uid);
     await logEvent("terms_accepted", uid);
     // Prevent back navigation
-    location.replace("info.html");
+    location.replace("info-gathering/info.html");
 
   } catch (error) {
     toggleFormDisabled(false);
