@@ -137,8 +137,6 @@ form.addEventListener("submit", async (e) => {
     const user = userCredential.user;
     const uid = user.uid;
 
-    await sendEmailVerification(user);
-
     await setDoc(doc(db, "users", user.uid), {
       email,
       spotters: 0,
@@ -149,7 +147,7 @@ form.addEventListener("submit", async (e) => {
     await logEvent("user_signed_up", uid);
     await logEvent("terms_accepted", uid);
     // Prevent back navigation
-    location.replace("verify.html");
+    location.replace("info.html");
 
   } catch (error) {
     toggleFormDisabled(false);
