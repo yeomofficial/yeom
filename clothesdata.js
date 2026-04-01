@@ -98,6 +98,16 @@ export const clothes = [
   color: "black",
   occasion: ["daily", "casual", "date"],
   image: "wardrobe/blacktopwoman.jpg"
+  },
+  {
+  id: "leather_jacket",
+  name: "Leather Jacket",
+  category: "outerwear",
+  gender: "unisex",
+  style: "edgy",
+  color: "black",
+  occasion: ["casual", "evening", "date"],
+  image: "wardrobe/black-leatherjacket.jpg"
   }
 ];
 
