@@ -118,6 +118,16 @@ export const clothes = [
   color: "white",
   occasion: ["casual", "travel", "daily"],
   image: "wardrobe/whiteutilityshirt.jpg"
+  },
+  {
+  id: "blue_striped_shirt",
+  name: "Blue Striped Shirt",
+  category: "top",
+  gender: "unisex",
+  style: "smart-casual",
+  color: "blue",
+  occasion: ["casual", "date", "event"],
+  image: "wardrobe/bluestripeshirt.jpg"
   }
 ];
 
