@@ -138,6 +138,16 @@ export const clothes = [
   color: "black",
   occasion: ["date", "evening", "event"],
   image: "wardrobe/blackmididress.jpg"
+  },
+  {
+  id: "black_pump_heels",
+  name: "Black Pump Heels",
+  category: "shoes",
+  gender: "women",
+  style: "formal",
+  color: "black",
+  occasion: ["date", "formal", "event", "evening"],
+  image: "blackpumpheels.jpg"
   }
 ];
 
