@@ -128,6 +128,16 @@ export const clothes = [
   color: "blue",
   occasion: ["casual", "date", "event"],
   image: "wardrobe/bluestripeshirt.jpg"
+  },
+  {
+  id: "black_midi_dress",
+  name: "Black Midi Dress",
+  category: "full",
+  gender: "women",
+  style: "casual",
+  color: "black",
+  occasion: ["date", "evening", "event"],
+  image: "wardrobe/blackmididress.jpg"
   }
 ];
 
