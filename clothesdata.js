@@ -158,6 +158,16 @@ export const clothes = [
   color: "white",
   occasion: ["daily", "casual", "date"],
   image: "wardrobe/whitetopwoman.jpg"
+  },
+  {
+  id: "sweater_vest",
+  name: "Sweater Vest",
+  category: "top",
+  gender: "unisex",
+  style: "casual",
+  color: "neutral",
+  occasion: ["casual", "smart-casual", "layering"],
+  image: "wardrobe/sweater_vest.jpg"
   }
 ];
 
