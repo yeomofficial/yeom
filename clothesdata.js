@@ -168,6 +168,16 @@ export const clothes = [
   color: "neutral",
   occasion: ["casual", "smart-casual", "layering"],
   image: "wardrobe/sweater_vest.jpg"
+  },
+  {
+  id: "black_mary_janes",
+  name: "Black Mary Janes",
+  category: "shoes",
+  gender: "women",
+  style: "casual",
+  color: "black",
+  occasion: ["daily", "casual", "date"],
+  image: "black-maryjanes.jpg"
   }
 ];
 
