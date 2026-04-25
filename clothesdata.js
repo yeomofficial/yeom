@@ -177,7 +177,7 @@ export const clothes = [
   style: "casual",
   color: "black",
   occasion: ["daily", "casual", "date"],
-  image: "black-maryjanes.jpg"
+  image: "wardrobe/black-maryjanes.jpg"
   }
 ];
 
