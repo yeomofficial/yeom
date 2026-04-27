@@ -139,6 +139,7 @@ form.addEventListener("submit", async (e) => {
 
     await setDoc(doc(db, "users", user.uid), {
       email,
+      emailVerified: false,
       spotters: 0,
       spotting: 0,
       createdAt: Date.now()
