@@ -9,6 +9,7 @@ import {
   setDoc,
   doc
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 import { logEvent } from "./analytics.js";
 
 /* ---------------- Firebase ---------------- */
@@ -142,7 +143,7 @@ form.addEventListener("submit", async (e) => {
       emailVerified: false,
       spotters: 0,
       spotting: 0,
-      createdAt: Date.now()
+      createdAt: serverTimestamp()
     });
 
     await logEvent("user_signed_up", uid);
