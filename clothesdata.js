@@ -20,7 +20,7 @@ export const clothes = [
   style: "casual",
   color: "black",
   occasion: ["daily", "casual", "travel"],
-  image: "wardrobe/black-tshirt.jpg"
+  image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777401351/black-tshirt_c67s3o.jpg"
   },
   {
   id: "denim_jacket",
