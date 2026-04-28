@@ -1,3 +1,6 @@
+const CLOUDINARY_BASE =
+  "https://res.cloudinary.com/dwauleaof/image/upload/f_auto,q_auto,w_400/";
+
 export const clothes = [
   {
     id: "white_tshirt",
@@ -67,7 +70,7 @@ export const clothes = [
     style: "formal",
     color: "black",
     occasion: ["formal", "smart-casual", "date", "evening"],
-    image: "wardrobe/men-chelseaboots-black.jpg"
+    image: CLOUDINARY_BASE + "wardrobe/men-chelseaboots-black.jpg"
   },
   {
     id: "w-wideleg-pants-black",
