@@ -70,7 +70,7 @@ export const clothes = [
     style: "formal",
     color: "black",
     occasion: ["formal", "smart-casual", "date", "evening"],
-    image: CLOUDINARY_BASE + "wardrobe/men-chelseaboots-black.jpg"
+    image: CLOUDINARY_BASE + "wardrobe/men-chelseaboots-black_wglkag.jpg"
   },
   {
     id: "w-wideleg-pants-black",
