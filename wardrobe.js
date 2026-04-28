@@ -155,7 +155,7 @@ function loadClothes() {
 
     card.innerHTML = `
       <div class="img-wrapper">
-        <img src="${getImageUrl(item.image)}" />
+        <img src="${item.image}" />
 
         <button class="add-btn" data-id="${item.id}">
           <span class="icon plus">
