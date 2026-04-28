@@ -51,6 +51,8 @@ async function loadUserWardrobeFromDB() {
   });
 }
 
+
+
 //  ================= ELEMENTS ==============
 const container = document.getElementById("clothesContainer");
 
@@ -153,7 +155,7 @@ function loadClothes() {
 
     card.innerHTML = `
       <div class="img-wrapper">
-        <img src="${item.image}" />
+        <img src="${getImageUrl(item.image)}" />
 
         <button class="add-btn" data-id="${item.id}">
           <span class="icon plus">
