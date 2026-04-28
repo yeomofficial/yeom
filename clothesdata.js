@@ -180,7 +180,7 @@ export const clothes = [
   style: "casual",
   color: "black",
   occasion: ["daily", "casual", "date"],
-  image: "wardrobe/black-maryjanes.jpg"
+  image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777401703/black-maryjanes_eohpi4.jpg"
   }
 ];
 
