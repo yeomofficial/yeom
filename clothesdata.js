@@ -60,7 +60,7 @@ export const clothes = [
     style: "formal",
     occasion: ["formal", "office", "smart-casual"],
     color: "white",
-    image: "wardrobe/women-btndown-white.jpg"
+    image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777460659/women-btndown-white_lnwoi4.jpg"
   },
   {
     id: "black-boots",
