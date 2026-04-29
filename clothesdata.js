@@ -170,7 +170,7 @@ export const clothes = [
   style: "casual",
   color: "neutral",
   occasion: ["casual", "smart-casual", "layering"],
-  image: "wardrobe/sweater_vest.jpg"
+  image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777443002/sweater_vest_r3kcd9.jpg"
   },
   {
   id: "black_mary_janes",
