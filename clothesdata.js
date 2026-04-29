@@ -90,7 +90,7 @@ export const clothes = [
     style: "formal",
     color: "black",
     occasion: ["formal", "smart-casual", "date", "evening"],
-    image: "wardrobe/w-balletflats-black.jpg"
+    image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777460405/w-balletflats-black_gjahh6.jpg"
   },
   {
   id: "w_black_top",
