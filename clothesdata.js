@@ -80,7 +80,7 @@ export const clothes = [
     style: "formal",
     occasion: ["formal", "office", "smart-casual"],
     color: "black",
-    image: "wardrobe/w-wide-legpants-black.jpg"
+    image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777451643/w-wide-legpants-black_b5nfj3.png"
   },
   {
     id: "black-balletflat",
