@@ -130,7 +130,7 @@ export const clothes = [
   style: "smart-casual",
   color: "blue",
   occasion: ["casual", "date", "event"],
-  image: "wardrobe/bluestripeshirt.jpg"
+  image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777452858/bluestripeshirt_k5amhb.jpg"
   },
   {
   id: "black_midi_dress",
