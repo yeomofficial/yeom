@@ -150,7 +150,7 @@ export const clothes = [
   style: "formal",
   color: "black",
   occasion: ["date", "formal", "event", "evening"],
-  image: "wardrobe/blackpumpheels.jpg"
+  image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777451156/blackpumpheels_idn27r.jpg"
   },
   {
   id: "white_top",
