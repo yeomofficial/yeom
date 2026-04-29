@@ -160,7 +160,7 @@ export const clothes = [
   style: "casual",
   color: "white",
   occasion: ["daily", "casual", "date"],
-  image: "wardrobe/whitetopwoman.jpg"
+  image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777446257/whitetopwoman_lynx5e.jpg"
   },
   {
   id: "sweater_vest",
