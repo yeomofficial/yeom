@@ -50,7 +50,7 @@ export const clothes = [
     style: "casual",
     occasion: ["daily", "casual", "travel", "college"],
     color: "white",
-    image: "wardrobe/white_converse.jpg"
+    image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777452357/white_converse_cc78yg.jpg"
   },
   {
     id: "w-btn-dwn-shirt-white",
