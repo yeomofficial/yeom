@@ -225,6 +225,33 @@ export const clothes = [
     "leather_jacket"   // again: kills the soft/playful vibe
   ],
   image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777554535/w-woman-polka-dot-top_z5lxam.jpg"
+  },
+  {
+  id: "leopard_print_halter_top",
+  name: "Leopard Print Halter Top",
+  category: "top",
+  gender: "women",
+  style: "bold",
+  vibe: "statement",
+  formality: "casual",
+  color: "brown",
+  pattern: "leopard",
+  fit: "slim",
+  neckline: "halter",
+  layering: "minimal",
+  occasion: ["date", "night-out", "party"],
+
+  goesWith: [
+    "black_trousers_women",
+    "w-wideleg-pants-black",
+    "blue_jeans"
+  ],
+
+  avoidWith: [
+    "leather_jacket"   // THIS makes sense (layer conflict)
+  ],
+
+  image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777555880/w-leopardprint-halter-top_lpfxy6.jpg"
   }
 ];
 
