@@ -202,6 +202,29 @@ export const clothes = [
     "leather_jacket"   // clashes vibe (too edgy)
   ],
   image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777553587/w-blue-lace-bow-cami_ekocrc.jpg"
+  },
+  {
+  id: "white_strapless_polka_top",
+  name: "Strapless Polka Dot Top",
+  category: "top",
+  gender: "women",
+  style: "playful",
+  vibe: "vintage",
+  formality: "casual",
+  color: "white",
+  pattern: "polka dot",
+  fit: "slim",
+  layering: "light",
+  occasion: ["date", "cafe", "summer", "casual"],
+  goesWith: [
+    "blue_jeans",
+    "w-wideleg-pants-black",
+    "black_trousers_women"
+  ],
+  avoidWith: [
+    "leather_jacket"   // again: kills the soft/playful vibe
+  ],
+  image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777554535/w-woman-polka-dot-top_z5lxam.jpg"
   }
 ];
 
