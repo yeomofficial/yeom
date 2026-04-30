@@ -181,6 +181,27 @@ export const clothes = [
   color: "black",
   occasion: ["daily", "casual", "date"],
   image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777401703/black-maryjanes_eohpi4.jpg"
+  },
+  {
+  id: "lace_bow_cami_top_navy",
+  name: "Lace Bow Cami Top",
+  category: "top",
+  gender: "women",
+  style: "soft-feminine",
+  vibe: "romantic",
+  formality: "semi-formal",
+  color: "navy blue",
+  layering: "light",
+  occasion: ["date", "evening", "cafe", "dinner"],
+  goesWith: [
+    "w-wideleg-pants-black",
+    "black_trousers_women",
+    "blue_jeans"
+  ],
+  avoidWith: [
+    "leather_jacket"   // clashes vibe (too edgy)
+  ],
+  image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777553587/w-blue-lace-bow-cami_ekocrc.jpg"
   }
 ];
 
