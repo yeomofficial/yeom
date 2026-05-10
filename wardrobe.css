@@ -43,6 +43,7 @@ button, input, textarea, select {
 
 .main-header {
   padding: 14px 16px 10px;
+  margin-bottom: 8px;
   background: white;
   position: relative;
 }
@@ -84,7 +85,7 @@ button, input, textarea, select {
 
 .title-group-centered {
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: 26px;
 }
 
 .title-group-centered h1 {
@@ -103,7 +104,7 @@ button, input, textarea, select {
 
 
 .search-section-minimal {
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .unified-search-bar {
@@ -112,6 +113,7 @@ button, input, textarea, select {
   background: white;
   border-radius: 20px;
   padding: 8px 16px;
+  margin-bottom: 14px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
   border: 1px solid rgba(0, 0, 0, 0.02);
 }
