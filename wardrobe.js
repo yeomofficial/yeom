@@ -149,14 +149,7 @@ function setupColorSwatches(selector) {
   });
 }
 
-chip.addEventListener("click", () => {
-  document.querySelectorAll(selector).forEach(c => c.classList.remove("active"));
-  chip.classList.add("active");
-  currentCategoryFilter = chip.dataset.category;
-
-  loadClothes(); 
-});
-
+setupCategoryChips("#categoryFilters .filter-chip");
 setupColorSwatches("#colorFilters .color-swatch");
 
 // ================= CUSTOM COLOR PICKER =================
@@ -241,7 +234,7 @@ function loadClothes() {
                          item.gender === currentGenderFilter ||
                          item.gender === "unisex";
     const matchesCategory = currentCategoryFilter === "all" ||
-                           (item.category && item.category.toLowerCase() === currentCategoryFilter);
+                           (item.category && item.category.toLowerCase() === currentCategoryFilter.toLowerCase())
     const matchesColor = currentColorFilter === "all" ||
                         (item.color && item.color.toLowerCase() === currentColorFilter) ||
                         (item.colors && item.colors.includes(currentColorFilter));
@@ -260,7 +253,7 @@ function loadClothes() {
     card.innerHTML = `
       <div class="img-wrapper">
         <img src="${item.image}" alt="${item.name}" />
-        <button class="add-btn \( {isInWardrobe ? 'added' : ''}" data-id=" \){item.id}">
+        <button class="add-btn ${isInWardrobe ? 'added' : ''}" data-id="${item.id}">
           <span class="icon plus">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14"/>
