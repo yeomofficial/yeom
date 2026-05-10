@@ -42,7 +42,7 @@ button, input, textarea, select {
 
 
 .main-header {
-  padding: 16px 20px 10px;
+  padding: 14px 16px;
   background: white;
 }
 
@@ -79,11 +79,11 @@ button, input, textarea, select {
 
 .title-group-centered {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 16px;
 }
 
 .title-group-centered h1 {
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 800;
   margin: 0;
   letter-spacing: -1px;
