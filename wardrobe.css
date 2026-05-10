@@ -80,6 +80,11 @@ button, input, textarea, select {
   transition: var(--transition);
 }
 
+.wardrobe-circle-btn img {
+  width: 20px;
+  height: 20px;
+}
+
 .wardrobe-circle-btn:active {
   transform: scale(0.9);
 }
