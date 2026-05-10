@@ -44,6 +44,7 @@ button, input, textarea, select {
 .main-header {
   padding: 14px 16px 10px;
   margin-bottom: 8px;
+  margin-top: 10px;
   background: white;
   position: relative;
 }
