@@ -138,6 +138,7 @@ function setupCategoryChips(selector) {
 }
 
 // ================= COLOR SWATCHES =================
+
 function setupColorSwatches(selector) {
   document.querySelectorAll(selector).forEach(swatch => {
     if (swatch.id === "colorPickerTrigger") return;
@@ -229,18 +230,21 @@ function loadClothes() {
   container.innerHTML = "";
 
   const filtered = clothes.filter(item => {
-    const matchesSearch = item.name.toLowerCase().includes(currentSearch);
-    const matchesGender = currentGenderFilter === "all" ||
-                         item.gender === currentGenderFilter ||
-                         item.gender === "unisex";
-    const matchesCategory = currentCategoryFilter === "all" ||
-                           (item.category && item.category.toLowerCase() === currentCategoryFilter.toLowerCase())
-    const matchesColor = currentColorFilter === "all" ||
-                        (item.color && item.color.toLowerCase() === currentColorFilter) ||
-                        (item.colors && item.colors.includes(currentColorFilter));
+  const matchesSearch = item.name.toLowerCase().includes(currentSearch);
 
-    return matchesSearch && matchesGender && matchesCategory && matchesColor;
-  });
+  const matchesGender =
+    currentGenderFilter === "all" ||
+    item.gender === currentGenderFilter ||
+    item.gender === "unisex";
+
+  const matchesCategory =
+    currentCategoryFilter === "all" ||
+    item.category?.toLowerCase() === currentCategoryFilter.toLowerCase();
+
+  const matchesColor = true; // disabled for now
+
+  return matchesSearch && matchesGender && matchesCategory && matchesColor;
+});
 
   const sorted = sortItems(filtered);
   if (itemCount) itemCount.innerText = `${sorted.length} Items`;
