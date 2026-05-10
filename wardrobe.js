@@ -129,7 +129,10 @@ function setupCategoryChips(selector) {
     chip.addEventListener("click", () => {
       document.querySelectorAll(selector).forEach(c => c.classList.remove("active"));
       chip.classList.add("active");
+
       currentCategoryFilter = chip.dataset.category;
+
+      loadClothes(); 
     });
   });
 }
@@ -146,7 +149,14 @@ function setupColorSwatches(selector) {
   });
 }
 
-setupCategoryChips("#categoryFilters .filter-chip");
+chip.addEventListener("click", () => {
+  document.querySelectorAll(selector).forEach(c => c.classList.remove("active"));
+  chip.classList.add("active");
+  currentCategoryFilter = chip.dataset.category;
+
+  loadClothes(); 
+});
+
 setupColorSwatches("#colorFilters .color-swatch");
 
 // ================= CUSTOM COLOR PICKER =================
@@ -218,40 +228,6 @@ if (resetFiltersBtn) {
 
     loadClothes();
   };
-}
-
-// ================= SORT OPTIONS =================
-document.querySelectorAll(".sort-option").forEach(opt => {
-  opt.addEventListener("click", () => {
-    document.querySelectorAll(".sort-option").forEach(o => o.classList.remove("active"));
-    opt.classList.add("active");
-    currentSort = opt.dataset.sort;
-    loadClothes();
-  });
-});
-
-// ================= SORTING LOGIC =================
-function sortItems(items) {
-  let sorted = [...items];
-  switch (currentSort) {
-    case "newest":
-      return sorted.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-    case "oldest":
-      return sorted.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
-    case "name-asc":
-      return sorted.sort((a, b) => a.name.localeCompare(b.name));
-    case "name-desc":
-      return sorted.sort((a, b) => b.name.localeCompare(a.name));
-    case "default":
-    default:
-      return sorted.sort((a, b) => {
-        const aIn = userWardrobe.some(i => i.id === a.id);
-        const bIn = userWardrobe.some(i => i.id === b.id);
-        if (aIn && !bIn) return 1;
-        if (!aIn && bIn) return -1;
-        return 0;
-      });
-  }
 }
 
 // ================= MAIN LOAD FUNCTION =================
