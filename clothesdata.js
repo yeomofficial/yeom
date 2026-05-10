@@ -10,7 +10,7 @@ export const clothes = [
     style: "casual",
     color: "white",
     occasion: ["daily", "casual", "travel"],
-    image: CLOUDINARY_BASE + "https://res.cloudinary.com/dwauleaof/image/upload/v1777400412/white_tshirt_pjyhjf.jpg"
+    image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777400412/white_tshirt_pjyhjf.jpg"
   },
   {
   id: "black_tshirt",
