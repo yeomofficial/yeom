@@ -42,17 +42,14 @@ button, input, textarea, select {
 
 
 .main-header {
-  padding: 20px 24px;
+  padding: 16px 20px 10px;
   background: white;
-  position: sticky;
-  top: 0;
-  z-index: 100;
 }
 
 .header-top-minimal {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 .wardrobe-circle-btn {
