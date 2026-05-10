@@ -242,16 +242,18 @@ button, input, textarea, select {
 .clothes-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 14px;                    
-  padding: 0 16px;             
+  gap: 12px;
+  padding: 15px;             
 }
 
 /* CLOTH CARD - Main Container */
 .cloth-card {
-  background: #fff;
-  border-radius: 22px;
+  background: #f7f7f7;
+  border-radius: 14px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
   overflow: hidden;
-  border: 1px solid #f0f0f0;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
   transition: all 0.3s ease;
   position: relative;
@@ -285,11 +287,9 @@ button, input, textarea, select {
 }
 
 .cloth-name {
-  font-size: 15px;
   font-weight: 600;
-  margin: 0 0 4px 0;
-  line-height: 1.3;
-  color: #111;
+  margin: 8px 0 0;
+  font-size: 14px;
 }
 
 .cloth-category {
