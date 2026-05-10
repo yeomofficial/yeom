@@ -30,7 +30,6 @@ const container = document.getElementById("myWardrobeContainer");
 
 let currentUser = null;
 
-alert("JS LOADED");
 // ================= LOAD USER WARDROBE =================
 async function loadMyWardrobe() {
 
