@@ -1,4 +1,4 @@
-const CACHE_NAME = "yeom-v1.3.17";
+const CACHE_NAME = "yeom-v1.3.18";
 
 /**
  *  IMPORTANT:
