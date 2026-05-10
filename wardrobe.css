@@ -52,6 +52,14 @@ button, input, textarea, select {
   margin-bottom: 16px;
 }
 
+.header-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: white;
+  padding-bottom: 10px;
+}
+
 .wardrobe-circle-btn {
   width: 48px;
   height: 48px;
