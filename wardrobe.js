@@ -230,34 +230,63 @@ function loadClothes() {
   container.innerHTML = "";
 
   const filtered = clothes.filter(item => {
-  const matchesSearch = item.name.toLowerCase().includes(currentSearch);
+    if (!item) return false;
 
-  const matchesGender =
-    currentGenderFilter === "all" ||
-    item.gender === currentGenderFilter ||
-    item.gender === "unisex";
+    const matchesSearch = !currentSearch || 
+      item.name?.toLowerCase().includes(currentSearch);
 
-  const matchesCategory =
-    currentCategoryFilter === "all" ||
-    item.category?.toLowerCase() === currentCategoryFilter.toLowerCase();
+    const matchesGender =
+      currentGenderFilter === "all" ||
+      item.gender === currentGenderFilter ||
+      item.gender === "unisex";
 
-  const matchesColor = true; // disabled for now
+    // FIXED: Normalize category (handle singular/plural)
+    const itemCategory = (item.category || "").toLowerCase().trim();
+    const filterCategory = currentCategoryFilter.toLowerCase().trim();
 
-  return matchesSearch && matchesGender && matchesCategory && matchesColor;
-});
+    let matchesCategory = currentCategoryFilter === "all";
+
+    if (!matchesCategory) {
+      // Handle both singular and plural forms
+      matchesCategory = 
+        itemCategory === filterCategory ||
+        itemCategory + "s" === filterCategory ||      // top → tops
+        itemCategory === filterCategory + "s" ||     // tops → top
+        itemCategory === filterCategory.replace(/s$/, ""); // bottoms → bottom
+    }
+
+    // Color filter is disabled for now (as in original)
+    const matchesColor = true;
+
+    return matchesSearch && matchesGender && matchesCategory && matchesColor;
+  });
 
   const sorted = sortItems(filtered);
-  if (itemCount) itemCount.innerText = `${sorted.length} Items`;
+  
+  if (itemCount) {
+    itemCount.innerText = `${sorted.length} Items`;
+  }
 
   sorted.forEach(item => {
     const card = document.createElement("div");
     card.className = "cloth-card";
+
     const isInWardrobe = userWardrobe.some(w => w.id === item.id);
+
+    // FIXED: Better image handling with fallback
+    const imageSrc = item.image || item.img || "";
+    const safeImageSrc = imageSrc ? 
+      (imageSrc.startsWith('http') ? imageSrc : `./images/${imageSrc}`) : 
+      'https://via.placeholder.com/300x400?text=No+Image';
 
     card.innerHTML = `
       <div class="img-wrapper">
-        <img src="${item.image}" alt="${item.name}" />
-        <button class="add-btn ${isInWardrobe ? 'added' : ''}" data-id="${item.id}">
+        <img 
+          src="${safeImageSrc}" 
+          alt="${item.name || 'Clothing item'}"
+          onerror="this.src='https://via.placeholder.com/300x400?text=Image+Not+Found'; this.onerror=null;"
+        />
+        <button class="add-btn \( {isInWardrobe ? 'added' : ''}" data-id=" \){item.id}">
           <span class="icon plus">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14"/>
@@ -271,7 +300,7 @@ function loadClothes() {
           </span>
         </button>
       </div>
-      <p class="cloth-name">${item.name}</p>
+      <p class="cloth-name">${item.name || 'Unnamed Item'}</p>
       <p class="cloth-category">${item.category || item.gender || 'Apparel'}</p>
     `;
 
@@ -284,7 +313,6 @@ function loadClothes() {
     container.appendChild(card);
   });
 }
-
 // ================= TOGGLE WARDROBE =================
 async function toggleWardrobe(item, button) {
   if (!currentUser) {
