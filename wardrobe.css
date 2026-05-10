@@ -4,8 +4,8 @@
   --primary-color: #000000;
   --secondary-color: #666666;
   --accent-color: #f3f4f6;
-  --bg-color: #FAF9F6;
-  --card-bg: #ffffff;
+  --bg-color: #ffffff;
+  --card-bg: #f7f7f7;
   --text-main: #111111;
   --text-muted: #888888;
   --glass-bg: rgba(255, 255, 255, 0.9);
@@ -248,14 +248,14 @@ button, input, textarea, select {
 
 /* CLOTH CARD - Main Container */
 .cloth-card {
-  background: #f7f7f7;
+  background: var(--card-bg);
   border-radius: 14px;
   padding: 10px;
   text-align: center;
   cursor: pointer;
   overflow: hidden;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
   position: relative;
 }
 
