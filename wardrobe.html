@@ -23,7 +23,8 @@
         <h1>My Wardrobe</h1>
         <p class="subtitle">Add clothes you own</p>
       </div>
-
+      
+      <div class="header-sticky">
       <div class="search-section-minimal">
         <div class="unified-search-bar">
           <svg class="search-icon-left" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -33,6 +34,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="4" x2="14" y2="4"></line><line x1="10" y1="4" x2="3" y2="4"></line><line x1="21" y1="12" x2="12" y2="12"></line><line x1="8" y1="12" x2="3" y2="12"></line><line x1="21" y1="20" x2="16" y2="20"></line><line x1="12" y1="20" x2="3" y2="20"></line><circle cx="14" cy="4" r="2"></circle><circle cx="8" cy="12" r="2"></circle><circle cx="16" cy="20" r="2"></circle></svg>
           </button>
         </div>
+      </div>
       </div>
 
       <div class="action-bar-minimal" style="border-bottom: 1px solid #e5e7eb; padding-bottom: 14px;">
@@ -57,25 +59,6 @@
         </div>
       </section>
     </main>
-
-    <div id="sortOverlay" class="overlay">
-      <div class="overlay-content bottom-sheet filter-sheet">
-        <div class="sheet-handle"></div>
-        <header class="overlay-header-minimal sort-header-line">
-          <h2>Sort By</h2>
-          <button class="close-overlay icon-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-          </button>
-        </header>
-        <div class="sort-options">
-          <button class="sort-option active" data-sort="default">Recently Added</button>
-          <button class="sort-option" data-sort="newest">Newest First</button>
-          <button class="sort-option" data-sort="oldest">Oldest First</button>
-          <button class="sort-option" data-sort="name-asc">Name (A-Z)</button>
-          <button class="sort-option" data-sort="name-desc">Name (Z-A)</button>
-        </div>
-      </div>
-    </div>
 
     <div id="filterOverlay" class="overlay">
       <div class="overlay-content bottom-sheet filter-sheet">
