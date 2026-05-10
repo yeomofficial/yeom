@@ -261,7 +261,7 @@ function loadClothes() {
     return matchesSearch && matchesGender && matchesCategory && matchesColor;
   });
 
-  const sorted = sortItems(filtered);
+  const sorted = filtered;
   
   if (itemCount) {
     itemCount.innerText = `${sorted.length} Items`;
