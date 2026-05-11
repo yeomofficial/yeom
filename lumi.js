@@ -89,16 +89,26 @@ function addMessage(text, sender) {
   chat.scrollTop = chat.scrollHeight;
 }
 
+function findBestMatch(aiId, wardrobe) {
+  if (!aiId) return null;
+
+  const cleanAI = aiId.toLowerCase().replace(/[_\s]/g, "");
+
+  return wardrobe.find(item => {
+    const cleanItem = item.id.toLowerCase().replace(/[_\s]/g, "");
+    return cleanItem.includes(cleanAI) || cleanAI.includes(cleanItem);
+  });
+}
+
 function addOutfit(outfit, wardrobe) {
 
   alert("OUTFIT RECEIVED:", outfit);
   
   if (!outfit) return;
 
-  // find items from wardrobe
-  const top = wardrobe.find(i => i.id === outfit.top);
-  const bottom = wardrobe.find(i => i.id === outfit.bottom);
-  const shoes = wardrobe.find(i => i.id === outfit.shoes);
+  const top = findBestMatch(outfit.top, wardrobe);
+  const bottom = findBestMatch(outfit.bottom, wardrobe);
+  const shoes = findBestMatch(outfit.shoes, wardrobe);
 
   // if something missing → don't render
   if (!top && !bottom && !shoes) return;
