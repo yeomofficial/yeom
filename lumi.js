@@ -89,13 +89,20 @@ function addMessage(text, sender) {
   chat.scrollTop = chat.scrollHeight;
 }
 
-function findBestMatch(aiId, wardrobe) {
+function findBestMatch(aiId, wardrobe, category = null) {
   if (!aiId) return null;
 
-  const cleanAI = aiId.toLowerCase().replace(/[_\s]/g, "");
+  const cleanAI = aiId.toLowerCase().replace(/[_\s-]/g, "");
 
-  return wardrobe.find(item => {
-    const cleanItem = item.id.toLowerCase().replace(/[_\s]/g, "");
+  let items = wardrobe;
+
+  // 🎯 filter by category first
+  if (category) {
+    items = wardrobe.filter(item => item.category === category);
+  }
+
+  return items.find(item => {
+    const cleanItem = item.id.toLowerCase().replace(/[_\s-]/g, "");
     return cleanItem.includes(cleanAI) || cleanAI.includes(cleanItem);
   });
 }
