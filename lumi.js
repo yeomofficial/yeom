@@ -109,6 +109,7 @@ function addOutfit(outfit, wardrobe) {
   const top = findBestMatch(outfit.top, wardrobe);
   const bottom = findBestMatch(outfit.bottom, wardrobe);
   const shoes = findBestMatch(outfit.shoes, wardrobe);
+  const layer = findBestMatch(outfit.layer, wardrobe);
 
   // if something missing → don't render
   if (!top && !bottom && !shoes) return;
@@ -121,6 +122,7 @@ function addOutfit(outfit, wardrobe) {
       ${top ? `<img src="${top.image}" />` : ""}
       ${bottom ? `<img src="${bottom.image}" />` : ""}
       ${shoes ? `<img src="${shoes.image}" />` : ""}
+      ${layer ? `<img src="${layer.image}" />` : ""}
     </div>
   `;
 
