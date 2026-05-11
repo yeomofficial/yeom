@@ -141,7 +141,7 @@ container.innerHTML = html;
 
 chat.appendChild(container);
 chat.scrollTop = chat.scrollHeight;
-
+}
 // -------------------- SMART TYPING SYSTEM --------------------
 
 let thinkingInterval = null;
