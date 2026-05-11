@@ -91,6 +91,8 @@ function addMessage(text, sender) {
 
 function addOutfit(outfit, wardrobe) {
 
+  alert("OUTFIT RECEIVED:", outfit);
+  
   if (!outfit) return;
 
   // find items from wardrobe
@@ -242,6 +244,7 @@ async function handleSend() {
     );
 
     const data = await res.json();
+    alert("FULL RESPONSE:", data);
 
     removeTyping();
 
@@ -328,7 +331,7 @@ document.addEventListener("dragstart", (e) => {
 // ===============================
 function canSendMessage() {
 
-  const LIMIT = 10;
+  const LIMIT = 20;
   const COOLDOWN = 5000;
 
   const today = new Date().toDateString();
