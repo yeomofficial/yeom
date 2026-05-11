@@ -111,11 +111,11 @@ function addOutfit(outfit, wardrobe) {
   
   if (!outfit) return;
 
-  const top = findBestMatch(outfit.top, wardrobe);
-  const bottom = findBestMatch(outfit.bottom, wardrobe);
-  const shoes = findBestMatch(outfit.shoes, wardrobe);
-  const full = findBestMatch(outfit.outfit, wardrobe);
-  const layer = findBestMatch(outfit.layer, wardrobe);
+  const top = findBestMatch(outfit.top, wardrobe, "top");
+const bottom = findBestMatch(outfit.bottom, wardrobe, "bottom");
+const shoes = findBestMatch(outfit.shoes, wardrobe, "shoes");
+const full = findBestMatch(outfit.outfit, wardrobe, "full");
+const layer = findBestMatch(outfit.layer, wardrobe, "outerwear");
 
   // if something missing → don't render
   if (!top && !bottom && !shoes && !full) return;
