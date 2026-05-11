@@ -305,6 +305,21 @@ body {
   100% { opacity: 0; }
 }
 
+.outfit-container {
+  margin: 10px 0;
+}
+
+.outfit-images {
+  display: flex;
+  gap: 10px;
+}
+
+.outfit-images img {
+  width: 80px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
 
 
 
