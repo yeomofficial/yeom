@@ -83,7 +83,7 @@ export const clothes = [
     image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777451643/w-wide-legpants-black_b5nfj3.png"
   },
   {
-    id: "black-balletflat",
+    id: "black-ballet-flat",
     name: "Black Ballet Flat",
     category: "shoes",
     gender: "women",
