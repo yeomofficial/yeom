@@ -392,11 +392,3 @@ function canSendMessage() {
 
   return true;
 }
-
-
-
-
-
-
-
-
