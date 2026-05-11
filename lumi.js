@@ -269,7 +269,6 @@ async function handleSend() {
     );
 
     const data = await res.json();
-    alert("FULL RESPONSE:", data);
 
     removeTyping();
 
@@ -356,7 +355,7 @@ document.addEventListener("dragstart", (e) => {
 // ===============================
 function canSendMessage() {
 
-  const LIMIT = 20;
+  const LIMIT = 25;
   const COOLDOWN = 5000;
 
   const today = new Date().toDateString();
