@@ -101,14 +101,13 @@ function findBestMatch(aiId, wardrobe) {
 }
 
 function addOutfit(outfit, wardrobe) {
-
-  alert("OUTFIT RECEIVED:", outfit);
   
   if (!outfit) return;
 
   const top = findBestMatch(outfit.top, wardrobe);
   const bottom = findBestMatch(outfit.bottom, wardrobe);
   const shoes = findBestMatch(outfit.shoes, wardrobe);
+  const full = findBestMatch(outfit.outfit, wardrobe);
   const layer = findBestMatch(outfit.layer, wardrobe);
 
   // if something missing → don't render
@@ -119,10 +118,24 @@ function addOutfit(outfit, wardrobe) {
 
   container.innerHTML = `
     <div class="outfit-images">
+      if (full) {
+  // Dress case
+  outfitDiv.innerHTML = `
+    <div class="outfit-images">
+      ${full ? `<img src="${full.image}" />` : ""}
+      ${shoes ? `<img src="${shoes.image}" />` : ""}
+    </div>
+  `;
+} else {
+  // Normal case
+  outfitDiv.innerHTML = `
+    <div class="outfit-images">
       ${top ? `<img src="${top.image}" />` : ""}
       ${bottom ? `<img src="${bottom.image}" />` : ""}
       ${shoes ? `<img src="${shoes.image}" />` : ""}
-      ${layer ? `<img src="${layer.image}" />` : ""}
+    </div>
+  `;
+}
     </div>
   `;
 
