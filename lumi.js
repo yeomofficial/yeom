@@ -111,24 +111,24 @@ function addOutfit(outfit, wardrobe) {
   const layer = findBestMatch(outfit.layer, wardrobe);
 
   // if something missing → don't render
-  if (!top && !bottom && !shoes) return;
+  if (!top && !bottom && !shoes && !full) return;
 
   const container = document.createElement("div");
   container.className = "outfit-container";
 
-  container.innerHTML = `
-    <div class="outfit-images">
-      if (full) {
+  let html = "";
+
+if (full) {
   // Dress case
-  outfitDiv.innerHTML = `
+  html = `
     <div class="outfit-images">
       ${full ? `<img src="${full.image}" />` : ""}
       ${shoes ? `<img src="${shoes.image}" />` : ""}
     </div>
   `;
 } else {
-  // Normal case
-  outfitDiv.innerHTML = `
+  // Normal outfit
+  html = `
     <div class="outfit-images">
       ${top ? `<img src="${top.image}" />` : ""}
       ${bottom ? `<img src="${bottom.image}" />` : ""}
@@ -136,12 +136,11 @@ function addOutfit(outfit, wardrobe) {
     </div>
   `;
 }
-    </div>
-  `;
 
-  chat.appendChild(container);
-  chat.scrollTop = chat.scrollHeight;
-}
+container.innerHTML = html;
+
+chat.appendChild(container);
+chat.scrollTop = chat.scrollHeight;
 
 // -------------------- SMART TYPING SYSTEM --------------------
 
