@@ -89,6 +89,33 @@ function addMessage(text, sender) {
   chat.scrollTop = chat.scrollHeight;
 }
 
+function addOutfit(outfit, wardrobe) {
+
+  if (!outfit) return;
+
+  // find items from wardrobe
+  const top = wardrobe.find(i => i.id === outfit.top);
+  const bottom = wardrobe.find(i => i.id === outfit.bottom);
+  const shoes = wardrobe.find(i => i.id === outfit.shoes);
+
+  // if something missing → don't render
+  if (!top && !bottom && !shoes) return;
+
+  const container = document.createElement("div");
+  container.className = "outfit-container";
+
+  container.innerHTML = `
+    <div class="outfit-images">
+      ${top ? `<img src="${top.image}" />` : ""}
+      ${bottom ? `<img src="${bottom.image}" />` : ""}
+      ${shoes ? `<img src="${shoes.image}" />` : ""}
+    </div>
+  `;
+
+  chat.appendChild(container);
+  chat.scrollTop = chat.scrollHeight;
+}
+
 // -------------------- SMART TYPING SYSTEM --------------------
 
 let thinkingInterval = null;
@@ -219,6 +246,7 @@ async function handleSend() {
     removeTyping();
 
     addMessage(data.reply, "ai");
+    addOutfit(data.outfit, wardrobe);
 
     // save AI reply to memory
     conversationHistory.push({
