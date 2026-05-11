@@ -367,7 +367,7 @@ document.addEventListener("dragstart", (e) => {
 // ===============================
 function canSendMessage() {
 
-  const LIMIT = 25;
+  const LIMIT = 30;
   const COOLDOWN = 5000;
 
   const today = new Date().toDateString();
