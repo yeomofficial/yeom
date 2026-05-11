@@ -96,14 +96,20 @@ function findBestMatch(aiId, wardrobe, category = null) {
 
   let items = wardrobe;
 
-  // 🎯 filter by category first
   if (category) {
     items = wardrobe.filter(item => item.category === category);
   }
 
   return items.find(item => {
-    const cleanItem = item.id.toLowerCase().replace(/[_\s-]/g, "");
-    return cleanItem.includes(cleanAI) || cleanAI.includes(cleanItem);
+    const cleanId = item.id.toLowerCase().replace(/[_\s-]/g, "");
+    const cleanName = item.name.toLowerCase().replace(/[_\s-]/g, "");
+
+    return (
+      cleanId.includes(cleanAI) ||
+      cleanAI.includes(cleanId) ||
+      cleanName.includes(cleanAI) ||
+      cleanAI.includes(cleanName)
+    );
   });
 }
 
