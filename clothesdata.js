@@ -188,19 +188,8 @@ export const clothes = [
   category: "top",
   gender: "women",
   style: "soft-feminine",
-  vibe: "romantic",
-  formality: "semi-formal",
   color: "navy blue",
-  layering: "light",
   occasion: ["date", "evening", "cafe", "dinner"],
-  goesWith: [
-    "w-wideleg-pants-black",
-    "black_trousers_women",
-    "blue_jeans"
-  ],
-  avoidWith: [
-    "leather_jacket"   // clashes vibe (too edgy)
-  ],
   image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777553587/w-blue-lace-bow-cami_ekocrc.jpg"
   },
   {
@@ -209,21 +198,8 @@ export const clothes = [
   category: "top",
   gender: "women",
   style: "playful",
-  vibe: "vintage",
-  formality: "casual",
   color: "white",
-  pattern: "polka dot",
-  fit: "slim",
-  layering: "light",
   occasion: ["date", "cafe", "summer", "casual"],
-  goesWith: [
-    "blue_jeans",
-    "w-wideleg-pants-black",
-    "black_trousers_women"
-  ],
-  avoidWith: [
-    "leather_jacket"   // again: kills the soft/playful vibe
-  ],
   image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777554535/w-woman-polka-dot-top_z5lxam.jpg"
   },
   {
@@ -232,25 +208,8 @@ export const clothes = [
   category: "top",
   gender: "women",
   style: "bold",
-  vibe: "statement",
-  formality: "casual",
   color: "brown",
-  pattern: "leopard",
-  fit: "slim",
-  neckline: "halter",
-  layering: "minimal",
   occasion: ["date", "night-out", "party"],
-
-  goesWith: [
-    "black_trousers_women",
-    "w-wideleg-pants-black",
-    "blue_jeans"
-  ],
-
-  avoidWith: [
-    "leather_jacket"   // THIS makes sense (layer conflict)
-  ],
-
   image: "https://res.cloudinary.com/dwauleaof/image/upload/v1777555880/w-leopardprint-halter-top_lpfxy6.jpg"
   }
 ];
