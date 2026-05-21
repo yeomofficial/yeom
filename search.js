@@ -69,6 +69,28 @@ window.viewProfile = (userId) => {
   window.location.href = `profile.html?uid=${userId}`;
 };
 
+// === Invite Card Logic ===
+const inviteCard = document.querySelector("#suggestedCards .card:first-child");
+
+inviteCard.style.cursor = "pointer";
+
+inviteCard.addEventListener("click", async () => {
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: "Join me on YEOM",
+        text: "Check out YEOM — discover & follow creators 🔥",
+        url: "https://yeomofficial.github.io/yeom/",
+      });
+    } catch (err) {
+      // User dismissed the share sheet, do nothing
+    }
+  } else {
+    navigator.clipboard.writeText("https://yeomofficial.github.io/yeom/");
+    alert("Link copied to clipboard!");
+  }
+});
+
 // ─── SUGGESTED PROFILES LOGIC ───────────────────────────────────
 function fisherYatesShuffle(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
