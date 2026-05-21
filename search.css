@@ -1,6 +1,7 @@
+/* === Base & Search Styles === */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Montserrat', Arial, sans-serif;
   background-color: #fafafa;
   overflow-x: hidden;
 }
@@ -8,58 +9,243 @@ body {
 .search-header {
   position: sticky;
   top: 0;
-  background-color: white;
-  padding: 10px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  padding: 14px 14px 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.back-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.search-bar-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 10px 14px;
+  gap: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+  flex: 1;
+}
+
+.search-icon {
+  flex-shrink: 0;
+  opacity: 0.85;
 }
 
 #searchInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 15px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  color: #1a1a1a;
+  padding: 0;
+}
+
+#searchInput::placeholder {
+  color: #bbb;
+  font-weight: 400;
+}
+
+/* Suggested Section */
+.suggested-section {
+  background: #f5f5f5;
+  padding: 16px 0 8px;
+}
+
+.content {
+  padding: 0 16px; 
+}
+
+h1 {
+  font-size: 28px;            /* Smaller heading */
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: gray;
+  margin-top: 2px;
+  font-size: 14px;            /* Smaller subtitle */
+  margin-bottom: 16px;
+}
+
+.category-img {
   width: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  box-sizing: border-box; /* Ensure padding doesn't affect width */
+  height: 100%;
+  object-fit: cover;           
+  object-position: center;
+  display: block;
 }
 
-.search-results {
-  padding: 15px;
-  background-color: #f5f5f5; /* near-white */
-  min-height: 100vh;
-  box-sizing: border-box;
+.category-label {
+  position: absolute;
+  bottom: 22px;
+  left: 22px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+  z-index: 2;
+  line-height: 1.1;
 }
 
-.container {
-  max-width: 100%; /* Ensure it fits the screen width */
+.category-arrow {
+  position: absolute;
+  bottom: 20px;
+  right: 18px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  color: #1a1a1a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cards {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  overflow-x: auto;
+  padding-bottom: 15px;
+  scrollbar-width: none;
+}
+
+.cards::-webkit-scrollbar {
+  display: none;
+}
+
+.card {
+  min-width: 118px;           /* Smaller cards */
+  background: white;
+  border-radius: 20px;
+  padding: 14px 12px;         /* Reduced padding inside card */
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.07);
+  flex: 0 0 auto;
+}
+
+.plus-box {
+  width: 70px;
+  height: 70px;
+  background: black;
+  color: white;
   margin: auto;
-  padding: 0 10px; /* Add some padding for better spacing */
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 45px;
 }
 
-input[type="text"] {
+.profile-circle {
+  width: 75px;
+  height: 75px;
+  background: black;
+  color: white;
+  border-radius: 50%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.card h2 {
+  font-size: 16px;
+  margin: 12px 0 4px;
+}
+
+.card p {
+  color: gray;
+  font-size: 13px;
+}
+
+.spot-btn {
   width: 100%;
   padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-sizing: border-box;
+  border: none;
+  border-radius: 14px;
+  background: black;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+.spot-btn:hover {
+  transform: scale(0.95);
+  opacity: 0.9;
 }
 
-li {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+/* Overlay backdrop */
+.search-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 98;
+}
+
+.search-overlay.active {
+  display: block;
+}
+
+/* Floating results panel */
+.search-results {
+  position: fixed;
+  top: 80px; /* just below the header */
+  left: 0; right: 0;
+  background: #fff;
+  z-index: 99;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 10px 15px;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: none;
+}
+
+.search-results.active {
+  display: block;
 }
 
 .user-result {
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ccc;
-  margin: 5px 0;
+  margin: 8px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -68,48 +254,52 @@ li {
 }
 
 .user-result button {
-  padding: 5px 10px;
+  padding: 8px 14px;
   background-color: black;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 14px;
 }
 
-.user-result button:hover {
-  background-color: lightgray;
+/* Categories (unchanged) */
+.categories-section {
+  padding: 24px 0 8px;
+  background-color: #fafafa;
 }
 
-/* Add media query for smaller screens */
-@media (max-width: 480px) {
-  #searchInput {
-    font-size: 14px;
-    padding: 8px;
-  }
-
-  .user-result {
-    flex-direction: column; /* Stack content vertically on small screens */
-    align-items: flex-start;
-  }
-
-  .user-result button {
-    margin-top: 10px;
-    width: 100%; 
-    height: 3%;
-  }
+.categories-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 16px;
+  padding: 0 20px;
 }
 
-.back-icon {
-  display: inline-block;
-  margin-bottom: 8px;
-  cursor: pointer;
-  width: 24px;
-  height: 24px;
+.categories-carousel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 0 16px 20px;
 }
 
-.back-icon svg {
+.category-card {
+  position: relative;
   width: 100%;
-  height: 100%;
-  stroke: black;
+  height: 190px;
+  border-radius: 22px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10), 0 1px 4px rgba(0, 0, 0, 0.06);
+  transition: transform 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.category-card:active {
+  transform: scale(0.97);
+}
+
+/* ... rest of your category styles (img, overlay, label, arrow) remain the same ... */
+.category-img, .category-overlay, .category-label, .category-arrow {
+  /* your existing styles */
 }
