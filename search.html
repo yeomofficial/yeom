@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>YEOM APP</title>
+  <link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32">
   <link rel="stylesheet" href="search.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <header class="search-header">
@@ -14,8 +16,97 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6" />
       </svg>
     </div>
-    <input type="text" id="searchInput" placeholder="Search Usernames" />
+    
+    <div class="search-bar-wrapper">
+      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none"
+        viewBox="0 0 24 24" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="10.5" cy="10.5" r="7.5" />
+        <line x1="16.5" y1="16.5" x2="21" y2="21" />
+      </svg>
+      <input type="text" id="searchInput" placeholder="Search Usernames" />
+    </div>
   </header>
+
+  <!-- Suggested / Spot Others Section (Added below search bar) -->
+  <section class="suggested-section">
+    <div class="content">
+      <h1>Spot Others</h1>
+      <p class="subtitle">Discover & follow creators</p>
+
+      <div class="cards" id="suggestedCards">
+        <!-- Invite Card -->
+        <div class="card">
+          <div class="plus-box">+</div>
+          <h2>Invite Friends</h2>
+          <p>Build your circle</p>
+        </div>
+        
+        <!-- You can add more static or dynamic cards here -->
+      </div>
+    </div>
+  </section>
+
+  <section class="categories-section" id="categoriesSection">
+    <h2 class="categories-title">Browse Categories</h2>
+    <div class="categories-carousel">
+      <!-- Your existing category cards remain unchanged -->
+      <div class="category-card" id="card-formals">
+        <img src="./Assests/formal.png" alt="Formals fashion" class="category-img" loading="lazy" />
+        <div class="category-overlay"></div>
+        <span class="category-label">Formals</span>
+        <button class="category-arrow" aria-label="Browse Formals">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+      <div class="category-card" id="card-streetwear">
+        <img src="./Assests/streetwear.png" alt="Streetwear fashion" class="category-img" loading="lazy" />
+        <div class="category-overlay"></div>
+        <span class="category-label">Streetwear</span>
+        <button class="category-arrow" aria-label="Browse Streetwear">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+      <div class="category-card" id="card-casual">
+        <img src="./Assests/casual.png" alt="Casual fashion" class="category-img" loading="lazy" />
+        <div class="category-overlay"></div>
+        <span class="category-label">Casual</span>
+        <button class="category-arrow" aria-label="Browse Casual">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+      <div class="category-card" id="card-minimalist">
+        <img src="./Assests/minimalist.png" alt="Minimalist fashion" class="category-img" loading="lazy" />
+        <div class="category-overlay"></div>
+        <span class="category-label">Minimalist</span>
+        <button class="category-arrow" aria-label="Browse Minimalist">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+      <div class="category-card" id="card-oldmoney">
+        <img src="./Assests/oldmoney.png" alt="Oldmoney fashion" class="category-img" loading="lazy" />
+        <div class="category-overlay"></div>
+        <span class="category-label">Oldmoney</span>
+        <button class="category-arrow" aria-label="Browse Oldmoney">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
 
   <main class="search-results">
     <div id="resultsList"></div>
