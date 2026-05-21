@@ -1,32 +1,29 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyC1O-WVb95Z77o2JelptaZ8ljRPdNVDIeY",
-  authDomain: "yeom-official.firebaseapp.com",
-  projectId: "yeom-official",
-  storageBucket: "yeom-official.appspot.com",
-  messagingSenderId: "285438640273",
-  appId: "1:285438640273:web:7d91f4ddc24536a3c5ff30",
-  measurementId: "G-EBXHHN5WFK",
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+import { auth, db } from "./fbase.js";
+import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
 const searchInput = document.getElementById("searchInput");
 const resultsList = document.getElementById("resultsList");
 
-// ─── SEARCH BAR LOGIC (unchanged) ───────────────────────────────
+// ─── SEARCH BAR LOGIC ───────────────────────────────────────────
+const overlay = document.createElement("div");
+overlay.classList.add("search-overlay");
+document.body.appendChild(overlay);
+
+const searchResults = document.querySelector(".search-results");
+
 searchInput.addEventListener("input", async () => {
   const searchTerm = searchInput.value.trim().toLowerCase();
 
   if (searchTerm === "") {
     resultsList.innerHTML = "";
+    searchResults.classList.remove("active");
+    overlay.classList.remove("active");
     return;
   }
+
+  searchResults.classList.add("active");
+  overlay.classList.add("active");
 
   try {
     const usersRef = collection(db, "users");
@@ -60,6 +57,14 @@ searchInput.addEventListener("input", async () => {
   }
 });
 
+overlay.addEventListener("click", () => {
+  searchInput.value = "";
+  resultsList.innerHTML = "";
+  searchResults.classList.remove("active");
+  overlay.classList.remove("active");
+  searchInput.blur();
+});
+
 window.viewProfile = (userId) => {
   window.location.href = `profile.html?uid=${userId}`;
 };
@@ -79,7 +84,7 @@ async function loadSuggestedUsers() {
 
   const allUsers = snapshot.docs
     .map(doc => ({ id: doc.id, ...doc.data() }))
-    .filter(u => u.id !== currentUser?.uid); // exclude self
+    .filter(u => u.id !== currentUser?.uid);
 
   const suggested = fisherYatesShuffle(allUsers).slice(0, 5);
   renderSuggested(suggested);
@@ -88,7 +93,6 @@ async function loadSuggestedUsers() {
 function renderSuggested(users) {
   const container = document.getElementById("suggestedCards");
 
-  // Keep the invite card, replace the rest
   const inviteCard = container.querySelector(".card:first-child");
   container.innerHTML = "";
   container.appendChild(inviteCard);
@@ -98,10 +102,15 @@ function renderSuggested(users) {
       ? user.username.slice(0, 2).toUpperCase()
       : "??";
 
+    const avatarHTML = user.profile
+      ? `<img src="${user.profile}" alt="${user.username}"
+            style="width:75px; height:75px; border-radius:50%; object-fit:cover; margin:auto; display:block;" />`
+      : `<div class="profile-circle">${initials}</div>`;
+
     const card = document.createElement("div");
     card.classList.add("card");
     card.innerHTML = `
-      <div class="profile-circle">${initials}</div>
+      ${avatarHTML}
       <h2>${user.username}</h2>
       <p>suggested</p>
       <button class="spot-btn" onclick="viewProfile('${user.id}')">Spot</button>
@@ -110,7 +119,25 @@ function renderSuggested(users) {
   });
 }
 
-// Load suggested once auth is ready
 onAuthStateChanged(auth, (user) => {
   if (user) loadSuggestedUsers();
+});
+
+// === Spot Button Toggle Logic ===
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('spot-btn')) {
+    const btn = e.target;
+
+    if (btn.innerText === "Spot") {
+      btn.innerText = "Spotted";
+      btn.style.background = "white";
+      btn.style.color = "black";
+      btn.style.border = "2px solid black";
+    } else {
+      btn.innerText = "Spot";
+      btn.style.background = "black";
+      btn.style.color = "white";
+      btn.style.border = "none";
+    }
+  }
 });
