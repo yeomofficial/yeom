@@ -82,27 +82,20 @@ function closeAllSheets() {
 
 // -------------------- AUTH --------------------
 onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    window.location.replace("index.html");
-    return;
+  if (user) {
+    CURRENT_UID = user.uid;
+    const ref = doc(db, "userInteractions", CURRENT_UID);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+      await setDoc(ref, { likedPosts: {}, savedPosts: {} });
+      USER_INTERACTIONS = { likedPosts: {}, savedPosts: {} };
+    } else {
+      USER_INTERACTIONS = snap.data();
+    }
   }
-
-  CURRENT_UID = user.uid;
-
-  // Load interaction memory ONCE
-  const ref = doc(db, "userInteractions", CURRENT_UID);
-  const snap = await getDoc(ref);
-
-  if (!snap.exists()) {
-    await setDoc(ref, { likedPosts: {}, savedPosts: {} });
-    USER_INTERACTIONS = { likedPosts: {}, savedPosts: {} };
-  } else {
-    USER_INTERACTIONS = snap.data();
-  }
-
+  // Always load posts — auth state doesn't gate the feed
   loadPosts();
 });
-
 // -------------------- POST UI --------------------
 function createPost({ postId, username, imageUrl, ownerId, likeCount = 0 }) {
   const post = document.createElement("article");
@@ -218,12 +211,16 @@ document.addEventListener("click", async (e) => {
 
   if (!likeBtn && !saveBtn) return;
 
+  if (!CURRENT_UID) {
+    showAuthSheet();
+    return;
+  }
+
   const post = e.target.closest(".post");
   const postId = post.dataset.postId;
   const postRef = doc(db, "posts", postId);
   const userRef = doc(db, "userInteractions", CURRENT_UID);
 
-  //  LIKE
   if (likeBtn) {
     const countSpan = likeBtn.querySelector("span");
 
@@ -231,22 +228,17 @@ document.addEventListener("click", async (e) => {
       delete USER_INTERACTIONS.likedPosts[postId];
       likeBtn.classList.remove("active");
       countSpan.textContent--;
-
       await updateDoc(postRef, { likeCount: increment(-1) });
     } else {
       USER_INTERACTIONS.likedPosts[postId] = true;
       likeBtn.classList.add("active");
       countSpan.textContent++;
-
       await updateDoc(postRef, { likeCount: increment(1) });
     }
 
-    await updateDoc(userRef, {
-      likedPosts: USER_INTERACTIONS.likedPosts
-    });
+    await updateDoc(userRef, { likedPosts: USER_INTERACTIONS.likedPosts });
   }
 
-  //  SAVE
   if (saveBtn) {
     if (USER_INTERACTIONS.savedPosts[postId]) {
       delete USER_INTERACTIONS.savedPosts[postId];
@@ -256,9 +248,7 @@ document.addEventListener("click", async (e) => {
       saveBtn.classList.add("active");
     }
 
-    await updateDoc(userRef, {
-      savedPosts: USER_INTERACTIONS.savedPosts
-    });
+    await updateDoc(userRef, { savedPosts: USER_INTERACTIONS.savedPosts });
   }
 });
 
@@ -343,3 +333,23 @@ function showToast(message) {
   }, 2500);
 }
 
+// -------------------- BOTTOM SHEET --------------------
+        
+const authSheet = document.getElementById("authSheet");
+const authSheetCancel = document.getElementById("authSheetCancel");
+
+function showAuthSheet() {
+  showSheet(authSheet);
+}
+
+authSheetCancel.addEventListener("click", closeAllSheets);
+
+// Also close authSheet in closeAllSheets():
+function closeAllSheets() {
+  sheetBackdrop.classList.add("hidden");
+  hideSheet(postActionsSheet);
+  hideSheet(reportSheet);
+  hideSheet(authSheet);
+  activePost = null;
+  activePostOwner = null;
+  }
