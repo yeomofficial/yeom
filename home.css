@@ -342,3 +342,70 @@ body {
   z-index: 3000;
 }
 
+/* -------------- AUTH SHEET ----------------- */
+.auth-sheet-content {
+  padding: 8px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.auth-sheet-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #888;
+  margin: 0;
+}
+
+.auth-sheet-title {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #000;
+  margin: 0;
+}
+
+.auth-sheet-body {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+  margin: 0 0 8px;
+}
+
+.auth-sheet-btn {
+  display: block;
+  text-align: center;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.auth-sheet-btn:active {
+  opacity: 0.75;
+}
+
+.auth-sheet-btn.primary {
+  background: #000;
+  color: #fff;
+}
+
+.auth-sheet-btn.secondary {
+  background: transparent;
+  color: #000;
+  border: 1.5px solid #000;
+}
+
+.auth-sheet-cancel {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 13px;
+  padding: 8px;
+  cursor: pointer;
+  align-self: center;
+}
