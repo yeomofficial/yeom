@@ -76,10 +76,10 @@ function closeAllSheets() {
   sheetBackdrop.classList.add("hidden");
   hideSheet(postActionsSheet);
   hideSheet(reportSheet);
+  hideSheet(authSheet);
   activePost = null;
   activePostOwner = null;
 }
-
 // -------------------- AUTH --------------------
 onAuthStateChanged(auth, async (user) => {
   if (user) {
@@ -334,7 +334,7 @@ function showToast(message) {
 }
 
 // -------------------- BOTTOM SHEET --------------------
-        
+
 const authSheet = document.getElementById("authSheet");
 const authSheetCancel = document.getElementById("authSheetCancel");
 
@@ -344,12 +344,3 @@ function showAuthSheet() {
 
 authSheetCancel.addEventListener("click", closeAllSheets);
 
-// Also close authSheet in closeAllSheets():
-function closeAllSheets() {
-  sheetBackdrop.classList.add("hidden");
-  hideSheet(postActionsSheet);
-  hideSheet(reportSheet);
-  hideSheet(authSheet);
-  activePost = null;
-  activePostOwner = null;
-  }
