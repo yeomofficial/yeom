@@ -347,7 +347,7 @@ body {
   padding: 8px 24px 32px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 16px;
 }
 
 .auth-sheet-eyebrow {
@@ -371,7 +371,7 @@ body {
   font-size: 14px;
   color: #555;
   line-height: 1.5;
-  margin: 0 0 8px;
+  margin: 0 0 13px;
 }
 
 .auth-sheet-btn {
