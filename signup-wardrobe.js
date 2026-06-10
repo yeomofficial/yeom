@@ -176,7 +176,7 @@ function updateContinueButton() {
 }
 
 continueBtn.onclick = () => {
-  window.location.href = "home.html";
+  window.location.href = "index.html";
 };
 
 // ================= AUTH =================
