@@ -139,12 +139,21 @@ form.addEventListener("submit", async (e) => {
     const uid = user.uid;
 
     await setDoc(doc(db, "users", user.uid), {
-      email,
-      emailVerified: false,
-      spotters: 0,
-      spotting: 0,
-      createdAt: serverTimestamp()
-    });
+  email,
+  emailVerified: false,
+  createdAt: serverTimestamp(),
+  xp: 0,
+  level: 1,
+  streak: { count: 0, lastActiveDate: null },
+  progress: {
+    lessonCompletedToday: false,
+    usedLumiToday: false,
+    lastResetDate: new Date().toISOString().slice(0, 10)
+  },
+  currentCourseId: null,
+  currentLessonId: null,
+  completedLessons: []
+});
 
     await logEvent("user_signed_up", uid);
     await logEvent("terms_accepted", uid);
