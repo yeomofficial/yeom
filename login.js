@@ -101,7 +101,7 @@ form.addEventListener("submit", async (e) => {
 
     const uid = userCredential.user.uid;
     await logEvent("user_logged_in", uid);
-    window.location.replace(`profile.html?uid=${uid}`);
+    window.location.replace(`home.html`);
 
   } catch (error) {
     toggleFormDisabled(false);
