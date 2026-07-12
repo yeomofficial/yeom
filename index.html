@@ -16,12 +16,8 @@
     window.addEventListener("load", () => {
       navigator.serviceWorker
         .register("./service-worker.js")
-        .then(() => {
-          console.log("Service Worker registered");
-        })
-        .catch((err) => {
-          console.log("SW failed", err);
-        });
+        .then(() => console.log("Service Worker registered"))
+        .catch((err) => console.log("SW failed", err));
     });
   }
   </script>
@@ -32,111 +28,102 @@
   <!-- ================= HEADER ================= -->
   <header class="app-header">
     <img class="header-img" src="yeom_img.png" alt="YEOM logo" />
-
     <a href="notification.html" class="notification-icon">
       <img class="notification-img" src="notification.png" alt="Notifications" />
       <span id="notificationBadge" class="notification-badge"></span>
     </a>
   </header>
 
-  <!-- ================= MAIN FEED ================= -->
+  <!-- ================= MAIN ================= -->
   <main class="app-main">
-    <section id="feed" class="feed">
-      <!-- Posts injected via JS -->
+
+    <!-- Greeting -->
+    <section class="greeting">
+      <h1 id="greetingText">Good Morning</h1>
+      <p class="greeting-sub">Let's build your best style, every day.</p>
     </section>
-    <div id="overlay-root"></div>
+
+    <!-- Streak -->
+    <section class="streak-card">
+      <span class="streak-icon">🔥</span>
+      <div class="streak-info">
+        <h2 id="streakCount">0 Day Streak</h2>
+        <p id="streakMsg">Start today and build the habit.</p>
+      </div>
+      <div id="streakWeek" class="streak-week">
+        <!-- 7 day dots injected via JS -->
+      </div>
+    </section>
+
+    <!-- Continue Learning -->
+    <section id="continueLearningCard" class="continue-card">
+      <p class="continue-label">📖 Continue Learning</p>
+      <p id="courseTitle" class="course-title">Fashion Basics</p>
+      <h2 id="lessonTitle">Loading lesson...</h2>
+      <p id="lessonMeta"></p>
+      <div class="progress-bar">
+        <div id="lessonProgressFill" class="progress-fill"></div>
+      </div>
+      <button id="continueLessonBtn" class="btn-primary">Continue Lesson →</button>
+    </section>
+
+    <!-- Outfit Tip -->
+    <section class="tip-card">
+      <span class="tip-icon">💡</span>
+      <div>
+        <h3>Today's Outfit Tip</h3>
+        <p id="outfitTipText">Loading tip...</p>
+      </div>
+    </section>
+
+    <!-- Style Plan -->
+    <section class="style-plan-card">
+      <div class="style-plan-header">
+        <h3>🎯 Sanjay's Style Plan</h3>
+        <span id="stylePlanCount">0 / 3 Completed</span>
+      </div>
+      <p class="style-plan-sub">Let's improve your style today.</p>
+
+      <ul id="stylePlanList" class="style-plan-list">
+        <!-- checklist items injected via JS -->
+      </ul>
+    </section>
+
+    <!-- Ask Lumi -->
+    <section class="ask-lumi-card">
+      <h3>✨ Ask Lumi</h3>
+      <p>Not sure what to wear?</p>
+      <p class="ask-lumi-example">"What should I wear today?"</p>
+      <a href="lumi_questions.html" class="btn-primary full">Ask Lumi →</a>
+    </section>
+
   </main>
 
-  <!-- ================= BACKDROP ================= -->
-  <div id="sheetBackdrop" class="sheet-backdrop hidden"></div>
-
-  <!-- ================= POST ACTIONS SHEET ================= -->
-  <div id="postActionsSheet" class="bottom-sheet hidden">
-    <div class="sheet-handle"></div>
-
-    <button id="sheetDelete" class="sheet-action danger hidden">
-      Delete post
-    </button>
-
-    <button id="sheetReport" class="sheet-action danger">
-      Report post
-    </button>
-
-    <button id="sheetCancel" class="sheet-action">
-      Cancel
-    </button>
-  </div>
-
-  <!-- ================= REPORT REASONS SHEET ================= -->
-  <div id="reportSheet" class="bottom-sheet hidden">
-    <div class="sheet-handle"></div>
-
-    <button class="sheet-action danger report-reason" data-reason="nudity">
-      Nudity or sexual content
-    </button>
-
-    <button class="sheet-action danger report-reason" data-reason="spam">
-      Spam or scam
-    </button>
-
-    <button class="sheet-action danger report-reason" data-reason="harassment">
-      Harassment or hate
-    </button>
-
-    <button class="sheet-action danger report-reason" data-reason="ip">
-      Intellectual property violation
-    </button>
-
-    <button id="reportCancel" class="sheet-action">
-      Cancel
-    </button>
-  </div>
-
-  <div id="toast" class="toast-hidden"></div>
-
-  <!-- AUTH PROMPT SHEET -->
-<div id="authSheet" class="bottom-sheet hidden">
-  <div class="sheet-handle"></div>
-  <div class="auth-sheet-content">
-    <p class="auth-sheet-eyebrow">Your style starts here</p>
-    <h3 class="auth-sheet-title">Discover who you are through fashion</h3>
-    <p class="auth-sheet-body">YEOM helps you find your style identity and makes getting dressed feel effortless.</p>
-    <a href="signup.html" class="auth-sheet-btn primary">Create Account</a>
-    <a href="login.html" class="auth-sheet-btn secondary">I already have an account</a>
-    <button id="authSheetCancel" class="auth-sheet-cancel">Maybe later</button>
-  </div>
-</div>
-  
   <!-- ================= BOTTOM NAV ================= -->
   <nav class="bottom-nav">
     <ul>
       <li>
-        <a href="index.html">
+        <a href="index.html" class="active">
           <img src="home.png" alt="Home" />
+          <span>Home</span>
         </a>
       </li>
-
       <li>
-        <a href="search.html">
-          <img src="search.png" alt="Search" />
+        <a href="learn.html">
+          <img src="learn.png" alt="Learn" />
+          <span>Learn</span>
         </a>
       </li>
-
       <li>
         <a href="lumi_questions.html">
-          <img src="yeom_ai.png" alt="Lumi AI" />
+          <img src="yeom_ai.png" alt="Lumi" />
+          <span>Lumi</span>
         </a>
       </li>
-
-      <li>
-        <a href="upload.html">
-          <img src="upload.png" alt="Upload" />
-        </a>
-      </li>
-
       <li>
         <a href="profile.html">
           <img src="profile.png" alt="Profile" />
+          <span>Profile</span>
         </a>
       </li>
     </ul>
@@ -147,4 +134,3 @@
 
 </body>
 </html>
-
