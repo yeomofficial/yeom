@@ -41,7 +41,7 @@ if (logoutBtn) {
       showMessage("Logged out successfully");
 
       setTimeout(() => {
-        window.location.replace("../index.html");
+        window.location.replace("../signup.html");
       }, 800);
 
     } catch (err) {
