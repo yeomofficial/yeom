@@ -1,0 +1,112 @@
+import { auth, db } from "./fbase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import { doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+const params = new URLSearchParams(window.location.search);
+const lessonId = params.get("id") || "lesson_01";
+
+let CURRENT_UID = null;
+let LESSON = null;
+let selectedOptionIndex = null;
+
+// -------------------- AUTH + LOAD --------------------
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.replace("login.html");
+    return;
+  }
+  CURRENT_UID = user.uid;
+
+  const lessonRef = doc(db, "lessons", lessonId);
+  const snap = await getDoc(lessonRef);
+
+  if (!snap.exists()) {
+    document.getElementById("lessonTitle").textContent = "Lesson not found.";
+    return;
+  }
+
+  LESSON = snap.data();
+  renderStepExplanation();
+});
+
+// -------------------- STEP RENDERING --------------------
+function showStep(id) {
+  document.querySelectorAll(".lesson-step").forEach(el => el.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+}
+
+function renderStepExplanation() {
+  document.getElementById("lessonTitle").textContent = LESSON.title;
+  document.getElementById("lessonExplanation").textContent = LESSON.explanation;
+  showStep("stepExplanation");
+  updateProgress(25);
+}
+
+function renderStepTakeaway() {
+  document.getElementById("lessonTakeaway").textContent = LESSON.keyTakeaway;
+  showStep("stepTakeaway");
+  updateProgress(50);
+}
+
+function renderStepQuiz() {
+  document.getElementById("quizQuestion").textContent = LESSON.quiz.question;
+
+  const optionsWrap = document.getElementById("quizOptions");
+  optionsWrap.innerHTML = "";
+
+  LESSON.quiz.options.forEach((optionText, index) => {
+    const btn = document.createElement("button");
+    btn.className = "quiz-option";
+    btn.textContent = optionText;
+    btn.addEventListener("click", () => handleQuizAnswer(index, btn));
+    optionsWrap.appendChild(btn);
+  });
+
+  showStep("stepQuiz");
+  updateProgress(75);
+}
+
+function handleQuizAnswer(index, btnEl) {
+  if (selectedOptionIndex !== null) return; // prevent double-tap
+  selectedOptionIndex = index;
+
+  const allOptions = document.querySelectorAll(".quiz-option");
+  allOptions.forEach(btn => btn.disabled = true);
+
+  const isCorrect = index === LESSON.quiz.correctIndex;
+  btnEl.classList.add(isCorrect ? "correct" : "incorrect");
+
+  if (!isCorrect) {
+    allOptions[LESSON.quiz.correctIndex].classList.add("correct");
+  }
+
+  setTimeout(() => completeLesson(isCorrect), 900);
+}
+
+async function completeLesson(isCorrect) {
+  const xpEarned = isCorrect ? LESSON.xpReward : Math.floor(LESSON.xpReward / 2);
+
+  const userRef = doc(db, "users", CURRENT_UID);
+  await updateDoc(userRef, {
+    xp: increment(xpEarned),
+    "progress.lessonCompletedToday": true
+  });
+
+  document.getElementById("resultTitle").textContent = isCorrect
+    ? "Nice! You got it right."
+    : "Good try — lesson complete.";
+  document.getElementById("resultXp").textContent = `+${xpEarned} XP`;
+
+  showStep("stepResult");
+  updateProgress(100);
+}
+
+function updateProgress(percent) {
+  document.getElementById("lessonStepFill").style.width = `${percent}%`;
+}
+
+// -------------------- NAV BUTTONS --------------------
+document.getElementById("nextToTakeawayBtn").addEventListener("click", renderStepTakeaway);
+document.getElementById("nextToQuizBtn").addEventListener("click", renderStepQuiz);
+document.getElementById("closeLessonBtn").addEventListener("click", () => window.location.href = "index.html");
+document.getElementById("finishLessonBtn").addEventListener("click", () => window.location.href = "index.html");
