@@ -103,26 +103,71 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-.lumi-avatar {
-  width: 64px;
-  height: 64px;
-  margin-bottom: 20px;
+/* ---------- CHAT STEP ---------- */
+.chat-step {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
-#lessonTitle {
-  font-family: 'Fraunces', serif;
-  font-weight: 600;
-  font-size: 26px;
-  line-height: 1.2;
-  color: var(--ink);
-  margin: 0 0 16px;
+.lumi-avatar-big {
+  width: 140px;
+  height: 140px;
+  margin-bottom: 28px;
 }
 
-#lessonExplanation {
-  font-size: 15px;
-  line-height: 1.6;
+.chat-bubble-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.chat-bubble {
+  background: var(--card-bg);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  font-size: 16px;
+  line-height: 1.5;
   color: var(--text-primary);
-  margin: 0 0 32px;
+  box-shadow: var(--shadow-soft);
+  min-height: 24px;
+}
+
+.bubble-in {
+  animation: bubbleIn 0.25s ease;
+}
+
+@keyframes bubbleIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.bubble-next-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.bubble-next-label {
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 0 6px;
+}
+
+.bubble-next-btn:has(.bubble-next-label) {
+  width: auto;
+  border-radius: 24px;
+  padding: 0 18px;
 }
 
 /* ---------- TAKEAWAY STEP ---------- */
