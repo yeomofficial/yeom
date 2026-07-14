@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>YEOM · Lesson</title>
+  <link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="stylesheet" href="lesson.css" />
+</head>
+<body>
+
+  <header class="lesson-header">
+    <button id="closeLessonBtn" class="close-btn" aria-label="Close lesson">✕</button>
+    <div class="lesson-progress-bar">
+      <div id="lessonStepFill" class="lesson-progress-fill"></div>
+    </div>
+  </header>
+
+  <main class="lesson-main">
+
+    <!-- STEP 1: Explanation -->
+    <section id="stepExplanation" class="lesson-step">
+      <img class="lumi-avatar" src="assets/lumi/lumi_neutral.png" alt="Lumi" />
+      <h1 id="lessonTitle">Loading...</h1>
+      <p id="lessonExplanation"></p>
+      <button class="btn-primary full" id="nextToTakeawayBtn">Continue →</button>
+    </section>
+
+    <!-- STEP 2: Key Takeaway -->
+    <section id="stepTakeaway" class="lesson-step hidden">
+      <img class="lumi-avatar" src="assets/lumi/lumi_neutral.png" alt="Lumi" />
+      <p class="takeaway-label">Key takeaway</p>
+      <h2 id="lessonTakeaway"></h2>
+      <button class="btn-primary full" id="nextToQuizBtn">Take the quiz →</button>
+    </section>
+
+    <!-- STEP 3: Quiz -->
+    <section id="stepQuiz" class="lesson-step hidden">
+      <img class="lumi-avatar" src="assets/lumi/lumi_neutral.png" alt="Lumi" />
+      <h2 id="quizQuestion"></h2>
+      <div id="quizOptions" class="quiz-options"></div>
+    </section>
+
+    <!-- STEP 4: Result -->
+    <section id="stepResult" class="lesson-step hidden">
+      <img id="resultAvatar" class="lumi-avatar" src="assets/lumi/lumi_neutral.png" alt="Lumi" />
+      <h1 id="resultTitle"></h1>
+      <p id="resultXp"></p>
+      <button class="btn-primary full" id="finishLessonBtn">Back to Home</button>
+    </section>
+
+  </main>
+
+  <script type="module" src="lesson.js"></script>
+</body>
+</html>
