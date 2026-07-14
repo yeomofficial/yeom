@@ -35,12 +35,45 @@ function showStep(id) {
   document.getElementById(id).classList.remove("hidden");
 }
 
+let chatMessages = [];
+let chatIndex = 0;
+
 function renderStepExplanation() {
-  document.getElementById("lessonTitle").textContent = LESSON.title;
-  document.getElementById("lessonExplanation").textContent = LESSON.explanation;
+  const greeting = `Hi! I'm Lumi. Let's learn about "${LESSON.title}"`;
+  const sentences = LESSON.explanation
+    .split(/(?<=[.!?])\s+/)
+    .filter(s => s.trim().length > 0);
+
+  chatMessages = [greeting, ...sentences];
+  chatIndex = 0;
+
   showStep("stepExplanation");
   updateProgress(25);
+  renderChatBubble();
 }
+
+function renderChatBubble() {
+  const bubble = document.getElementById("chatBubble");
+  bubble.textContent = chatMessages[chatIndex];
+  bubble.classList.remove("bubble-in");
+  void bubble.offsetWidth;
+  bubble.classList.add("bubble-in");
+
+  const nextBtn = document.getElementById("bubbleNextBtn");
+  const isLast = chatIndex === chatMessages.length - 1;
+  nextBtn.innerHTML = isLast
+    ? `<span class="bubble-next-label">Continue →</span>`
+    : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>`;
+}
+
+document.getElementById("bubbleNextBtn").addEventListener("click", () => {
+  if (chatIndex < chatMessages.length - 1) {
+    chatIndex++;
+    renderChatBubble();
+  } else {
+    renderStepTakeaway();
+  }
+});
 
 function renderStepTakeaway() {
   document.getElementById("lessonTakeaway").textContent = LESSON.keyTakeaway;
@@ -106,7 +139,6 @@ function updateProgress(percent) {
 }
 
 // -------------------- NAV BUTTONS --------------------
-document.getElementById("nextToTakeawayBtn").addEventListener("click", renderStepTakeaway);
 document.getElementById("nextToQuizBtn").addEventListener("click", renderStepQuiz);
 document.getElementById("closeLessonBtn").addEventListener("click", () => window.location.href = "index.html");
 document.getElementById("finishLessonBtn").addEventListener("click", () => window.location.href = "index.html");
