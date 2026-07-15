@@ -116,6 +116,12 @@ body {
   margin-bottom: 28px;
 }
 
+.lumi-avatar {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 20px;
+}
+
 .chat-bubble-wrap {
   width: 100%;
   display: flex;
