@@ -39,6 +39,8 @@ let chatMessages = [];
 let chatIndex = 0;
 
 function renderStepExplanation() {
+  document.getElementById("outfitImage").src = LESSON.imageUrl;
+
   const greeting = `Hi! I'm Lumi. Let's learn about "${LESSON.title}"`;
   const sentences = LESSON.explanation
     .split(/(?<=[.!?])\s+/)
