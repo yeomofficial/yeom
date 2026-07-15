@@ -39,7 +39,7 @@ let chatMessages = [];
 let chatIndex = 0;
 
 function renderStepExplanation() {
-  document.getElementById("outfitImage").src = LESSON.imageUrl;
+  document.getElementById("outfitImage").src = LESSON.imageAssetPath;
 
   const greeting = `Hi! I'm Lumi. Let's learn about "${LESSON.title}"`;
   const sentences = LESSON.explanation
