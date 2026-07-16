@@ -140,12 +140,12 @@ body {
 }
 
 .outfit-hero-wrap {
-  position: relative;
   width: 100%;
   border-radius: var(--radius-lg);
   overflow: hidden;
   aspect-ratio: 3 / 4;
   background: #eee;
+  margin-bottom: 14px;
 }
 
 .outfit-hero {
@@ -156,17 +156,12 @@ body {
 }
 
 .narrator-bar {
-  position: absolute;
-  bottom: 12px;
-  left: 12px;
-  right: 12px;
   display: flex;
   align-items: center;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(6px);
+  background: var(--card-bg);
   border-radius: var(--radius-md);
-  padding: 10px 12px;
+  padding: 14px 14px;
   box-shadow: var(--shadow-soft);
 }
 
