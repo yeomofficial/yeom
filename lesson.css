@@ -329,3 +329,72 @@ body {
 .btn-primary.full {
   width: 100%;
 }
+
+.block-question {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--ink);
+  margin: 0 0 20px;
+}
+
+.outfit-builder {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.outfit-category-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  margin: 0 0 8px;
+}
+
+.outfit-options {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+}
+
+.clothing-card {
+  flex: 0 0 auto;
+  width: 88px;
+  background: var(--card-bg);
+  border: 1.5px solid #e5e5e5;
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.clothing-card img {
+  width: 100%;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.clothing-card span {
+  font-size: 10px;
+  text-align: center;
+  color: var(--text-secondary);
+  line-height: 1.2;
+}
+
+.clothing-card.selected {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+.clothing-card.selected span {
+  color: var(--accent);
+  font-weight: 600;
+}
