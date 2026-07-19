@@ -1,13 +1,23 @@
 import { auth, db } from "./fbase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 import { doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { clothes } from "./clothesdata.js";
 
 const params = new URLSearchParams(window.location.search);
 const lessonId = params.get("id") || "lesson_01";
 
 let CURRENT_UID = null;
 let LESSON = null;
-let selectedOptionIndex = null;
+let CLOTHING_MAP = {};
+let blockIndex = 0;
+let correctCount = 0;
+let totalGradableBlocks = 0;
+
+buildClothingMap();
+
+function buildClothingMap() {
+  CLOTHING_MAP = Object.fromEntries(clothes.map(item => [item.id, item]));
+}
 
 // -------------------- AUTH + LOAD --------------------
 onAuthStateChanged(auth, async (user) => {
@@ -21,105 +31,160 @@ onAuthStateChanged(auth, async (user) => {
   const snap = await getDoc(lessonRef);
 
   if (!snap.exists()) {
-    document.getElementById("lessonTitle").textContent = "Lesson not found.";
+    document.getElementById("blockContainer").innerHTML = "<p>Lesson not found.</p>";
     return;
   }
 
   LESSON = snap.data();
-  renderStepExplanation();
+  totalGradableBlocks = LESSON.blocks.filter(b => b.type !== "teach").length || 1;
+
+  renderBlock();
 });
 
-// -------------------- STEP RENDERING --------------------
-function showStep(id) {
-  document.querySelectorAll(".lesson-step").forEach(el => el.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
-}
+// -------------------- BLOCK ROUTER --------------------
+function renderBlock() {
+  const block = LESSON.blocks[blockIndex];
 
-let chatMessages = [];
-let chatIndex = 0;
-
-function renderStepExplanation() {
-  document.getElementById("outfitImage").src = LESSON.imageAssetPath;
-
-  const greeting = `Hi! I'm Lumi. Let's learn about "${LESSON.title}"`;
-  const sentences = LESSON.explanation
-    .split(/(?<=[.!?])\s+/)
-    .filter(s => s.trim().length > 0);
-
-  chatMessages = [greeting, ...sentences];
-  chatIndex = 0;
-
-  showStep("stepExplanation");
-  updateProgress(25);
-  renderChatBubble();
-}
-
-function renderChatBubble() {
-  const bubble = document.getElementById("chatBubble");
-  bubble.textContent = chatMessages[chatIndex];
-  bubble.classList.remove("bubble-in");
-  void bubble.offsetWidth;
-  bubble.classList.add("bubble-in");
-
-  const nextBtn = document.getElementById("bubbleNextBtn");
-  const isLast = chatIndex === chatMessages.length - 1;
-  nextBtn.innerHTML = isLast
-    ? `<span class="bubble-next-label">Continue →</span>`
-    : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>`;
-}
-
-document.getElementById("bubbleNextBtn").addEventListener("click", () => {
-  if (chatIndex < chatMessages.length - 1) {
-    chatIndex++;
-    renderChatBubble();
-  } else {
-    renderStepTakeaway();
+  if (!block) {
+    completeLesson();
+    return;
   }
-});
 
-function renderStepTakeaway() {
-  document.getElementById("lessonTakeaway").textContent = LESSON.keyTakeaway;
-  showStep("stepTakeaway");
-  updateProgress(50);
+  updateProgress(Math.round((blockIndex / LESSON.blocks.length) * 100));
+
+  if (block.type === "teach") renderTeachBlock(block);
+  else if (block.type === "question") renderQuestionBlock(block);
+  else if (block.type === "outfit_challenge") renderOutfitChallengeBlock(block);
 }
 
-function renderStepQuiz() {
-  document.getElementById("quizQuestion").textContent = LESSON.quiz.question;
+function advanceBlock() {
+  blockIndex++;
+  renderBlock();
+}
 
-  const optionsWrap = document.getElementById("quizOptions");
-  optionsWrap.innerHTML = "";
+// -------------------- TEACH BLOCK --------------------
+function renderTeachBlock(block) {
+  const container = document.getElementById("blockContainer");
 
-  LESSON.quiz.options.forEach((optionText, index) => {
+  container.innerHTML = `
+    ${block.imageUrl ? `
+      <div class="outfit-hero-wrap">
+        <img class="outfit-hero" src="${block.imageUrl}" alt="Lesson visual" />
+      </div>
+    ` : ""}
+    <div class="narrator-bar">
+      <img class="lumi-avatar-mini" src="lumi/lumi.png" alt="Lumi" />
+      <div class="chat-bubble-wrap">
+        <div class="chat-bubble">${block.text}</div>
+      </div>
+      <button class="bubble-next-btn" id="teachNextBtn" aria-label="Next">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+      </button>
+    </div>
+  `;
+
+  document.getElementById("teachNextBtn").addEventListener("click", advanceBlock);
+}
+
+// -------------------- QUESTION BLOCK --------------------
+function renderQuestionBlock(block) {
+  const container = document.getElementById("blockContainer");
+
+  container.innerHTML = `
+    <img class="lumi-avatar" src="lumi/lumi.png" alt="Lumi" />
+    <h2 class="block-question">${block.question}</h2>
+    <div class="quiz-options" id="quizOptionsWrap"></div>
+  `;
+
+  const optionsWrap = document.getElementById("quizOptionsWrap");
+  let answered = false;
+
+  block.options.forEach((optionText, index) => {
     const btn = document.createElement("button");
     btn.className = "quiz-option";
     btn.textContent = optionText;
-    btn.addEventListener("click", () => handleQuizAnswer(index, btn));
+
+    btn.addEventListener("click", () => {
+      if (answered) return;
+      answered = true;
+
+      const allBtns = optionsWrap.querySelectorAll(".quiz-option");
+      allBtns.forEach(b => b.disabled = true);
+
+      const isCorrect = index === block.correctIndex;
+      btn.classList.add(isCorrect ? "correct" : "incorrect");
+      if (!isCorrect) allBtns[block.correctIndex].classList.add("correct");
+      if (isCorrect) correctCount++;
+
+      setTimeout(advanceBlock, 900);
+    });
+
     optionsWrap.appendChild(btn);
   });
-
-  showStep("stepQuiz");
-  updateProgress(75);
 }
 
-function handleQuizAnswer(index, btnEl) {
-  if (selectedOptionIndex !== null) return; // prevent double-tap
-  selectedOptionIndex = index;
+// -------------------- OUTFIT CHALLENGE BLOCK --------------------
+function renderOutfitChallengeBlock(block) {
+  const container = document.getElementById("blockContainer");
+  const selection = {};
 
-  const allOptions = document.querySelectorAll(".quiz-option");
-  allOptions.forEach(btn => btn.disabled = true);
+  container.innerHTML = `
+    <img class="lumi-avatar" src="lumi/lumi.png" alt="Lumi" />
+    <h2 class="block-question">${block.prompt}</h2>
+    <div class="outfit-builder">
+      ${["top", "bottom", "shoes"].map(cat => `
+        <div class="outfit-category">
+          <p class="outfit-category-label">${cat}</p>
+          <div class="outfit-options" id="options-${cat}"></div>
+        </div>
+      `).join("")}
+    </div>
+    <button class="btn-primary full" id="checkOutfitBtn" disabled>Check Outfit</button>
+  `;
 
-  const isCorrect = index === LESSON.quiz.correctIndex;
-  btnEl.classList.add(isCorrect ? "correct" : "incorrect");
+  ["top", "bottom", "shoes"].forEach(category => {
+    const wrap = document.getElementById(`options-${category}`);
 
-  if (!isCorrect) {
-    allOptions[LESSON.quiz.correctIndex].classList.add("correct");
-  }
+    block.options[category].forEach(itemId => {
+      const item = CLOTHING_MAP[itemId];
+      if (!item) return;
 
-  setTimeout(() => completeLesson(isCorrect), 900);
+      const card = document.createElement("button");
+      card.className = "clothing-card";
+      card.innerHTML = `<img src="${item.image}" alt="${item.name}" /><span>${item.name}</span>`;
+
+      card.addEventListener("click", () => {
+        wrap.querySelectorAll(".clothing-card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        selection[category] = itemId;
+
+        const checkBtn = document.getElementById("checkOutfitBtn");
+        checkBtn.disabled = !(selection.top && selection.bottom && selection.shoes);
+      });
+
+      wrap.appendChild(card);
+    });
+  });
+
+  document.getElementById("checkOutfitBtn").addEventListener("click", () => {
+    const isCorrect =
+      selection.top === block.correctAnswer.top &&
+      selection.bottom === block.correctAnswer.bottom &&
+      selection.shoes === block.correctAnswer.shoes;
+
+    if (isCorrect) correctCount++;
+
+    document.getElementById("checkOutfitBtn").disabled = true;
+    document.getElementById("checkOutfitBtn").textContent = isCorrect ? "Correct! ✓" : "Not quite — moving on";
+
+    setTimeout(advanceBlock, 1000);
+  });
 }
 
-async function completeLesson(isCorrect) {
-  const xpEarned = isCorrect ? LESSON.xpReward : Math.floor(LESSON.xpReward / 2);
+// -------------------- COMPLETE LESSON --------------------
+async function completeLesson() {
+  const scoreRatio = correctCount / totalGradableBlocks;
+  const xpEarned = scoreRatio >= 0.5 ? LESSON.xpReward : Math.floor(LESSON.xpReward / 2);
 
   const userRef = doc(db, "users", CURRENT_UID);
   await updateDoc(userRef, {
@@ -127,12 +192,12 @@ async function completeLesson(isCorrect) {
     "progress.lessonCompletedToday": true
   });
 
-  document.getElementById("resultTitle").textContent = isCorrect
-    ? "Nice! You got it right."
-    : "Good try — lesson complete.";
+  document.getElementById("blockContainer").classList.add("hidden");
+  document.getElementById("resultTitle").textContent =
+    scoreRatio >= 0.5 ? "Nice! You did great." : "Good try — lesson complete.";
   document.getElementById("resultXp").textContent = `+${xpEarned} XP`;
 
-  showStep("stepResult");
+  document.getElementById("stepResult").classList.remove("hidden");
   updateProgress(100);
 }
 
@@ -140,7 +205,5 @@ function updateProgress(percent) {
   document.getElementById("lessonStepFill").style.width = `${percent}%`;
 }
 
-// -------------------- NAV BUTTONS --------------------
-document.getElementById("nextToQuizBtn").addEventListener("click", renderStepQuiz);
 document.getElementById("closeLessonBtn").addEventListener("click", () => window.location.href = "index.html");
 document.getElementById("finishLessonBtn").addEventListener("click", () => window.location.href = "index.html");
