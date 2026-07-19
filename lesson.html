@@ -17,47 +17,18 @@
   </header>
 
   <main class="lesson-main">
-    <div id="blockContainer" class="lesson-step">
-      
-    <!-- STEP 1: Explanation (hero image + narrator bubble) -->
-<section id="stepExplanation" class="lesson-step image-step">
-  <div class="outfit-hero-wrap">
-    <img id="outfitImage" class="outfit-hero" src="" alt="Lesson outfit example" />
+
+  <div id="blockContainer" class="lesson-step">
+    <!-- current block renders here, replaced on every step -->
   </div>
 
-  <div class="narrator-bar">
-    <img class="lumi-avatar-mini" src="lumi/lumi.png" alt="Lumi" />
-    <div class="chat-bubble-wrap">
-      <div id="chatBubble" class="chat-bubble"></div>
-    </div>
-    <button id="bubbleNextBtn" class="bubble-next-btn" aria-label="Next">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
-    </button>
-  </div>
-</section>
-
-    <!-- STEP 2: Key Takeaway -->
-    <section id="stepTakeaway" class="lesson-step hidden">
-      <img class="lumi-avatar" src="lumi/lumi.png" alt="Lumi" />
-      <p class="takeaway-label">Key takeaway</p>
-      <h2 id="lessonTakeaway"></h2>
-      <button class="btn-primary full" id="nextToQuizBtn">Take the quiz →</button>
-    </section>
-
-    <!-- STEP 3: Quiz -->
-    <section id="stepQuiz" class="lesson-step hidden">
-      <img class="lumi-avatar" src="lumi/lumi.png" alt="Lumi" />
-      <h2 id="quizQuestion"></h2>
-      <div id="quizOptions" class="quiz-options"></div>
-    </section>
-    </div>
-    <!-- STEP 4: Result -->
-    <section id="stepResult" class="lesson-step hidden">
-      <img id="resultAvatar" class="lumi-avatar" src="lumi/lumi.png" alt="Lumi" />
-      <h1 id="resultTitle"></h1>
-      <p id="resultXp"></p>
-      <button class="btn-primary full" id="finishLessonBtn">Back to Home</button>
-    </section>
+  <!-- RESULT (shown after all blocks complete) -->
+  <section id="stepResult" class="lesson-step hidden">
+    <img id="resultAvatar" class="lumi-avatar" src="lumi/lumi.png" alt="Lumi" />
+    <h1 id="resultTitle"></h1>
+    <p id="resultXp"></p>
+    <button class="btn-primary full" id="finishLessonBtn">Back to Home</button>
+  </section>
 
   </main>
 
