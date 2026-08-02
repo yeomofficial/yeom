@@ -158,9 +158,9 @@ function renderImageChoiceBlock(block) {
       const allCards = wrap.querySelectorAll(".image-choice-card");
       allCards.forEach(c => c.disabled = true);
 
-      const isCorrect = index === block.correctIndex;
+      const isCorrect = index === Number(block.correctIndex);
       card.classList.add(isCorrect ? "correct" : "incorrect");
-      if (!isCorrect) allCards[block.correctIndex].classList.add("correct");
+      if (!isCorrect) allCards[Number(block.correctIndex)].classList.add("correct");
       if (isCorrect) correctCount++;
 
       document.getElementById("imageChoiceExplainText").textContent =
