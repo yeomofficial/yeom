@@ -231,6 +231,54 @@ body {
   margin: 0 0 32px;
 }
 
+/* ---------- IMAGE CHOICE STEP ---------- */
+.image-choice-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.image-choice-card {
+  padding: 0;
+  border: 2px solid #e5e5e5;
+  border-radius: var(--radius-sm);
+  background: var(--card-bg);
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.image-choice-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.image-choice-card:active {
+  transform: scale(0.98);
+}
+
+.image-choice-card:disabled {
+  cursor: default;
+}
+
+.image-choice-card.correct {
+  border-color: var(--correct);
+}
+
+.image-choice-card.incorrect {
+  border-color: var(--incorrect);
+}
+
+/* ---------- GENERIC HIDDEN UTILITY ---------- */
+.hidden {
+  display: none !important;
+}
+
 /* ---------- QUIZ STEP ---------- */
 #quizQuestion {
   font-family: 'Fraunces', serif;
