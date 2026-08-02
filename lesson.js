@@ -55,6 +55,7 @@ function renderBlock() {
   if (block.type === "teach") renderTeachBlock(block);
   else if (block.type === "question") renderQuestionBlock(block);
   else if (block.type === "outfit_challenge") renderOutfitChallengeBlock(block);
+  else if (block.type === "image_choice") renderImageChoiceBlock(block);
 }
 
 function advanceBlock() {
@@ -121,6 +122,56 @@ function renderQuestionBlock(block) {
 
     optionsWrap.appendChild(btn);
   });
+}
+
+// -------------------- IMAGE CHOICE BLOCK --------------------
+function renderImageChoiceBlock(block) {
+  const container = document.getElementById("blockContainer");
+
+  container.innerHTML = `
+    <img class="lumi-avatar" src="lumi/lumi.png" alt="Lumi" />
+    <h2 class="block-question">${block.question}</h2>
+    <div class="image-choice-grid" id="imageChoiceWrap"></div>
+    <div class="narrator-bar hidden" id="imageChoiceExplainBar">
+      <img class="lumi-avatar-mini" src="lumi/lumi.png" alt="Lumi" />
+      <div class="chat-bubble-wrap">
+        <div class="chat-bubble" id="imageChoiceExplainText"></div>
+      </div>
+      <button class="bubble-next-btn" id="imageChoiceNextBtn" aria-label="Next">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+      </button>
+    </div>
+  `;
+
+  const wrap = document.getElementById("imageChoiceWrap");
+  let answered = false;
+
+  block.options.forEach((option, index) => {
+    const card = document.createElement("button");
+    card.className = "image-choice-card";
+    card.innerHTML = `<img src="${option.imageUrl}" alt="Option ${index + 1}" />`;
+
+    card.addEventListener("click", () => {
+      if (answered) return;
+      answered = true;
+
+      const allCards = wrap.querySelectorAll(".image-choice-card");
+      allCards.forEach(c => c.disabled = true);
+
+      const isCorrect = index === block.correctIndex;
+      card.classList.add(isCorrect ? "correct" : "incorrect");
+      if (!isCorrect) allCards[block.correctIndex].classList.add("correct");
+      if (isCorrect) correctCount++;
+
+      document.getElementById("imageChoiceExplainText").textContent =
+        isCorrect ? block.correctExplanation : block.incorrectExplanation;
+      document.getElementById("imageChoiceExplainBar").classList.remove("hidden");
+    });
+
+    wrap.appendChild(card);
+  });
+
+  document.getElementById("imageChoiceNextBtn").addEventListener("click", advanceBlock);
 }
 
 // -------------------- OUTFIT CHALLENGE BLOCK --------------------
