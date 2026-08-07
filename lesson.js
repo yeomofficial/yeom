@@ -328,4 +328,4 @@ function updateProgress(percent) {
 
 document.getElementById("closeLessonBtn").addEventListener("click", () => window.location.href = "index.html");
 document.getElementById("finishLessonBtn").addEventListener("click", () => window.location.href = "index.html");
-}
+
