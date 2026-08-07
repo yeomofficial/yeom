@@ -310,4 +310,21 @@ async function completeLesson() {
 
   document.getElementById("stepResult").classList.remove("hidden");
   updateProgress(100);
+
+  function getTodayString() {
+  return new Date().toISOString().split("T")[0]; // "YYYY-MM-DD"
+}
+
+function getYesterdayString() {
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  return d.toISOString().split("T")[0];
+}
+
+function updateProgress(percent) {
+  document.getElementById("lessonStepFill").style.width = `${percent}%`;
+}
+
+document.getElementById("closeLessonBtn").addEventListener("click", () => window.location.href = "index.html");
+document.getElementById("finishLessonBtn").addEventListener("click", () => window.location.href = "index.html");
 }
