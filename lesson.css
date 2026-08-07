@@ -372,6 +372,14 @@ body {
   margin: 0 0 32px;
 }
 
+.result-takeaway {
+  font-size: 14px;
+  color: var(--text-secondary);
+  max-width: 320px;
+  line-height: 1.5;
+  margin: 0 0 32px;
+}
+
 /* ---------- SHARED BUTTON ---------- */
 .btn-primary {
   display: inline-flex;
