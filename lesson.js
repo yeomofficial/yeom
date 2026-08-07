@@ -19,6 +19,22 @@ function buildClothingMap() {
   CLOTHING_MAP = Object.fromEntries(clothes.map(item => [item.id, item]));
 }
 
+// -------------------- TYPEWRITER EFFECT --------------------
+function typeText(el, text, speed = 22) {
+  el.textContent = "";
+  let i = 0;
+  return new Promise(resolve => {
+    const interval = setInterval(() => {
+      el.textContent += text[i];
+      i++;
+      if (i >= text.length) {
+        clearInterval(interval);
+        resolve();
+      }
+    }, speed);
+  });
+}
+
 // -------------------- AUTH + LOAD --------------------
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
@@ -76,7 +92,7 @@ function renderTeachBlock(block) {
     <div class="narrator-bar">
       <img class="lumi-avatar-mini" src="lumi/lumi.png" alt="Lumi" />
       <div class="chat-bubble-wrap">
-        <div class="chat-bubble">${block.text}</div>
+        <div class="chat-bubble" id="teachBubbleText"></div>
       </div>
       <button class="bubble-next-btn" id="teachNextBtn" aria-label="Next">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
@@ -84,6 +100,7 @@ function renderTeachBlock(block) {
     </div>
   `;
 
+  typeText(document.getElementById("teachBubbleText"), block.text);
   document.getElementById("teachNextBtn").addEventListener("click", advanceBlock);
 }
 
@@ -163,8 +180,8 @@ function renderImageChoiceBlock(block) {
       if (!isCorrect) allCards[Number(block.correctIndex)].classList.add("correct");
       if (isCorrect) correctCount++;
 
-      document.getElementById("imageChoiceExplainText").textContent =
-        isCorrect ? block.correctExplanation : block.incorrectExplanation;
+      typeText(document.getElementById("imageChoiceExplainText"),
+  isCorrect ? block.correctExplanation : block.incorrectExplanation);
       document.getElementById("imageChoiceExplainBar").classList.remove("hidden");
     });
 
