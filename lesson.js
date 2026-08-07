@@ -310,8 +310,9 @@ async function completeLesson() {
 
   document.getElementById("stepResult").classList.remove("hidden");
   updateProgress(100);
+}
 
-  function getTodayString() {
+function getTodayString() {
   return new Date().toISOString().split("T")[0]; // "YYYY-MM-DD"
 }
 
