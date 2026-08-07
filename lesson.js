@@ -284,6 +284,11 @@ async function completeLesson() {
     scoreRatio >= 0.5 ? "Nice! You did great." : "Good try — lesson complete.";
   document.getElementById("resultXp").textContent = `+${xpEarned} XP`;
 
+  if (LESSON.takeaway) {
+    document.getElementById("resultTakeaway").textContent = LESSON.takeaway;
+    document.getElementById("resultTakeaway").classList.remove("hidden");
+  }
+
   document.getElementById("stepResult").classList.remove("hidden");
   updateProgress(100);
 }
