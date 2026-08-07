@@ -109,9 +109,23 @@ function renderQuestionBlock(block) {
   const container = document.getElementById("blockContainer");
 
   container.innerHTML = `
-    <img class="lumi-avatar" src="lumi/lumi.png" alt="Lumi" />
+    ${block.imageUrls ? `
+      <div class="dual-image-wrap">
+        <img class="dual-image" src="${block.imageUrls.left}" alt="Left comparison" />
+        <img class="dual-image" src="${block.imageUrls.right}" alt="Right comparison" />
+      </div>
+    ` : `<img class="lumi-avatar" src="lumi/lumi.png" alt="Lumi" />`}
     <h2 class="block-question">${block.question}</h2>
     <div class="quiz-options" id="quizOptionsWrap"></div>
+    <div class="narrator-bar hidden" id="questionExplainBar">
+      <img class="lumi-avatar-mini" src="lumi/lumi.png" alt="Lumi" />
+      <div class="chat-bubble-wrap">
+        <div class="chat-bubble" id="questionExplainText"></div>
+      </div>
+      <button class="bubble-next-btn" id="questionNextBtn" aria-label="Next">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+      </button>
+    </div>
   `;
 
   const optionsWrap = document.getElementById("quizOptionsWrap");
@@ -129,16 +143,21 @@ function renderQuestionBlock(block) {
       const allBtns = optionsWrap.querySelectorAll(".quiz-option");
       allBtns.forEach(b => b.disabled = true);
 
-      const isCorrect = index === block.correctIndex;
+      const isCorrect = index === Number(block.correctIndex);
       btn.classList.add(isCorrect ? "correct" : "incorrect");
-      if (!isCorrect) allBtns[block.correctIndex].classList.add("correct");
+      if (!isCorrect) allBtns[Number(block.correctIndex)].classList.add("correct");
       if (isCorrect) correctCount++;
 
-      setTimeout(advanceBlock, 900);
+      const explainBar = document.getElementById("questionExplainBar");
+      const explainText = document.getElementById("questionExplainText");
+      explainBar.classList.remove("hidden");
+      typeText(explainText, isCorrect ? block.correctExplanation : block.incorrectExplanation);
     });
 
     optionsWrap.appendChild(btn);
   });
+
+  document.getElementById("questionNextBtn").addEventListener("click", advanceBlock);
 }
 
 // -------------------- IMAGE CHOICE BLOCK --------------------
