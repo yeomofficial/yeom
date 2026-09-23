@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Clothing — YEOM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="app">
+
+    <header class="topbar">
+      <button class="icon-btn back-btn" type="button" aria-label="Go back">←</button>
+      <h1>ADD CLOTHING</h1>
+      <div class="topbar-spacer"></div>
+    </header>
+
+    <section class="photo-card">
+      <img id="clothingPreview" src="" alt="Clothing preview">
+      <div id="photoPlaceholder" class="photo-placeholder">
+        <div class="hanger-icon">♧</div>
+        <span>Add a photo</span>
+      </div>
+
+      <div class="photo-actions">
+        <button id="editPhotoBtn" class="round-btn" type="button" aria-label="Edit photo">✎</button>
+        <button id="uploadPhotoBtn" class="round-btn" type="button" aria-label="Choose photo">⌗</button>
+      </div>
+
+      <input id="photoInput" type="file" accept="image/*" hidden>
+    </section>
+
+    <form id="clothingForm">
+
+      <section class="form-section">
+        <label>Category <span>*</span></label>
+
+        <div class="category-grid" id="categoryGrid">
+          <button class="category-option selected" type="button" data-value="Top">
+            <span class="category-icon">♧</span>
+            <span>Top</span>
+          </button>
+
+          <button class="category-option" type="button" data-value="Bottom">
+            <span class="category-icon">▥</span>
+            <span>Bottom</span>
+          </button>
+
+          <button class="category-option" type="button" data-value="Shoes">
+            <span class="category-icon">⌁</span>
+            <span>Shoes</span>
+          </button>
+
+          <button class="category-option" type="button" data-value="Outerwear">
+            <span class="category-icon">◇</span>
+            <span>Outerwear</span>
+          </button>
+
+          <button class="category-option" type="button" data-value="Full Set">
+            <span class="category-icon">♧</span>
+            <span>Full Set</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <label for="type">Type <span>*</span></label>
+        <div class="select-wrap">
+          <select id="type" required>
+            <option value="T-shirt">T-shirt</option>
+            <option value="Shirt">Shirt</option>
+            <option value="Polo">Polo</option>
+            <option value="Hoodie">Hoodie</option>
+            <option value="Sweater">Sweater</option>
+            <option value="Tank Top">Tank Top</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <label for="colour">Colour <span>*</span></label>
+        <div class="select-wrap colour-select">
+          <span id="colourDot" class="colour-dot"></span>
+          <select id="colour" required>
+            <option value="Red" data-colour="#d9252a">Red</option>
+            <option value="Black" data-colour="#111111">Black</option>
+            <option value="White" data-colour="#f4f4f4">White</option>
+            <option value="Blue" data-colour="#2864c7">Blue</option>
+            <option value="Green" data-colour="#27734b">Green</option>
+            <option value="Yellow" data-colour="#e6bd20">Yellow</option>
+            <option value="Grey" data-colour="#8c8c8c">Grey</option>
+            <option value="Brown" data-colour="#80583c">Brown</option>
+            <option value="Other" data-colour="#b8b8b8">Other</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <label>Where would you wear this <span>*</span></label>
+
+        <div class="occasion-list" id="occasionList">
+          <button class="pill selected" type="button" data-value="Casual walk">Casual walk</button>
+          <button class="pill" type="button" data-value="College">College</button>
+          <button class="pill" type="button" data-value="Party">Party</button>
+          <button class="pill" type="button" data-value="Sports">Sports</button>
+          <button class="pill" type="button" data-value="Home">Home</button>
+          <button class="pill" type="button" data-value="Date">Date</button>
+          <button class="pill" type="button" data-value="Travel">Travel</button>
+        </div>
+      </section>
+
+      <button class="submit-btn" type="submit">
+        <span>ADD TO WARDROBE</span>
+        <span class="arrow">→</span>
+      </button>
+
+      <p id="status" class="status" aria-live="polite"></p>
+
+    </form>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
