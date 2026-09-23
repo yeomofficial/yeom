@@ -3,13 +3,24 @@
 }
 
 :root {
-  --bg: #f7f5ee;
-  --card: #efede5;
-  --text: #172322;
-  --muted: #747873;
-  --border: #d5d2ca;
-  --dark: #172c2b;
-  --white: #ffffff;
+  --primary-color: #000000;
+  --secondary-color: #666666;
+  --accent-color: #f3f4f6;
+
+  --bg-color: #ffffff;
+  --card-bg: #f7f7f7;
+
+  --text-main: #111111;
+  --text-muted: #888888;
+
+  --border-color: #dddddd;
+
+  --glass-bg: rgba(255, 255, 255, 0.9);
+
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html,
