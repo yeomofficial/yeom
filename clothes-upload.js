@@ -7,12 +7,11 @@ const typeSelect = document.getElementById("type");
 const colourSelect = document.getElementById("colour");
 const colourDot = document.getElementById("colourDot");
 
+const photoCard = document.getElementById("photoCard");
 const photoInput = document.getElementById("photoInput");
-const uploadPhotoBtn = document.getElementById("uploadPhotoBtn");
-const editPhotoBtn = document.getElementById("editPhotoBtn");
-
 const clothingPreview = document.getElementById("clothingPreview");
 const photoPlaceholder = document.getElementById("photoPlaceholder");
+const removeBgBtn = document.getElementById("removeBgBtn");
 
 const status = document.getElementById("status");
 
@@ -25,21 +24,21 @@ let selectedOccasion = "Casual walk";
 // ==========================================
 
 categoryGrid.addEventListener("click", (event) => {
+
   const button = event.target.closest(".category-option");
 
   if (!button) return;
 
-  // Remove selected state
-  document.querySelectorAll(".category-option").forEach((item) => {
-    item.classList.remove("selected");
-  });
+  document
+    .querySelectorAll(".category-option")
+    .forEach((item) => {
+      item.classList.remove("selected");
+    });
 
-  // Select clicked category
   button.classList.add("selected");
 
   selectedCategory = button.dataset.value;
 
-  // Change available clothing types
   updateTypeOptions(selectedCategory);
 });
 
@@ -49,6 +48,7 @@ categoryGrid.addEventListener("click", (event) => {
 // ==========================================
 
 const typeOptions = {
+
   Top: [
     "T-shirt",
     "Shirt",
@@ -96,10 +96,8 @@ function updateTypeOptions(category) {
 
   const options = typeOptions[category] || [];
 
-  // Clear current options
   typeSelect.innerHTML = "";
 
-  // Add new options
   options.forEach((type) => {
 
     const option = document.createElement("option");
@@ -112,6 +110,10 @@ function updateTypeOptions(category) {
 }
 
 
+// Set initial type options
+updateTypeOptions(selectedCategory);
+
+
 // ==========================================
 // OCCASION
 // ==========================================
@@ -122,12 +124,12 @@ occasionList.addEventListener("click", (event) => {
 
   if (!button) return;
 
-  // Remove previous selection
-  document.querySelectorAll(".pill").forEach((item) => {
-    item.classList.remove("selected");
-  });
+  document
+    .querySelectorAll(".pill")
+    .forEach((item) => {
+      item.classList.remove("selected");
+    });
 
-  // Select clicked occasion
   button.classList.add("selected");
 
   selectedOccasion = button.dataset.value;
@@ -154,34 +156,32 @@ colourSelect.addEventListener(
 );
 
 
-// Set initial colour
 updateColourDot();
 
 
 // ==========================================
-// IMAGE UPLOAD / PREVIEW
+// PHOTO UPLOAD
 // ==========================================
 
-function openPhotoPicker() {
+// Clicking anywhere on the photo card
+// opens the device's file picker.
+
+photoCard.addEventListener("click", (event) => {
+
+  // Don't open the file picker when
+  // the remove-background button is clicked.
+  if (event.target.closest("#removeBgBtn")) {
+    return;
+  }
+
   photoInput.click();
-}
+});
 
 
-// Upload button
-uploadPhotoBtn.addEventListener(
-  "click",
-  openPhotoPicker
-);
+// ==========================================
+// IMAGE SELECTED
+// ==========================================
 
-
-// Edit button
-editPhotoBtn.addEventListener(
-  "click",
-  openPhotoPicker
-);
-
-
-// When user chooses an image
 photoInput.addEventListener("change", () => {
 
   const file = photoInput.files[0];
@@ -189,7 +189,7 @@ photoInput.addEventListener("change", () => {
   if (!file) return;
 
 
-  // Make sure it's actually an image
+  // Make sure the selected file is an image
   if (!file.type.startsWith("image/")) {
 
     status.textContent =
@@ -204,61 +204,46 @@ photoInput.addEventListener("change", () => {
     URL.createObjectURL(file);
 
 
+  // Show image
   clothingPreview.src = imageURL;
 
   clothingPreview.style.display =
     "block";
 
+
+  // Hide "Add a photo"
   photoPlaceholder.style.display =
     "none";
 
-  status.textContent = "";
-});
 
-const photoCard = document.getElementById("photoCard");
-const photoInput = document.getElementById("photoInput");
-const clothingPreview = document.getElementById("clothingPreview");
-const photoPlaceholder = document.getElementById("photoPlaceholder");
-const removeBgBtn = document.getElementById("removeBgBtn");
+  // Show remove-background button
+  removeBgBtn.style.display =
+    "flex";
 
-photoCard.addEventListener("click", () => {
-  photoInput.click();
-});
-
-photoInput.addEventListener("change", () => {
-  const file = photoInput.files[0];
-
-  if (!file) return;
-
-  if (!file.type.startsWith("image/")) {
-    status.textContent = "Please choose an image.";
-    return;
-  }
-
-  const imageURL = URL.createObjectURL(file);
-
-  clothingPreview.src = imageURL;
-
-  clothingPreview.style.display = "block";
-  photoPlaceholder.style.display = "none";
-
-  // Now show Remove Background
-  removeBgBtn.style.display = "block";
 
   status.textContent = "";
 });
 
+
 // ==========================================
-// BACK BUTTON
+// REMOVE BACKGROUND
 // ==========================================
 
-document
-  .querySelector(".back-btn")
-  .addEventListener("click", () => {
+removeBgBtn.addEventListener("click", (event) => {
 
-    history.back();
+  event.stopPropagation();
 
-  });
+  console.log("Remove background clicked");
+
+  /*
+    Later:
+
+    1. Send image to background-removal service
+    2. Receive processed image
+    3. Replace clothingPreview.src
+    4. Upload processed image to Cloudinary
+  */
+});
 
 
 // ==========================================
@@ -270,7 +255,6 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
 
 
-  // Collect clothing information
   const data = {
 
     category: selectedCategory,
@@ -298,8 +282,9 @@ form.addEventListener("submit", (event) => {
 
 
   /*
-    Later, this is where we can connect
-    Firebase + Cloudinary.
+    Later, this is where we connect:
+
+    Firebase + Cloudinary
 
     Example:
 
@@ -316,6 +301,5 @@ form.addEventListener("submit", (event) => {
         createdAt: serverTimestamp()
       }
     );
-
   */
 });
