@@ -83,6 +83,12 @@ button {
   padding: 160px 24px 36px;   /* 56px header + \~28px gap */
 }
 
+@media (max-width: 560px) {
+  .app {
+    padding: 100px 18px 28px;
+  }
+}
+
 /* =========================================
    HEADER
    Temporarily removed
@@ -123,6 +129,20 @@ button {
 
 .photo-card:hover {
   border-color: #999999;
+}
+
+@media (max-width: 560px) {
+  .photo-card {
+    height: 280px;            /* was 410px */
+    border-radius: 18px;
+    margin-bottom: 32px;
+  }
+}
+
+@media (max-width: 370px) {
+  .photo-card {
+    height: 240px;            /* was 350px */
+  }
 }
 
 
