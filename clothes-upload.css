@@ -1,34 +1,23 @@
 * {
   box-sizing: border-box;
-  margin-bottom: 20px;
 }
 
 :root {
   --primary-color: #000000;
   --secondary-color: #666666;
-
   --accent-color: #f3f4f6;
-
-  --bg-color: #faf9f7; 
+  --bg-color: #faf9f7;
   --card-bg: #f7f7f7;
-
   --text-main: #111111;
   --text-muted: #888888;
-
   --border-color: #dddddd;
-
   --glass-bg: rgba(255, 255, 255, 0.95);
-
   --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.08);
-
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-
-/* =========================================
-   BASE
-========================================= */
+/* ========== HEADER ========== */
 .app-header {
   position: fixed;
   top: 0;
@@ -45,21 +34,18 @@
   z-index: 1000;
 }
 
-.header-img { height: 28px; }
+.header-img {
+  height: 28px;
+}
 
+/* ========== BASE ========== */
 html,
 body {
   margin: 0;
   min-height: 100%;
-
   background: var(--bg-color);
   color: var(--text-main);
-
   font-family: "Montserrat", Arial, sans-serif;
-}
-
-body {
-  justify-content: center;
 }
 
 button,
@@ -71,17 +57,16 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
-
 /* ========== APP ========== */
 .app {
   margin: 0 auto;
   width: 100%;
   max-width: 720px;
   min-height: 100vh;
-  padding: 80px 24px 36px;     /* clears the fixed 56px header */
+  padding: 80px 24px 36px;   /* clears the fixed header */
 }
 
-/* ========== PHOTO CARD (ONLY ONE definition) ========== */
+/* ========== PHOTO CARD (ONLY ONE) ========== */
 .photo-card {
   position: relative;
   width: 100%;
@@ -102,10 +87,232 @@ button {
   border-color: #999999;
 }
 
+#clothingPreview {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: none;
+  padding: 20px;
+}
+
+.photo-placeholder {
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+/* Remove background button */
+.remove-bg-btn {
+  display: none;
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  width: 46px;
+  height: 46px;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.remove-bg-btn svg {
+  width: 21px;
+  height: 21px;
+}
+
+/* ========== FORM ========== */
+.form-section {
+  margin-bottom: 34px;
+}
+
+.form-section > label {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-main);
+  letter-spacing: -0.2px;
+}
+
+.form-section label span {
+  color: var(--secondary-color);
+}
+
+/* Category */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.category-option {
+  min-height: 105px;
+  padding: 12px 6px;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  background: #ffffff;
+  color: var(--text-main);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: var(--transition);
+}
+
+.category-option:hover {
+  border-color: #999999;
+}
+
+.category-option.selected {
+  background: var(--primary-color);
+  color: #ffffff;
+  border-color: var(--primary-color);
+}
+
+.category-option span:last-child {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Selects */
+.select-wrap {
+  position: relative;
+}
+
+.select-wrap::after {
+  content: "⌄";
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-57%);
+  font-size: 22px;
+  color: var(--text-main);
+  pointer-events: none;
+}
+
+select {
+  width: 100%;
+  height: 64px;
+  appearance: none;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  background: #ffffff;
+  color: var(--text-main);
+  padding: 0 54px 0 20px;
+  outline: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+select:focus {
+  border-color: var(--primary-color);
+}
+
+/* Colour */
+.colour-select select {
+  padding-left: 66px;
+}
+
+.colour-dot {
+  position: absolute;
+  z-index: 1;
+  left: 20px;
+  top: 50%;
+  width: 32px;
+  height: 32px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: #d9252a;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+}
+
+/* Occasions */
+.occasion-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pill {
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--text-main);
+  padding: 14px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: var(--transition);
+}
+
+.pill:hover {
+  border-color: #999999;
+}
+
+.pill.selected {
+  color: #ffffff;
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* Submit */
+.submit-btn {
+  width: 100%;
+  height: 68px;
+  border: 0;
+  border-radius: 18px;
+  background: var(--primary-color);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.submit-btn:active {
+  transform: scale(0.985);
+}
+
+.submit-btn .arrow {
+  font-size: 27px;
+  font-weight: 400;
+}
+
+/* Status */
+.status {
+  text-align: center;
+  min-height: 20px;
+  margin: 15px 0 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Hide the old topbar */
+.topbar {
+  display: none;
+}
+
 /* ========== MOBILE ========== */
 @media (max-width: 560px) {
   .app {
-    padding: 72px 18px 28px;   /* still clears header, no margin-top needed */
+    padding: 72px 18px 28px;
   }
 
   .photo-card {
@@ -152,518 +359,4 @@ button {
   .pill {
     padding: 12px 15px;
   }
-}
-
-
-/* Image */
-
-#clothingPreview {
-  width: 100%;
-  height: 100%;
-
-  object-fit: contain;
-
-  display: none;
-
-  padding: 24px;
-}
-
-
-/* Empty state */
-
-.photo-placeholder {
-  color: var(--text-muted);
-
-  display: flex;
-  flex-direction: column;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 12px;
-
-  font-size: 16px;
-
-  pointer-events: none;
-}
-
-.hanger-icon {
-  font-size: 48px;
-
-  opacity: 0.55;
-}
-
-
-/* =========================================
-   PHOTO ACTION
-   Only used AFTER image exists
-========================================= */
-
-.photo-actions {
-  position: absolute;
-
-  top: 16px;
-  right: 16px;
-
-  display: none;
-}
-
-
-/*
-   Only one action:
-   Remove Background
-*/
-
-.round-btn {
-  width: 52px;
-  height: 52px;
-
-  border: 1px solid var(--border-color);
-  border-radius: 50%;
-
-  background: #ffffff;
-  color: var(--primary-color);
-
-  box-shadow: var(--shadow-sm);
-
-  cursor: pointer;
-
-  font-size: 22px;
-}
-
-
-/* =========================================
-   FORM SECTIONS
-========================================= */
-
-.form-section {
-  margin-bottom: 34px;
-}
-
-.form-section > label {
-  display: block;
-
-  margin-bottom: 16px;
-
-  font-size: 18px;
-  font-weight: 600;
-
-  color: var(--text-main);
-
-  letter-spacing: -0.2px;
-}
-
-.form-section label span {
-  color: var(--secondary-color);
-}
-
-
-/* =========================================
-   CATEGORY
-========================================= */
-
-.category-grid {
-  display: grid;
-
-  grid-template-columns: repeat(5, 1fr);
-
-  gap: 10px;
-}
-
-.category-option {
-  min-height: 105px;
-
-  padding: 12px 6px;
-
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
-
-  background: #ffffff;
-  color: var(--text-main);
-
-  cursor: pointer;
-
-  display: flex;
-  flex-direction: column;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 10px;
-
-  transition: var(--transition);
-}
-
-.category-option:hover {
-  border-color: #999999;
-}
-
-
-/* SELECTED CATEGORY */
-
-.category-option.selected {
-  background: var(--primary-color);
-
-  color: #ffffff;
-
-  border-color: var(--primary-color);
-}
-
-.category-icon {
-  font-size: 28px;
-  line-height: 1;
-}
-
-.category-option span:last-child {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-
-/* =========================================
-   DROPDOWNS
-========================================= */
-
-.select-wrap {
-  position: relative;
-}
-
-.select-wrap::after {
-  content: "⌄";
-
-  position: absolute;
-
-  right: 20px;
-  top: 50%;
-
-  transform: translateY(-57%);
-
-  font-size: 22px;
-
-  color: var(--text-main);
-
-  pointer-events: none;
-}
-
-select {
-  width: 100%;
-  height: 64px;
-
-  appearance: none;
-
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
-
-  background: #ffffff;
-  color: var(--text-main);
-
-  padding: 0 54px 0 20px;
-
-  outline: none;
-
-  font-size: 16px;
-
-  cursor: pointer;
-
-  transition: var(--transition);
-}
-
-select:focus {
-  border-color: var(--primary-color);
-}
-
-
-/* =========================================
-   COLOUR
-========================================= */
-
-.colour-select select {
-  padding-left: 66px;
-}
-
-.colour-dot {
-  position: absolute;
-
-  z-index: 1;
-
-  left: 20px;
-  top: 50%;
-
-  width: 32px;
-  height: 32px;
-
-  transform: translateY(-50%);
-
-  border-radius: 50%;
-
-  background: #d9252a;
-
-  border: 1px solid rgba(0, 0, 0, 0.08);
-
-  pointer-events: none;
-}
-
-
-/* =========================================
-   OCCASIONS
-========================================= */
-
-.occasion-list {
-  display: flex;
-
-  flex-wrap: wrap;
-
-  gap: 10px;
-}
-
-.pill {
-  border: 1px solid var(--border-color);
-
-  border-radius: 999px;
-
-  background: #ffffff;
-  color: var(--text-main);
-
-  padding: 14px 20px;
-
-  cursor: pointer;
-
-  font-size: 14px;
-
-  transition: var(--transition);
-}
-
-.pill:hover {
-  border-color: #999999;
-}
-
-
-/* SELECTED OCCASION */
-
-.pill.selected {
-  color: #ffffff;
-
-  background: var(--primary-color);
-
-  border-color: var(--primary-color);
-}
-
-
-/* =========================================
-   ADD TO WARDROBE
-========================================= */
-
-.submit-btn {
-  width: 100%;
-  height: 68px;
-
-  border: 0;
-  border-radius: 18px;
-
-  background: var(--primary-color);
-  color: #ffffff;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  gap: 20px;
-
-  cursor: pointer;
-
-  font-size: 15px;
-  font-weight: 600;
-
-  letter-spacing: 2px;
-
-  transition: transform 0.15s ease,
-              opacity 0.15s ease;
-}
-
-.submit-btn:active {
-  transform: scale(0.985);
-}
-
-.submit-btn .arrow {
-  font-size: 27px;
-  font-weight: 400;
-}
-
-
-/* =========================================
-   STATUS
-========================================= */
-
-.status {
-  text-align: center;
-
-  min-height: 20px;
-
-  margin: 15px 0 0;
-
-  color: var(--text-muted);
-
-  font-size: 13px;
-}
-
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media (max-width: 560px) {
-
-  .app {
-    padding: 20px 18px 28px;
-  }
-
-
-  .photo-card {
-    height: 410px;
-
-    border-radius: 18px;
-
-    margin-bottom: 38px;
-  }
-
-
-  .category-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-
-  .category-option {
-    min-height: 100px;
-  }
-
-
-  .form-section > label {
-    font-size: 17px;
-  }
-
-
-  .submit-btn {
-    height: 64px;
-  }
-}
-
-
-/* =========================================
-   SMALL PHONES
-========================================= */
-
-@media (max-width: 370px) {
-
-  .app {
-    padding-left: 14px;
-    padding-right: 14px;
-  }
-
-
-  .photo-card {
-    height: 350px;
-  }
-
-
-  .category-grid {
-    gap: 7px;
-  }
-
-
-  .category-option span:last-child {
-    font-size: 12px;
-  }
-
-
-  .pill {
-    padding: 12px 15px;
-  }
-}
-
-
-.photo-card-wrap {
-  position: relative;
-}
-
-
-.photo-card {
-  position: relative;
-
-  width: 100%;
-  height: 430px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 2px dashed #b8b8b8;
-  border-radius: 24px;
-
-  background: #ffffff;
-
-  cursor: pointer;
-  overflow: hidden;
-}
-
-
-.photo-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  gap: 14px;
-
-  color: #aaa;
-}
-
-
-.photo-placeholder span {
-  font-size: 20px;
-}
-
-
-.clothing-preview {
-  display: none;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: contain;
-}
-
-
-/* =========================
-   REMOVE BACKGROUND
-   ========================= */
-
-.remove-bg-btn {
-  display: none;
-
-  position: absolute;
-
-  right: 16px;
-  bottom: 16px;
-
-  width: 46px;
-  height: 46px;
-
-  align-items: center;
-  justify-content: center;
-
-  border: none;
-  border-radius: 50%;
-
-  background: #000;
-  color: #fff;
-
-  cursor: pointer;
-
-  z-index: 10;
-}
-
-
-.remove-bg-btn svg {
-  width: 21px;
-  height: 21px;
 }
