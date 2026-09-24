@@ -80,12 +80,12 @@ button {
   width: 100%;
   max-width: 720px;
   min-height: 100vh;
-  padding: 84px 24px 36px;   /* 56px header + \~28px gap */
+  padding: 80px 24px 36px;   /* 56px header + \~28px gap */
 }
 
 @media (max-width: 560px) {
   .app {
-    padding: 76px 18px 28px;   /* 56 + 20 */
+    padding: 72px 18px 28px;
   }
 }
 
@@ -107,7 +107,7 @@ button {
   position: relative;
 
   width: 100%;
-  height: 430px;
+  height: 320px;
 
   background: #ffffff;
 
