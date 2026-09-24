@@ -31,6 +31,8 @@
 .app-header {
   position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   height: 56px;
   padding: 0 16px;
@@ -38,7 +40,7 @@
   align-items: center;
   justify-content: space-between;
   background-color: #fff;
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-sm);
   z-index: 1000;
 }
 
@@ -56,7 +58,6 @@ body {
 }
 
 body {
-  display: flex;
   justify-content: center;
 }
 
@@ -75,14 +76,18 @@ button {
 ========================================= */
 
 .app {
+  margin: 0 auto;
   width: 100%;
   max-width: 720px;
-
   min-height: 100vh;
-
-  padding: 28px 24px 36px;
+  padding: 84px 24px 36px;   /* 56px header + \~28px gap */
 }
 
+@media (max-width: 560px) {
+  .app {
+    padding: 76px 18px 28px;   /* 56 + 20 */
+  }
+}
 
 /* =========================================
    HEADER
