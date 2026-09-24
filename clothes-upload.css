@@ -104,7 +104,8 @@ button {
 /* ========== MOBILE ========== */
 @media (max-width: 560px) {
   .app {
-    padding: 136px 18px 28px;   /* still clears header */
+    padding: 136px 18px 28px;
+    margin-top: 100px;/* still clears header */
   }
 
   .photo-card {
