@@ -20,19 +20,38 @@
       <div class="topbar-spacer"></div>
     </header>
 
-    <section class="photo-card">
-      <img id="clothingPreview" src="" alt="Clothing preview">
-      <div id="photoPlaceholder" class="photo-placeholder">
-        <div class="hanger-icon">♧</div>
-        <span>Add a photo</span>
-      </div>
+    <section class="photo-card" id="photoCard">
 
-      <div class="photo-actions">
-        <button id="editPhotoBtn" class="round-btn" type="button" aria-label="Edit photo">✎</button>
-        <button id="uploadPhotoBtn" class="round-btn" type="button" aria-label="Choose photo">⌗</button>
-      </div>
+  <img
+    id="clothingPreview"
+    src=""
+    alt="Clothing preview"
+  >
 
-      <input id="photoInput" type="file" accept="image/*" hidden>
+  <div id="photoPlaceholder" class="photo-placeholder">
+    <div class="photo-icon">
+      <!-- your icon here -->
+    </div>
+
+    <span>Add a photo</span>
+  </div>
+
+  <!-- Only appears AFTER an image is uploaded -->
+  <button
+    id="removeBgBtn"
+    class="remove-bg-btn"
+    type="button"
+  >
+    Remove background
+  </button>
+
+  <input
+    id="photoInput"
+    type="file"
+    accept="image/*"
+    hidden
+  >
+
     </section>
 
     <form id="clothingForm">
