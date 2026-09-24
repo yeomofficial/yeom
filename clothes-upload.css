@@ -71,59 +71,29 @@ button {
 }
 
 
-/* =========================================
-   APP
-========================================= */
-
+/* ========== APP ========== */
 .app {
   margin: 0 auto;
   width: 100%;
   max-width: 720px;
   min-height: 100vh;
-  padding: 160px 24px 36px;   /* 56px header + \~28px gap */
+  padding: 80px 24px 36px;     /* clears the fixed header */
 }
 
-@media (max-width: 560px) {
-  .app {
-    padding: 100px 18px 28px;
-  }
-}
-
-/* =========================================
-   HEADER
-   Temporarily removed
-========================================= */
-
-.topbar {
-  display: none;
-}
-
-
-/* =========================================
-   PHOTO UPLOAD
-========================================= */
-
+/* ========== PHOTO CARD (single definition) ========== */
 .photo-card {
   position: relative;
-
   width: 100%;
-  height: 260px;
-
+  height: 280px;               /* smaller desktop size */
   background: #ffffff;
-
   border: 2px dashed var(--border-color);
   border-radius: 20px;
-
   overflow: hidden;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
-  margin-bottom: 42px;
-
+  margin-bottom: 36px;
   cursor: pointer;
-
   transition: var(--transition);
 }
 
@@ -131,17 +101,55 @@ button {
   border-color: #999999;
 }
 
+/* ========== MOBILE ========== */
 @media (max-width: 560px) {
+  .app {
+    padding: 72px 18px 28px;   /* still clears header */
+  }
+
   .photo-card {
-    height: 280px;            /* was 410px */
+    height: 240px;             /* even smaller on phones */
     border-radius: 18px;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .category-option {
+    min-height: 100px;
+  }
+
+  .form-section > label {
+    font-size: 17px;
+  }
+
+  .submit-btn {
+    height: 64px;
   }
 }
 
 @media (max-width: 370px) {
+  .app {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
   .photo-card {
-    height: 240px;            /* was 350px */
+    height: 220px;
+  }
+
+  .category-grid {
+    gap: 7px;
+  }
+
+  .category-option span:last-child {
+    font-size: 12px;
+  }
+
+  .pill {
+    padding: 12px 15px;
   }
 }
 
