@@ -179,8 +179,21 @@ photoCard.addEventListener("click", (event) => {
 
 
 // ==========================================
-// IMAGE SELECTED
+// IMAGE UPLOAD / PREVIEW
 // ==========================================
+
+const photoInput =
+  document.getElementById("photoInput");
+
+const clothingPreview =
+  document.getElementById("clothingPreview");
+
+const photoPlaceholder =
+  document.getElementById("photoPlaceholder");
+
+const removeBgBtn =
+  document.getElementById("removeBgBtn");
+
 
 photoInput.addEventListener("change", () => {
 
@@ -189,7 +202,7 @@ photoInput.addEventListener("change", () => {
   if (!file) return;
 
 
-  // Make sure the selected file is an image
+  // Make sure it is an image
   if (!file.type.startsWith("image/")) {
 
     status.textContent =
@@ -199,24 +212,24 @@ photoInput.addEventListener("change", () => {
   }
 
 
-  // Create temporary preview URL
+  // Create temporary preview
   const imageURL =
     URL.createObjectURL(file);
 
 
-  // Show image
-  clothingPreview.src = imageURL;
+  clothingPreview.src =
+    imageURL;
+
 
   clothingPreview.style.display =
     "block";
 
 
-  // Hide "Add a photo"
   photoPlaceholder.style.display =
     "none";
 
 
-  // Show remove-background button
+  // NOW show the remove-background icon
   removeBgBtn.style.display =
     "flex";
 
@@ -229,21 +242,16 @@ photoInput.addEventListener("change", () => {
 // REMOVE BACKGROUND
 // ==========================================
 
-removeBgBtn.addEventListener("click", (event) => {
-
-  event.stopPropagation();
+removeBgBtn.addEventListener("click", () => {
 
   console.log("Remove background clicked");
 
   /*
-    Later:
-
-    1. Send image to background-removal service
-    2. Receive processed image
-    3. Replace clothingPreview.src
-    4. Upload processed image to Cloudinary
+    Background-removal logic will go here later.
   */
+
 });
+
 
 
 // ==========================================
