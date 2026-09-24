@@ -215,6 +215,38 @@ photoInput.addEventListener("change", () => {
   status.textContent = "";
 });
 
+const photoCard = document.getElementById("photoCard");
+const photoInput = document.getElementById("photoInput");
+const clothingPreview = document.getElementById("clothingPreview");
+const photoPlaceholder = document.getElementById("photoPlaceholder");
+const removeBgBtn = document.getElementById("removeBgBtn");
+
+photoCard.addEventListener("click", () => {
+  photoInput.click();
+});
+
+photoInput.addEventListener("change", () => {
+  const file = photoInput.files[0];
+
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    status.textContent = "Please choose an image.";
+    return;
+  }
+
+  const imageURL = URL.createObjectURL(file);
+
+  clothingPreview.src = imageURL;
+
+  clothingPreview.style.display = "block";
+  photoPlaceholder.style.display = "none";
+
+  // Now show Remove Background
+  removeBgBtn.style.display = "block";
+
+  status.textContent = "";
+});
 
 // ==========================================
 // BACK BUTTON
