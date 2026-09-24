@@ -316,7 +316,7 @@ select:focus {
   }
 
   .photo-card {
-    height: 240px;
+    height: 320 px;
     border-radius: 18px;
     margin-bottom: 28px;
   }
@@ -345,7 +345,7 @@ select:focus {
   }
 
   .photo-card {
-    height: 220px;
+    height: 320px;
   }
 
   .category-grid {
