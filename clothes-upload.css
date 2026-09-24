@@ -28,6 +28,21 @@
 /* =========================================
    BASE
 ========================================= */
+.app-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 56px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  box-shadow: var(--shadow-soft);
+  z-index: 1000;
+}
+
+.header-img { height: 28px; }
 
 html,
 body {
