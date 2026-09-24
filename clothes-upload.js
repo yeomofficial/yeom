@@ -166,33 +166,9 @@ updateColourDot();
 // Clicking anywhere on the photo card
 // opens the device's file picker.
 
-photoCard.addEventListener("click", (event) => {
-
-  // Don't open the file picker when
-  // the remove-background button is clicked.
-  if (event.target.closest("#removeBgBtn")) {
-    return;
-  }
-
-  photoInput.click();
-});
-
-
 // ==========================================
 // IMAGE UPLOAD / PREVIEW
 // ==========================================
-
-const photoInput =
-  document.getElementById("photoInput");
-
-const clothingPreview =
-  document.getElementById("clothingPreview");
-
-const photoPlaceholder =
-  document.getElementById("photoPlaceholder");
-
-const removeBgBtn =
-  document.getElementById("removeBgBtn");
 
 
 photoInput.addEventListener("change", () => {
