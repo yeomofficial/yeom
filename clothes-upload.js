@@ -170,6 +170,16 @@ updateColourDot();
 // IMAGE UPLOAD / PREVIEW
 // ==========================================
 
+photoCard.addEventListener("click", (event) => {
+
+  // Don't open the file picker when
+  // the remove-background button is clicked.
+  if (event.target.closest("#removeBgBtn")) {
+    return;
+  }
+
+  photoInput.click();
+});
 
 photoInput.addEventListener("change", () => {
 
